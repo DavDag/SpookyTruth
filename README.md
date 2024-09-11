@@ -1,6 +1,10 @@
 ![](https://github.com/DavDag/template-excaliburjs/actions/workflows/deploy_site.yml/badge.svg)
 ![](http://img.shields.io/badge/node-20.x.x-brightgreen.svg)
 
+> [!NOTE]
+> This is a template for game jams and rapid prototyping of games.<br>
+> Fork this repo and start your own project :)
+
 # GameTitle
 
 <a href="">
