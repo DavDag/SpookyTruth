@@ -1,4 +1,4 @@
-import { Engine, Keys, Loader } from 'excalibur'
+import { Engine, ImageFiltering, Keys, Loader } from 'excalibur'
 import { Resources } from './assets/resources'
 import { EngineConfigs } from './configs'
 import { CreditsScene } from './scenes/credits.scene'
@@ -22,7 +22,7 @@ class App {
     }
 
     public Start() {
-        this.engine.start(this.loader).then(() => this.engine.goToScene('menu'))
+        void this.engine.start(this.loader).then(() => this.engine.goToScene('menu'))
     }
 
     public Resize(w: number, h: number) {
@@ -73,21 +73,28 @@ class App {
     private AddResources() {
         this.loader = new Loader()
         Object.values(Resources.image).forEach(
-            this.loader.addResource.bind(this.loader)
+            this.loader.addResource.bind(this.loader),
         )
         Object.values(Resources.music).forEach(
-            this.loader.addResource.bind(this.loader)
+            this.loader.addResource.bind(this.loader),
         )
     }
 
     private CreateEngine() {
         this.engine = new Engine({
             canvasElementId: 'game',
+            viewport: EngineConfigs.GameViewport,
             resolution: EngineConfigs.GameResolution,
             displayMode: EngineConfigs.DisplayMode,
             backgroundColor: EngineConfigs.BackgroundColor,
             fixedUpdateFps: EngineConfigs.FixedUpdateFps,
-            pixelArt: EngineConfigs.PixelArt,
+            antialiasing: {
+                nativeContextAntialiasing: false,
+                pixelArtSampler: false,
+                filtering: ImageFiltering.Pixel,
+                multiSampleAntialiasing: false,
+                canvasImageRendering: 'pixelated',
+            },
         })
     }
 

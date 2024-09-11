@@ -1,26 +1,96 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Game Title</title>
-        <link rel="icon" href="../favicon.ico" type="image/x-icon" />
-        <style>
-            html,
-            body {
-                margin: 0 !important;
-                padding: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: black;
-            }
-        </style>
-        <script src="index.ts" type="module"></script>
-    </head>
-    <body>
-        <canvas id="game"></canvas>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Title</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <style>
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+            position: relative;
+            font-family: 'Comic Sans MS', monospace;
+        }
+
+        .game-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            aspect-ratio: 438 / 720;
+            background-image: url("./assets/image/gameboy.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        #game {
+            position: absolute;
+            top: 90px;
+            left: 90px;
+        }
+
+        #game-play-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #efeeee;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .play-btn-container {
+            display: none;
+            place-items: center;
+            cursor: pointer;
+            padding: 4rem;
+            background: #efeeee;
+            border-radius: 50%;
+            transition: all 0.3s ease-in;
+            box-shadow: -10px -10px 10px rgba(255, 255, 255, 0.6),
+            10px 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .play-btn-container .game-play-btn-text {
+            display: grid;
+            place-items: center;
+            font-size: 4rem;
+            color: grey;
+        }
+
+        .play-btn-container:active {
+            box-shadow: inset -10px -10px 10px rgba(255, 255, 255, 0.6),
+            inset 10px 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .play-btn-container:active .game-play-btn-text {
+            color: #721efa;
+        }
+
+    </style>
+    <script src="index.ts" type="module"></script>
+</head>
+<body>
+<div class="game-container">
+    <canvas id="game"></canvas>
+</div>
+<div id="game-play-container">
+    <div id="game-play-btn" class="play-btn-container">
+        <span class="game-play-btn-text">Play</span>
+    </div>
+</div>
+</body>
 </html>
