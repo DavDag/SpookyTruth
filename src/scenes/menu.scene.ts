@@ -1,33 +1,47 @@
-import {
-    Color,
-    Engine,
-    Font,
-    ImageFiltering,
-    Label,
-    Scene,
-    Vector,
-} from 'excalibur'
+import { Color, Engine, Font, Label, Scene, TextAlign, Vector } from 'excalibur'
 import { MyApp } from '../app'
 
 export class MenuScene extends Scene {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        const label = new Label({
-            pos: Vector.Zero,
+        const start = new Label({
+            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight),
             color: Color.White,
-            text: 'Press Enter to start',
+            text: 'Start game',
             font: new Font({
                 family: 'Arial',
                 size: 20,
-                filtering: ImageFiltering.Blended,
-                smoothing: true,
-                quality: 2,
+                textAlign: TextAlign.Center,
             }),
         })
-        label.on('pointerup', () => {
-            MyApp.GoToGameScene()
+        start.on('pointerup', () => MyApp.StartGame())
+        this.add(start)
+
+        const options = new Label({
+            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight + 20),
+            color: Color.White,
+            text: 'Options',
+            font: new Font({
+                family: 'Arial',
+                size: 20,
+                textAlign: TextAlign.Center,
+            }),
         })
-        this.add(label)
+        options.on('pointerup', () => MyApp.Options())
+        this.add(options)
+
+        const credits = new Label({
+            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight + 40),
+            color: Color.White,
+            text: 'Credits',
+            font: new Font({
+                family: 'Arial',
+                size: 20,
+                textAlign: TextAlign.Center,
+            }),
+        })
+        credits.on('pointerup', () => MyApp.Credits())
+        this.add(credits)
     }
 }

@@ -1,29 +1,19 @@
-import {
-    Color,
-    Engine,
-    Font,
-    ImageFiltering,
-    Label,
-    Scene,
-    Vector,
-} from 'excalibur'
+import { Color, Engine, Font, Label, Scene, TextAlign, Vector } from 'excalibur'
 
 export class PauseScene extends Scene {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        const label = new Label({
-            pos: Vector.Zero,
+        const resume = new Label({
+            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight),
             color: Color.White,
             text: 'Press ESC to resume game',
             font: new Font({
                 family: 'Arial',
                 size: 20,
-                filtering: ImageFiltering.Blended,
-                smoothing: true,
-                quality: 2,
+                textAlign: TextAlign.Center,
             }),
         })
-        this.add(label)
+        this.add(resume)
     }
 }

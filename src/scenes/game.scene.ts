@@ -2,11 +2,14 @@ import {
     Color,
     Engine,
     Font,
-    ImageFiltering,
     Label,
     Scene,
+    TextAlign,
+    Timer,
     Vector,
 } from 'excalibur'
+
+import { MyApp } from '../app'
 
 export class GameScene extends Scene {
     public pauseable = true
@@ -14,18 +17,30 @@ export class GameScene extends Scene {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        const label = new Label({
-            pos: Vector.Zero,
+        const game = new Label({
+            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight),
             color: Color.White,
-            text: 'Game running...',
+            text: 'Game running: 0/3s',
             font: new Font({
                 family: 'Arial',
                 size: 20,
-                filtering: ImageFiltering.Blended,
-                smoothing: true,
-                quality: 2,
+                textAlign: TextAlign.Center,
             }),
         })
-        this.add(label)
+        this.add(game)
+
+        const timer = new Timer({
+            interval: 1000,
+            fcn: () => {
+                game.text = `Game running: ${timer.timesRepeated + 1}/3s`
+                if (timer.timesRepeated + 1 == 3) {
+                    MyApp.GameOver()
+                }
+            },
+            repeats: true,
+            numberOfRepeats: 3,
+        })
+        this.add(timer)
+        timer.start()
     }
 }

@@ -15,7 +15,7 @@
     alt="itch jam page" />
 </a>
 
-<a href="">
+<a href="https://davdag.github.io/template-excaliburjs/">
   <img src="https://github.com/user-attachments/assets/865cf62a-7d87-478d-8a61-1b796e26b168"
     width="33px"
     alt="game link" />

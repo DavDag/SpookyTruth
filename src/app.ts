@@ -1,10 +1,12 @@
 import { Engine, Keys, Loader } from 'excalibur'
 import { Resources } from './assets/resources'
 import { EngineConfigs } from './configs'
-import { MenuScene } from './scenes/menu.scene'
-import { GameOverScene } from './scenes/gameover.scene'
-import { PauseScene } from './scenes/pause.scene'
+import { CreditsScene } from './scenes/credits.scene'
 import { GameScene } from './scenes/game.scene'
+import { GameOverScene } from './scenes/gameover.scene'
+import { MenuScene } from './scenes/menu.scene'
+import { OptionsScene } from './scenes/options.scene'
+import { PauseScene } from './scenes/pause.scene'
 
 class App {
     private loader: Loader
@@ -28,6 +30,18 @@ class App {
         this.engine.screen.applyResolutionAndViewport()
     }
 
+    public StartGame() {
+        void this.engine.goToScene('game')
+    }
+
+    public Credits() {
+        void this.engine.goToScene('credits')
+    }
+
+    public Options() {
+        void this.engine.goToScene('options')
+    }
+
     public Pause() {
         if ((this.engine.currentScene as any)?.pauseable === true) {
             this.pausedScene = this.engine.currentSceneName
@@ -40,8 +54,20 @@ class App {
         this.pausedScene = undefined
     }
 
-    public GoToGameScene() {
+    public GameOver() {
+        this.engine.goToScene('gameover').then(() => {
+            // Remove & Re-Add the game scene to reset it
+            this.engine.removeScene('game')
+            this.engine.add('game', new GameScene())
+        })
+    }
+
+    public RestartGame() {
         void this.engine.goToScene('game')
+    }
+
+    public BackToMenu() {
+        void this.engine.goToScene('menu')
     }
 
     private AddResources() {
@@ -67,9 +93,11 @@ class App {
 
     private AddScenes() {
         this.engine.add('menu', new MenuScene())
+        this.engine.add('game', new GameScene())
+        this.engine.add('credits', new CreditsScene())
+        this.engine.add('options', new OptionsScene())
         this.engine.add('pause', new PauseScene())
         this.engine.add('gameover', new GameOverScene())
-        this.engine.add('game', new GameScene())
     }
 
     private AddListeners() {

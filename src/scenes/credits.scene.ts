@@ -1,46 +1,33 @@
 import { Color, Engine, Font, Label, Scene, TextAlign, Vector } from 'excalibur'
 import { MyApp } from '../app'
 
-export class GameOverScene extends Scene {
+export class CreditsScene extends Scene {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        const gameover = new Label({
+        const label = new Label({
             pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight - 100),
             color: Color.White,
-            text: 'Game over :(',
+            text: 'Credits',
             font: new Font({
                 family: 'Arial',
                 size: 20,
                 textAlign: TextAlign.Center,
             }),
         })
-        this.add(gameover)
+        this.add(label)
 
         const menu = new Label({
-            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight),
+            pos: Vector.Zero,
             color: Color.White,
-            text: 'Go to menu',
+            text: 'back to menu',
             font: new Font({
                 family: 'Arial',
                 size: 20,
-                textAlign: TextAlign.Center,
+                quality: 2,
             }),
         })
         menu.on('pointerup', () => MyApp.BackToMenu())
         this.add(menu)
-
-        const restart = new Label({
-            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight + 50),
-            color: Color.White,
-            text: 'Restart',
-            font: new Font({
-                family: 'Arial',
-                size: 20,
-                textAlign: TextAlign.Center,
-            }),
-        })
-        restart.on('pointerup', () => MyApp.RestartGame())
-        this.add(restart)
     }
 }
