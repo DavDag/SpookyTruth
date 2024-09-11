@@ -35,4 +35,3 @@ Clone the repo and install node v20.
 
 Install dependencies `npm install`<br>
 Run locally `npm run start:dev`<br>
-
