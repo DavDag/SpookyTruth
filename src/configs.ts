@@ -1,7 +1,9 @@
-import {Color} from "excalibur";
+import {Color, DisplayMode, Resolution} from "excalibur";
 
-export const Configs = {
-    WindowWidth: 800,
-    WindowHeight: 600,
-    BackgroundColor: Color.ExcaliburBlue,
-};
+export class EngineConfigs {
+    static GameResolution: Resolution = {width: 800, height: 600};
+    static DisplayMode: DisplayMode = DisplayMode.FitContainer;
+    static BackgroundColor: Color = Color.ExcaliburBlue;
+    static PixelArt: boolean = true;
+    static FixedUpdateFps: number = 60;
+}

@@ -3,42 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuadRush</title>
+    <title>Game Title</title>
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0"/>
-    <script src="index.ts" type="module"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0"/>
     <style>
         html, body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
             display: flex;
-            justify-content: center;
             align-items: center;
-        }
-
-        .game-container {
-            position: relative;
-            width: 800px !important;
-            height: 600px !important;
-        }
-
-        .game-container canvas {
-            width: 100%;
-            height: 100%;
+            justify-content: center;
+            background-color: black;
         }
     </style>
+    <script src="index.ts" type="module"></script>
 </head>
 <body>
-<div class="game-container">
-    <canvas id="game"></canvas>
-</div>
+<canvas id="game"></canvas>
 </body>
 </html>
