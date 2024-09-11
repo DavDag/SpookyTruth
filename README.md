@@ -1,34 +1,38 @@
-# TheFloorIsLava
+![](https://github.com/DavDag/template-excaliburjs/actions/workflows/deploy_site.yml/badge.svg)
+![](http://img.shields.io/badge/node-20.x.x-brightgreen.svg)
+
+# GameTitle
 
 <a href="">
-  <img src="https://github.com/user-attachments/assets/259eb251-38ed-4a30-b65f-3e061338ab80" width="30px" alt="itch.io" />
+  <img src="https://github.com/user-attachments/assets/259eb251-38ed-4a30-b65f-3e061338ab80"
+    width="30px"
+    alt="itch page" />
 </a>
 
 <a href="">
-  <img src="https://scorespace.net/wp-content/uploads/2021/12/SS_LOGO_MAIN-mobile.png" width="50px" alt="scorespace.net" />
+  <img src=""
+    width="50px"
+    alt="itch jam page" />
 </a>
 
 <a href="">
-  <img src="https://github.com/user-attachments/assets/865cf62a-7d87-478d-8a61-1b796e26b168" width="33px" alt="play" />
+  <img src="https://github.com/user-attachments/assets/865cf62a-7d87-478d-8a61-1b796e26b168"
+    width="33px"
+    alt="game link" />
 </a>
 <br>
 
-Submission to the _xyz_.
+Submission to _xyz_.
+Uses the [Excalibur.js](https://excaliburjs.com/) game engine.
 
 ## Gameplay
 
-todo
+(screenshots)
 
 ## Local dev
 
-Clone the repo and install node v20.<br>
+Clone the repo and install node v20.
 
-Intall dependencies
-```
-npm install
-```
+Install dependencies `npm install`<br>
+Run locally `npm run start:dev`<br>
 
-To run it locally
-```
-npm run start:dev
-```
