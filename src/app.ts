@@ -7,18 +7,22 @@ import { GameOverScene } from './scenes/gameover.scene'
 import { MenuScene } from './scenes/menu.scene'
 import { OptionsScene } from './scenes/options.scene'
 import { PauseScene } from './scenes/pause.scene'
+import { GameBoyPostProcessor, Palette } from './postprocessors/gameboy_pp'
 
 class App {
+
     private loader: Loader
     private engine: Engine
 
     private pausedScene?: string
+    private gbpp: GameBoyPostProcessor
 
     public Initialize() {
         this.AddResources()
         this.CreateEngine()
         this.AddScenes()
         this.AddListeners()
+        this.AddPostProcessors()
     }
 
     public Start() {
@@ -68,6 +72,10 @@ class App {
 
     public BackToMenu() {
         void this.engine.goToScene('menu')
+    }
+
+    public SetPalette(p: Palette) {
+        this.gbpp.setPalette(p)
     }
 
     private AddResources() {
@@ -124,6 +132,11 @@ class App {
                 this.engine.toggleDebug()
             }
         })
+    }
+
+    private AddPostProcessors() {
+        this.gbpp = new GameBoyPostProcessor()
+        this.engine.graphicsContext.addPostProcessor(this.gbpp)
     }
 }
 
