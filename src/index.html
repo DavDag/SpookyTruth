@@ -20,25 +20,7 @@
             font-family: 'Comic Sans MS', monospace;
         }
 
-        .game-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            aspect-ratio: 438 / 720;
-            background-image: url("./assets/image/gameboy.png");
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-
-        #game {
-            position: absolute;
-            top: 90px;
-            left: 90px;
-        }
-
-        #game-play-container {
+        #custom-start-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -52,45 +34,18 @@
             user-select: none;
         }
 
-        .play-btn-container {
-            display: none;
-            place-items: center;
-            cursor: pointer;
-            padding: 4rem;
-            background: #efeeee;
-            border-radius: 50%;
-            transition: all 0.3s ease-in;
-            box-shadow: -10px -10px 10px rgba(255, 255, 255, 0.6),
-            10px 10px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .play-btn-container .game-play-btn-text {
-            display: grid;
-            place-items: center;
-            font-size: 4rem;
-            color: grey;
-        }
-
-        .play-btn-container:active {
-            box-shadow: inset -10px -10px 10px rgba(255, 255, 255, 0.6),
-            inset 10px 10px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .play-btn-container:active .game-play-btn-text {
-            color: #721efa;
+        #custom-start-overlay-play-btn {
         }
 
     </style>
     <script src="index.ts" type="module"></script>
 </head>
 <body>
-<div class="game-container">
-    <canvas id="game"></canvas>
-</div>
-<div id="game-play-container">
-    <div id="game-play-btn" class="play-btn-container">
-        <span class="game-play-btn-text">Play</span>
-    </div>
+<canvas id="game"></canvas>
+<div id="custom-start-overlay">
+    <button id="custom-start-overlay-play-btn">
+        Play
+    </button>
 </div>
 </body>
 </html>

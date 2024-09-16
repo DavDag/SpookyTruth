@@ -1,16 +1,15 @@
 import { Engine, ImageFiltering, Keys, Loader } from 'excalibur'
 import { Resources } from './assets/resources'
 import { EngineConfigs } from './configs'
+import { GameBoyPostProcessor, Palette } from './postprocessors/gameboy_pp'
 import { CreditsScene } from './scenes/credits.scene'
 import { GameScene } from './scenes/game.scene'
 import { GameOverScene } from './scenes/gameover.scene'
 import { MenuScene } from './scenes/menu.scene'
 import { OptionsScene } from './scenes/options.scene'
 import { PauseScene } from './scenes/pause.scene'
-import { GameBoyPostProcessor, Palette } from './postprocessors/gameboy_pp'
 
 class App {
-
     private loader: Loader
     private engine: Engine
 
@@ -26,7 +25,9 @@ class App {
     }
 
     public Start() {
-        void this.engine.start(this.loader).then(() => this.engine.goToScene('menu'))
+        void this.engine
+            .start(this.loader)
+            .then(() => this.engine.goToScene('menu'))
     }
 
     public Resize(w: number, h: number) {
@@ -81,10 +82,10 @@ class App {
     private AddResources() {
         this.loader = new Loader()
         Object.values(Resources.image).forEach(
-            this.loader.addResource.bind(this.loader),
+            this.loader.addResource.bind(this.loader)
         )
         Object.values(Resources.music).forEach(
-            this.loader.addResource.bind(this.loader),
+            this.loader.addResource.bind(this.loader)
         )
     }
 

@@ -11,11 +11,12 @@ window.addEventListener('load', () => {
 
 const obs = new MutationObserver(() => {
     const btn = document.getElementById('excalibur-play')
-    document.getElementById('game-play-btn').style.display = (!!btn) ? 'grid' : 'none'
+    document.getElementById('custom-start-overlay-play-btn').style.display =
+        !!btn ? 'grid' : 'none'
 })
 
 obs.observe(document.body, { childList: true })
-document.getElementById('game-play-btn').onclick = () => {
+document.getElementById('custom-start-overlay-play-btn').onclick = () => {
     document.getElementById('excalibur-play').click()
-    document.getElementById('game-play-container').style.display = 'none'
+    document.getElementById('custom-start-overlay').style.display = 'none'
 }
