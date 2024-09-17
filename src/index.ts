@@ -5,10 +5,6 @@ window.addEventListener('load', () => {
     MyApp.Start()
 })
 
-// window.addEventListener('resize', () => {
-//     MyApp.Resize(window.innerWidth, window.innerHeight)
-// })
-
 const obs = new MutationObserver(() => {
     const btn = document.getElementById('excalibur-play')
     document.getElementById('custom-start-overlay-play-btn').style.display =

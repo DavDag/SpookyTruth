@@ -1,7 +1,7 @@
-import { Engine, ImageFiltering, Keys, Loader } from 'excalibur'
+import { Engine, Keys, Loader } from 'excalibur'
 import { Resources } from './assets/resources'
 import { EngineConfigs } from './configs'
-import { GameBoyPostProcessor, Palette } from './postprocessors/gameboy_pp'
+import { GameBoyPostProcessor } from './postprocessors/gameboy_pp'
 import { CreditsScene } from './scenes/credits.scene'
 import { GameScene } from './scenes/game.scene'
 import { GameOverScene } from './scenes/gameover.scene'
@@ -28,11 +28,6 @@ class App {
         void this.engine
             .start(this.loader)
             .then(() => this.engine.goToScene('menu'))
-    }
-
-    public Resize(w: number, h: number) {
-        this.engine.screen.viewport = { width: w, height: h }
-        this.engine.screen.applyResolutionAndViewport()
     }
 
     public StartGame() {
@@ -75,16 +70,15 @@ class App {
         void this.engine.goToScene('menu')
     }
 
-    public SetPalette(p: Palette) {
-        this.gbpp.setPalette(p)
-    }
-
     private AddResources() {
         this.loader = new Loader()
         Object.values(Resources.image).forEach(
             this.loader.addResource.bind(this.loader)
         )
         Object.values(Resources.music).forEach(
+            this.loader.addResource.bind(this.loader)
+        )
+        Object.values(Resources.font).forEach(
             this.loader.addResource.bind(this.loader)
         )
     }
@@ -97,13 +91,14 @@ class App {
             displayMode: EngineConfigs.DisplayMode,
             backgroundColor: EngineConfigs.BackgroundColor,
             fixedUpdateFps: EngineConfigs.FixedUpdateFps,
-            antialiasing: {
-                nativeContextAntialiasing: false,
-                pixelArtSampler: false,
-                filtering: ImageFiltering.Pixel,
-                multiSampleAntialiasing: false,
-                canvasImageRendering: 'pixelated',
-            },
+            antialiasing: false,
+            pixelRatio: 1,
+            suppressHiDPIScaling: true,
+        })
+
+        this.engine.on('start', () => {
+            this.engine.screen.pixelRatioOverride = 1
+            this.engine.screen.applyResolutionAndViewport()
         })
     }
 
@@ -131,6 +126,7 @@ class App {
             // P to toggle debug mode
             if (evt.key === Keys.P) {
                 this.engine.toggleDebug()
+                this.gbpp.toggleDebugPalette()
             }
         })
     }

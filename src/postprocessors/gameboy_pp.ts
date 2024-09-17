@@ -6,10 +6,11 @@ import {
     VertexLayout,
 } from 'excalibur'
 
-export type Palette = [Color, Color, Color, Color]
+type Palette = [Color, Color, Color, Color]
 
 // https://lospec.com/palette-list
-export const PALETTES: { [key: string]: Palette } = {
+const PALETTES: { [key: string]: Palette } = {
+    debug: [Color.Red, Color.Blue, Color.Green, Color.White],
     kirokaze: [
         Color.fromHex('#332c50'),
         Color.fromHex('#46878f'),
@@ -36,10 +37,13 @@ export const PALETTES: { [key: string]: Palette } = {
     ],
 }
 
+export type PaletteName = keyof typeof PALETTES
+
 export class GameBoyPostProcessor implements PostProcessor {
     private _shader: ScreenShader
     private _isPaletteChangeRequired: boolean = true
-    private _palette: Palette = PALETTES['kirokaze']
+    private _palette: PaletteName = 'kirokaze'
+    private _showDebugPalette: boolean = false
 
     initialize(gl: WebGL2RenderingContext) {
         this._shader = new ScreenShader(
@@ -67,22 +71,24 @@ void main() {
             this._isPaletteChangeRequired = false
 
             // Update palette
+            const p =
+                PALETTES[!this._showDebugPalette ? this._palette : 'debug']
             this._shader.getShader().use()
             this._shader
                 .getShader()
                 .setUniform('uniform3fv', 'u_palette', [
-                    this._palette[0].r / 255.0,
-                    this._palette[0].g / 255.0,
-                    this._palette[0].b / 255.0,
-                    this._palette[1].r / 255.0,
-                    this._palette[1].g / 255.0,
-                    this._palette[1].b / 255.0,
-                    this._palette[2].r / 255.0,
-                    this._palette[2].g / 255.0,
-                    this._palette[2].b / 255.0,
-                    this._palette[3].r / 255.0,
-                    this._palette[3].g / 255.0,
-                    this._palette[3].b / 255.0,
+                    p[0].r / 255.0,
+                    p[0].g / 255.0,
+                    p[0].b / 255.0,
+                    p[1].r / 255.0,
+                    p[1].g / 255.0,
+                    p[1].b / 255.0,
+                    p[2].r / 255.0,
+                    p[2].g / 255.0,
+                    p[2].b / 255.0,
+                    p[3].r / 255.0,
+                    p[3].g / 255.0,
+                    p[3].b / 255.0,
                 ])
         }
     }
@@ -95,7 +101,12 @@ void main() {
         return this._shader.getShader()
     }
 
-    public setPalette(palette: Palette) {
+    public toggleDebugPalette() {
+        this._isPaletteChangeRequired = true
+        this._showDebugPalette = !this._showDebugPalette
+    }
+
+    public setPalette(palette: PaletteName) {
         this._isPaletteChangeRequired = true
         this._palette = palette
     }
