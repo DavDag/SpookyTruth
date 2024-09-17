@@ -11,6 +11,7 @@ import {
 import { MyApp } from '../app'
 import { Resources } from '../assets/resources'
 import { MyInputs } from '../utils/input_handling'
+import { MySounds } from '../utils/sound_handling'
 
 export class MenuScene extends Scene {
     private selected = 0
@@ -113,6 +114,9 @@ export class MenuScene extends Scene {
             this.menuItems[this.selected].actions.repeatForever((ctx) => {
                 ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
             })
+
+            // Play sound
+            MySounds.PlayMenuInteraction()
         }
 
         // Handle selection
