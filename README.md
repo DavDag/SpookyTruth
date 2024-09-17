@@ -13,9 +13,9 @@
     alt="itch page" />
 </a>
 
-<a href="">
-  <img src=""
-    width="50px"
+<a href="https://itch.io/jam/gbjam-12">
+  <img src="https://img.itch.zone/aW1nLzE3NzE1OTk4LmdpZg==/original/25ZRhS.gif"
+    width="36px"
     alt="itch jam page" />
 </a>
 
@@ -26,7 +26,7 @@
 </a>
 <br>
 
-Submission to _xyz_.
+Submission to _GBJAM #12_.<br>
 Uses the [Excalibur.js](https://excaliburjs.com/) game engine.
 
 ## Gameplay

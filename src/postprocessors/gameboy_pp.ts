@@ -9,7 +9,7 @@ import {
 type Palette = [Color, Color, Color, Color]
 
 // https://lospec.com/palette-list
-const PALETTES: { [key: string]: Palette } = {
+const PALETTES = {
     debug: [Color.Red, Color.Blue, Color.Green, Color.White],
     kirokaze: [
         Color.fromHex('#332c50'),
@@ -109,5 +109,19 @@ void main() {
     public setPalette(palette: PaletteName) {
         this._isPaletteChangeRequired = true
         this._palette = palette
+    }
+
+    public nextPalette() {
+        const keys = Object.keys(PALETTES)
+        const index = keys.indexOf(this._palette)
+        const next = (index + 1) % keys.length
+        this.setPalette(keys[next] as PaletteName)
+    }
+
+    public prevPalette() {
+        const keys = Object.keys(PALETTES)
+        const index = keys.indexOf(this._palette)
+        const prev = (index - 1 + keys.length) % keys.length
+        this.setPalette(keys[prev] as PaletteName)
     }
 }

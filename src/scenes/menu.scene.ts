@@ -1,28 +1,131 @@
-import { Actor, Color, Engine, Scene, Sprite, Vector } from 'excalibur'
+import {
+    Actor,
+    BaseAlign,
+    Color,
+    Engine,
+    Label,
+    Scene,
+    TextAlign,
+    Vector,
+} from 'excalibur'
+import { MyApp } from '../app'
 import { Resources } from '../assets/resources'
+import { MyInputs } from '../utils/input_handling'
 
 export class MenuScene extends Scene {
+    private selected = 0
+    private selector: Actor
+    private menuItems: Label[] = []
+
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        const bg = new Actor({
-            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight),
-            width: engine.drawWidth,
-            height: engine.drawHeight,
-            color: Color.Violet,
+        // Title
+        const title = new Label({
+            text: 'Spooky Truth',
+            pos: new Vector(engine.drawWidth / 2, 30),
+            color: Color.White,
+            font: Resources.font.main.toFont({
+                size: 24,
+                textAlign: TextAlign.Center,
+                baseAlign: BaseAlign.Middle,
+            }),
         })
-        bg.graphics.use(Sprite.from(Resources.image.checkboard))
-        this.add(bg)
+        this.add(title)
 
-        // const lbl = new Label({
-        //     text: 'play game',
-        //     x: engine.halfDrawWidth,
-        //     y: engine.halfDrawHeight,
-        //     font: Resources.font.main.toFont({
-        //         textAlign: TextAlign.Center,
-        //     }),
-        // })
-        //
-        // this.add(lbl)
+        // Menu items
+        const play = new Label({
+            text: 'play',
+            pos: new Vector(80, 80),
+            color: Color.White,
+            font: Resources.font.main.toFont({
+                textAlign: TextAlign.Center,
+                baseAlign: BaseAlign.Middle,
+            }),
+        })
+        this.add(play)
+        this.menuItems.push(play)
+        const options = new Label({
+            text: 'options',
+            pos: new Vector(80, 100),
+            color: Color.White,
+            font: Resources.font.main.toFont({
+                textAlign: TextAlign.Center,
+                baseAlign: BaseAlign.Middle,
+            }),
+        })
+        this.add(options)
+        this.menuItems.push(options)
+        const credits = new Label({
+            text: 'credits',
+            pos: new Vector(80, 120),
+            color: Color.White,
+            font: Resources.font.main.toFont({
+                textAlign: TextAlign.Center,
+                baseAlign: BaseAlign.Middle,
+            }),
+        })
+        this.add(credits)
+        this.menuItems.push(credits)
+
+        // Selector
+        this.selector = new Label({
+            text: '>',
+            pos: Vector.Zero,
+            color: Color.White,
+            font: Resources.font.main.toFont({
+                textAlign: TextAlign.Center,
+                baseAlign: BaseAlign.Middle,
+            }),
+            offset: new Vector(-40, 0),
+        })
+        this.add(this.selector)
+
+        // Update selector position
+        this.selector.pos = this.menuItems[this.selected].pos.clone()
+    }
+
+    onPreUpdate(engine: Engine, delta: number) {
+        super.onPreUpdate(engine, delta)
+
+        // Move the selection up and down
+        let newSelected = this.selected
+        if (MyInputs.IsPadDownPressed(engine)) {
+            newSelected++
+            if (newSelected > 2) {
+                newSelected = 0
+            }
+        }
+        if (MyInputs.IsPadUpPressed(engine)) {
+            newSelected--
+            if (newSelected < 0) {
+                newSelected = 2
+            }
+        }
+        if (newSelected !== this.selected) {
+            // Reset previous selection
+            this.menuItems[this.selected].scale.setTo(1, 1)
+            this.menuItems[this.selected].actions.clearActions()
+
+            // Update selection
+            this.selected = newSelected
+            this.selector.pos = this.menuItems[this.selected].pos.clone()
+            this.menuItems[this.selected].actions.repeatForever((ctx) => {
+                ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
+            })
+        }
+
+        // Handle selection
+        if (MyInputs.IsButtonAPressed(engine)) {
+            if (this.selected === 0) {
+                MyApp.StartGame()
+            }
+            if (this.selected === 1) {
+                MyApp.Options()
+            }
+            if (this.selected === 2) {
+                MyApp.Credits()
+            }
+        }
     }
 }

@@ -128,6 +128,14 @@ class App {
                 this.engine.toggleDebug()
                 this.gbpp.toggleDebugPalette()
             }
+
+            // 9 & 0 to increase & decrease the palette index
+            if (evt.key === Keys.Digit9) {
+                this.gbpp.nextPalette()
+            }
+            if (evt.key === Keys.Digit0) {
+                this.gbpp.prevPalette()
+            }
         })
     }
 
