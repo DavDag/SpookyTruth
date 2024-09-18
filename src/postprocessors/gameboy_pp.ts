@@ -45,6 +45,11 @@ export class GameBoyPostProcessor implements PostProcessor {
     private _palette: PaletteName = 'kirokaze'
     private _showDebugPalette: boolean = false
 
+    constructor() {
+        this._palette =
+            (localStorage.getItem('palette') as PaletteName) ?? 'kirokaze'
+    }
+
     initialize(gl: WebGL2RenderingContext) {
         this._shader = new ScreenShader(
             gl,
@@ -101,6 +106,10 @@ void main() {
         return this._shader.getShader()
     }
 
+    public getPalette() {
+        return `#${Object.keys(PALETTES).indexOf(this._palette)}`
+    }
+
     public toggleDebugPalette() {
         this._isPaletteChangeRequired = true
         this._showDebugPalette = !this._showDebugPalette
@@ -112,16 +121,18 @@ void main() {
     }
 
     public nextPalette() {
-        const keys = Object.keys(PALETTES)
+        const keys = Object.keys(PALETTES).filter((k) => k !== 'debug')
         const index = keys.indexOf(this._palette)
         const next = (index + 1) % keys.length
         this.setPalette(keys[next] as PaletteName)
+        localStorage.setItem('palette', this._palette)
     }
 
     public prevPalette() {
-        const keys = Object.keys(PALETTES)
+        const keys = Object.keys(PALETTES).filter((k) => k !== 'debug')
         const index = keys.indexOf(this._palette)
         const prev = (index - 1 + keys.length) % keys.length
         this.setPalette(keys[prev] as PaletteName)
+        localStorage.setItem('palette', this._palette)
     }
 }

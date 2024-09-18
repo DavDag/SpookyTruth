@@ -27,7 +27,7 @@ class App {
     public Start() {
         void this.engine
             .start(this.loader)
-            .then(() => this.engine.goToScene('menu'))
+            .then(() => this.engine.goToScene('credits'))
     }
 
     public StartGame() {
@@ -68,6 +68,18 @@ class App {
 
     public BackToMenu() {
         void this.engine.goToScene('menu')
+    }
+
+    public get Palette() {
+        return this.gbpp.getPalette()
+    }
+
+    public NextPalette() {
+        this.gbpp.nextPalette()
+    }
+
+    public PrevPalette() {
+        this.gbpp.prevPalette()
     }
 
     private AddResources() {
@@ -127,14 +139,6 @@ class App {
             if (evt.key === Keys.P) {
                 this.engine.toggleDebug()
                 this.gbpp.toggleDebugPalette()
-            }
-
-            // 9 & 0 to increase & decrease the palette index
-            if (evt.key === Keys.Digit9) {
-                this.gbpp.nextPalette()
-            }
-            if (evt.key === Keys.Digit0) {
-                this.gbpp.prevPalette()
             }
         })
     }

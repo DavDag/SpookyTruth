@@ -1,7 +1,6 @@
 import {
     Actor,
     BaseAlign,
-    Color,
     Engine,
     Label,
     Scene,
@@ -25,7 +24,6 @@ export class MenuScene extends Scene {
         const title = new Label({
             text: 'Spooky Truth',
             pos: new Vector(engine.drawWidth / 2, 30),
-            color: Color.White,
             font: Resources.font.main.toFont({
                 size: 24,
                 textAlign: TextAlign.Center,
@@ -38,7 +36,6 @@ export class MenuScene extends Scene {
         const play = new Label({
             text: 'play',
             pos: new Vector(80, 80),
-            color: Color.White,
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -49,7 +46,6 @@ export class MenuScene extends Scene {
         const options = new Label({
             text: 'options',
             pos: new Vector(80, 100),
-            color: Color.White,
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -60,7 +56,6 @@ export class MenuScene extends Scene {
         const credits = new Label({
             text: 'credits',
             pos: new Vector(80, 120),
-            color: Color.White,
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -73,7 +68,6 @@ export class MenuScene extends Scene {
         this.selector = new Label({
             text: '>',
             pos: Vector.Zero,
-            color: Color.White,
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -84,6 +78,9 @@ export class MenuScene extends Scene {
 
         // Update selector position
         this.selector.pos = this.menuItems[this.selected].pos.clone()
+        this.menuItems[this.selected].actions.repeatForever((ctx) => {
+            ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
+        })
     }
 
     onPreUpdate(engine: Engine, delta: number) {

@@ -1,33 +1,50 @@
-import { Color, Engine, Font, Label, Scene, TextAlign, Vector } from 'excalibur'
+import {
+    Engine,
+    Label,
+    Scene,
+    SceneActivationContext,
+    TextAlign,
+    Vector,
+} from 'excalibur'
 import { MyApp } from '../app'
+import { Resources } from '../assets/resources'
+import { MyInputs } from '../utils/input_handling'
 
 export class CreditsScene extends Scene {
+    private text: Label
+
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        const label = new Label({
-            pos: new Vector(engine.halfDrawWidth, engine.halfDrawHeight - 100),
-            color: Color.White,
-            text: 'Credits',
-            font: new Font({
-                family: 'Arial',
+        this.text = new Label({
+            text:
+                'Programming by\n\nDavide Risaliti\n\n\n' +
+                'Art by\n\nDavide Risaliti\nIrene Costagli\n\n\n' +
+                'Music by\n\nIrene Costagli\n\n\n' +
+                '\n' +
+                'Thanks for\nplaying!',
+            pos: Vector.Zero,
+            font: Resources.font.main.toFont({
                 size: 20,
                 textAlign: TextAlign.Center,
             }),
         })
-        this.add(label)
+        this.add(this.text)
+    }
 
-        const menu = new Label({
-            pos: Vector.Zero,
-            color: Color.White,
-            text: 'back to menu',
-            font: new Font({
-                family: 'Arial',
-                size: 20,
-                quality: 2,
-            }),
-        })
-        menu.on('pointerup', () => MyApp.BackToMenu())
-        this.add(menu)
+    onActivate(context: SceneActivationContext<unknown>) {
+        super.onActivate(context)
+
+        this.text.actions.clearActions()
+        this.text.pos = new Vector(80, 140)
+        this.text.actions.moveBy(0, -480, 25)
+    }
+
+    onPreUpdate(engine: Engine, delta: number) {
+        super.onPreUpdate(engine, delta)
+
+        if (MyInputs.IsButtonBPressed(engine)) {
+            MyApp.BackToMenu()
+        }
     }
 }
