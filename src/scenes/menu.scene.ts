@@ -22,7 +22,7 @@ export class MenuScene extends Scene {
         // Title
         const title = new Label({
             text: 'Spooky Truth',
-            pos: new Vector(engine.drawWidth / 2, 30),
+            pos: new Vector(80, 30),
             font: Resources.font.main.toFont({
                 size: 24,
                 textAlign: TextAlign.Center,

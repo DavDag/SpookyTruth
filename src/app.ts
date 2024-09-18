@@ -4,7 +4,6 @@ import { EngineConfigs } from './configs'
 import { GameBoyPostProcessor } from './postprocessors/gameboy_pp'
 import { CreditsScene } from './scenes/credits.scene'
 import { GameScene } from './scenes/game.scene'
-import { GameOverScene } from './scenes/gameover.scene'
 import { MenuScene } from './scenes/menu.scene'
 import { OptionsScene } from './scenes/options.scene'
 import { PauseScene } from './scenes/pause.scene'
@@ -90,7 +89,6 @@ class App {
         this.engine.add('credits', new CreditsScene())
         this.engine.add('options', new OptionsScene())
         this.engine.add('pause', new PauseScene())
-        this.engine.add('gameover', new GameOverScene())
     }
 
     private AddListeners() {

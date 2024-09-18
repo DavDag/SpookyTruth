@@ -1,5 +1,6 @@
 import { Engine, Scene, SceneActivationContext } from 'excalibur'
 import { MyStorage } from '../utils/storage'
+import { IntroductionLevelScene } from './levels/introduction.level.scene'
 
 export class GameScene extends Scene {
     private level: number = 0
@@ -15,5 +16,12 @@ export class GameScene extends Scene {
         this.openLevel()
     }
 
-    private openLevel() {}
+    private openLevel() {
+        switch (this.level) {
+            case 0:
+                this.engine.addScene('level/0', new IntroductionLevelScene())
+                void this.engine.goToScene('level/0')
+                break
+        }
+    }
 }
