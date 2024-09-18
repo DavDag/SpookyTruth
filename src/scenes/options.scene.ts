@@ -162,13 +162,13 @@ export class OptionsScene extends Scene {
                 MySounds.PlayMenuInteraction()
             }
             if (this.selected === 3) {
-                MyApp.BackToMenu()
                 MySounds.PlayMenuInteraction()
+                void this.engine.goToScene('menu')
             }
         }
         if (MyInputs.IsButtonBPressed(engine)) {
-            MyApp.BackToMenu()
             MySounds.PlayMenuInteraction()
+            void this.engine.goToScene('menu')
         }
     }
 }

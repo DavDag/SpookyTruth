@@ -7,7 +7,6 @@ import {
     TextAlign,
     Vector,
 } from 'excalibur'
-import { MyApp } from '../app'
 import { Resources } from '../assets/resources'
 import { MyInputs } from '../utils/input_handling'
 import { MySounds } from '../utils/sound_handling'
@@ -119,13 +118,13 @@ export class MenuScene extends Scene {
         // Handle selection
         if (MyInputs.IsButtonAPressed(engine)) {
             if (this.selected === 0) {
-                MyApp.StartGame()
+                void this.engine.goToScene('game')
             }
             if (this.selected === 1) {
-                MyApp.Options()
+                void this.engine.goToScene('options')
             }
             if (this.selected === 2) {
-                MyApp.Credits()
+                void this.engine.goToScene('credits')
             }
         }
     }

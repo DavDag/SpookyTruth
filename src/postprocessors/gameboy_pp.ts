@@ -5,6 +5,7 @@ import {
     Shader,
     VertexLayout,
 } from 'excalibur'
+import { MyStorage } from '../utils/storage'
 
 type Palette = [Color, Color, Color, Color]
 
@@ -46,8 +47,7 @@ export class GameBoyPostProcessor implements PostProcessor {
     private _showDebugPalette: boolean = false
 
     constructor() {
-        this._palette =
-            (localStorage.getItem('palette') as PaletteName) ?? 'kirokaze'
+        this._palette = MyStorage.Retrieve<PaletteName>('palette', 'kirokaze')
     }
 
     initialize(gl: WebGL2RenderingContext) {
@@ -125,7 +125,7 @@ void main() {
         const index = keys.indexOf(this._palette)
         const next = (index + 1) % keys.length
         this.setPalette(keys[next] as PaletteName)
-        localStorage.setItem('palette', this._palette)
+        MyStorage.Store('palette', this._palette)
     }
 
     public prevPalette() {
@@ -133,6 +133,6 @@ void main() {
         const index = keys.indexOf(this._palette)
         const prev = (index - 1 + keys.length) % keys.length
         this.setPalette(keys[prev] as PaletteName)
-        localStorage.setItem('palette', this._palette)
+        MyStorage.Store('palette', this._palette)
     }
 }

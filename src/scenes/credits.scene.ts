@@ -6,7 +6,6 @@ import {
     TextAlign,
     Vector,
 } from 'excalibur'
-import { MyApp } from '../app'
 import { Resources } from '../assets/resources'
 import { MyInputs } from '../utils/input_handling'
 
@@ -44,7 +43,7 @@ export class CreditsScene extends Scene {
         super.onPreUpdate(engine, delta)
 
         if (MyInputs.IsButtonBPressed(engine)) {
-            MyApp.BackToMenu()
+            void this.engine.goToScene('menu')
         }
     }
 }

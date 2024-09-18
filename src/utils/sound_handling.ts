@@ -1,18 +1,12 @@
-import { EngineConfigs } from '../configs'
+import { MyStorage } from './storage'
 
 class SoundHandling {
     private sfxVolume: number
     private musicVolume: number
 
     constructor() {
-        this.sfxVolume = parseFloat(
-            localStorage.getItem('sfxVolume') ??
-                EngineConfigs.StartingVolume.toString()
-        )
-        this.musicVolume = parseFloat(
-            localStorage.getItem('musicVolume') ??
-                EngineConfigs.StartingVolume.toString()
-        )
+        this.sfxVolume = MyStorage.Retrieve('sfxVolume', 0.5)
+        this.musicVolume = MyStorage.Retrieve('musicVolume', 0.5)
     }
 
     public get SfxVolume() {
@@ -32,7 +26,7 @@ class SoundHandling {
         if (this.sfxVolume > 1) {
             this.sfxVolume = 0
         }
-        localStorage.setItem('sfxVolume', this.sfxVolume.toString())
+        MyStorage.Store('sfxVolume', this.sfxVolume)
     }
 
     public DecreaseSfxVolume() {
@@ -40,7 +34,7 @@ class SoundHandling {
         if (this.sfxVolume < 0) {
             this.sfxVolume = 1.0
         }
-        localStorage.setItem('sfxVolume', this.sfxVolume.toString())
+        MyStorage.Store('sfxVolume', this.sfxVolume)
     }
 
     public IncreaseMusicVolume() {
@@ -48,7 +42,7 @@ class SoundHandling {
         if (this.musicVolume > 1) {
             this.musicVolume = 0
         }
-        localStorage.setItem('musicVolume', this.musicVolume.toString())
+        MyStorage.Store('musicVolume', this.musicVolume)
     }
 
     public DecreaseMusicVolume() {
@@ -56,7 +50,7 @@ class SoundHandling {
         if (this.musicVolume < 0) {
             this.musicVolume = 1.0
         }
-        localStorage.setItem('musicVolume', this.musicVolume.toString())
+        MyStorage.Store('musicVolume', this.musicVolume)
     }
 }
 

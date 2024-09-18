@@ -27,47 +27,17 @@ class App {
     public Start() {
         void this.engine
             .start(this.loader)
-            .then(() => this.engine.goToScene('credits'))
-    }
-
-    public StartGame() {
-        void this.engine.goToScene('game')
-    }
-
-    public Credits() {
-        void this.engine.goToScene('credits')
-    }
-
-    public Options() {
-        void this.engine.goToScene('options')
+            .then(() => this.engine.goToScene('game'))
     }
 
     public Pause() {
-        if ((this.engine.currentScene as any)?.pauseable === true) {
-            this.pausedScene = this.engine.currentSceneName
-            void this.engine.goToScene('pause')
-        }
+        this.pausedScene = this.engine.currentSceneName
+        void this.engine.goToScene('pause')
     }
 
     public Resume() {
         void this.engine.goToScene(this.pausedScene)
         this.pausedScene = undefined
-    }
-
-    public GameOver() {
-        this.engine.goToScene('gameover').then(() => {
-            // Remove & Re-Add the game scene to reset it
-            this.engine.removeScene('game')
-            this.engine.add('game', new GameScene())
-        })
-    }
-
-    public RestartGame() {
-        void this.engine.goToScene('game')
-    }
-
-    public BackToMenu() {
-        void this.engine.goToScene('menu')
     }
 
     public get Palette() {
@@ -126,15 +96,6 @@ class App {
     private AddListeners() {
         // Keyboard listeners
         this.engine.input.keyboard.on('down', (evt: any) => {
-            // Escape to pause the game
-            if (evt.key === Keys.Escape) {
-                if (this.pausedScene) {
-                    this.Resume()
-                } else {
-                    this.Pause()
-                }
-            }
-
             // P to toggle debug mode
             if (evt.key === Keys.P) {
                 this.engine.toggleDebug()

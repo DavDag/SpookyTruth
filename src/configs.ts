@@ -7,8 +7,6 @@ export class EngineConfigs {
     static BackgroundColor: Color = Color.Black
     static FixedUpdateFps: number = 60
 
-    static StartingVolume: number = 0.5
-
     static ButtonA: Keys[] = [Keys.J, Keys.Z]
     static ButtonB: Keys[] = [Keys.X, Keys.K]
     static ButtonStart: Keys[] = [Keys.Enter]
