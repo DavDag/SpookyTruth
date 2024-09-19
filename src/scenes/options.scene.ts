@@ -4,6 +4,7 @@ import {
     Engine,
     Label,
     Scene,
+    SceneActivationContext,
     TextAlign,
     Vector,
 } from 'excalibur'
@@ -12,7 +13,13 @@ import { Resources } from '../assets/resources'
 import { MyInputs } from '../utils/input_handling'
 import { MySounds } from '../utils/sound_handling'
 
+export interface OptionsSceneActivationCtx {
+    backScene: string
+}
+
 export class OptionsScene extends Scene {
+    private backScene: string
+
     private selected = 0
     private selector: Actor
     private menuItems: Label[] = []
@@ -113,6 +120,22 @@ export class OptionsScene extends Scene {
         })
     }
 
+    onActivate(context: SceneActivationContext<OptionsSceneActivationCtx>) {
+        super.onActivate(context)
+
+        // Update back scene
+        this.backScene = context.data?.backScene ?? this.backScene
+
+        // Update selector position
+        this.menuItems[this.selected].scale.setTo(1, 1)
+        this.menuItems[this.selected].actions.clearActions()
+        this.selected = 0
+        this.selector.pos = this.menuItems[this.selected].pos.clone()
+        this.menuItems[this.selected].actions.repeatForever((ctx) => {
+            ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
+        })
+    }
+
     onPreUpdate(engine: Engine, delta: number) {
         super.onPreUpdate(engine, delta)
 
@@ -144,31 +167,43 @@ export class OptionsScene extends Scene {
 
         // Handle selection
         if (MyInputs.IsButtonAPressed(engine)) {
-            if (this.selected === 0) {
-                MySounds.IncreaseSfxVolume()
-                this.menuItemsValues[this.selected].text =
-                    `${(MySounds.SfxVolume * 100).toFixed(0)}%`
-                MySounds.PlayMenuInteraction()
+            switch (this.selected) {
+                // Sfx
+                case 0:
+                    MySounds.IncreaseSfxVolume()
+                    this.menuItemsValues[this.selected].text =
+                        `${(MySounds.SfxVolume * 100).toFixed(0)}%`
+                    break
+
+                // Music
+                case 1:
+                    MySounds.IncreaseMusicVolume()
+                    this.menuItemsValues[this.selected].text =
+                        `${(MySounds.MusicVolume * 100).toFixed(0)}%`
+                    break
+
+                // Palette
+                case 2:
+                    MyApp.NextPalette()
+                    this.menuItemsValues[this.selected].text = MyApp.Palette
+                    break
+
+                // Back
+                case 3:
+                    void this.engine.goToScene(this.backScene)
+                    break
             }
-            if (this.selected === 1) {
-                MySounds.IncreaseMusicVolume()
-                this.menuItemsValues[this.selected].text =
-                    `${(MySounds.MusicVolume * 100).toFixed(0)}%`
-                MySounds.PlayMenuInteraction()
-            }
-            if (this.selected === 2) {
-                MyApp.NextPalette()
-                this.menuItemsValues[this.selected].text = MyApp.Palette
-                MySounds.PlayMenuInteraction()
-            }
-            if (this.selected === 3) {
-                MySounds.PlayMenuInteraction()
-                void this.engine.goToScene('menu')
-            }
-        }
-        if (MyInputs.IsButtonBPressed(engine)) {
+
+            // Play sound
             MySounds.PlayMenuInteraction()
-            void this.engine.goToScene('menu')
+        }
+
+        // Back to game
+        if (MyInputs.IsButtonBPressed(engine)) {
+            void this.engine.goToScene(this.backScene)
+
+            // Play sound
+            MySounds.PlayMenuInteraction()
         }
     }
 }

@@ -5,12 +5,14 @@ import YataghanFont from './font/Yataghan-qZ5d.ttf' // @ts-ignore
 import CheckboardImage from './image/checkboard.png' // @ts-ignore
 import GameBoyImage from './image/gameboy.png' // @ts-ignore
 import PlayerImage from './image/player.png' // @ts-ignore
+import IntroductionRoomImage from './image/introduction_room.png' // @ts-ignore
 
 export const Resources = {
     image: {
         gameboy: new ImageSource(GameBoyImage),
         checkboard: new ImageSource(CheckboardImage),
         player: new ImageSource(PlayerImage),
+        introductionRoom: new ImageSource(IntroductionRoomImage),
     },
     music: {},
     font: {

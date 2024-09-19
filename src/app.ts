@@ -5,14 +5,12 @@ import { GameBoyPostProcessor } from './postprocessors/gameboy_pp'
 import { CreditsScene } from './scenes/credits.scene'
 import { GameScene } from './scenes/game.scene'
 import { MenuScene } from './scenes/menu.scene'
-import { OptionsScene } from './scenes/options.scene'
-import { PauseScene } from './scenes/pause.scene'
+import { OptionsScene, OptionsSceneActivationCtx } from './scenes/options.scene'
+import { PauseScene, PauseSceneActivationCtx } from './scenes/pause.scene'
 
 class App {
     private loader: Loader
     private engine: Engine
-
-    private pausedScene?: string
     private gbpp: GameBoyPostProcessor
 
     public Initialize() {
@@ -26,17 +24,23 @@ class App {
     public Start() {
         void this.engine
             .start(this.loader)
-            .then(() => this.engine.goToScene('game'))
+            .then(() => this.engine.goToScene('menu'))
     }
 
-    public Pause() {
-        this.pausedScene = this.engine.currentSceneName
-        void this.engine.goToScene('pause')
+    public OpenPause() {
+        void this.engine.goToScene<PauseSceneActivationCtx>('pause', {
+            sceneActivationData: {
+                backScene: this.engine.currentSceneName,
+            },
+        })
     }
 
-    public Resume() {
-        void this.engine.goToScene(this.pausedScene)
-        this.pausedScene = undefined
+    public OpenOptions() {
+        void this.engine.goToScene<OptionsSceneActivationCtx>('options', {
+            sceneActivationData: {
+                backScene: this.engine.currentSceneName,
+            },
+        })
     }
 
     public get Palette() {

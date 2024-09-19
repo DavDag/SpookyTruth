@@ -31,7 +31,7 @@ export class BaseLevelScene extends Scene {
         super.onPreUpdate(engine, delta)
 
         if (MyInputs.IsButtonStartPressed(engine)) {
-            MyApp.Pause()
+            MyApp.OpenPause()
         }
     }
 }

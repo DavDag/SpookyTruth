@@ -7,6 +7,7 @@ import {
     TextAlign,
     Vector,
 } from 'excalibur'
+import { MyApp } from '../app'
 import { Resources } from '../assets/resources'
 import { MyInputs } from '../utils/input_handling'
 import { MySounds } from '../utils/sound_handling'
@@ -87,17 +88,13 @@ export class MenuScene extends Scene {
 
         // Move the selection up and down
         let newSelected = this.selected
-        if (MyInputs.IsPadDownPressed(engine)) {
-            newSelected++
-            if (newSelected > 2) {
-                newSelected = 0
-            }
-        }
         if (MyInputs.IsPadUpPressed(engine)) {
-            newSelected--
-            if (newSelected < 0) {
-                newSelected = 2
-            }
+            newSelected =
+                (this.selected - 1 + this.menuItems.length) %
+                this.menuItems.length
+        }
+        if (MyInputs.IsPadDownPressed(engine)) {
+            newSelected = (this.selected + 1) % this.menuItems.length
         }
         if (newSelected !== this.selected) {
             // Reset previous selection
@@ -117,15 +114,25 @@ export class MenuScene extends Scene {
 
         // Handle selection
         if (MyInputs.IsButtonAPressed(engine)) {
-            if (this.selected === 0) {
-                void this.engine.goToScene('game')
+            switch (this.selected) {
+                // Play
+                case 0:
+                    void this.engine.goToScene('game')
+                    break
+
+                // Options
+                case 1:
+                    MyApp.OpenOptions()
+                    break
+
+                // Credits
+                case 2:
+                    void this.engine.goToScene('credits')
+                    break
             }
-            if (this.selected === 1) {
-                void this.engine.goToScene('options')
-            }
-            if (this.selected === 2) {
-                void this.engine.goToScene('credits')
-            }
+
+            // Play sound
+            MySounds.PlayMenuInteraction()
         }
     }
 }

@@ -19,8 +19,8 @@ export class GameScene extends Scene {
     private openLevel() {
         switch (this.level) {
             case 0:
-                this.engine.addScene('level/0', new IntroductionLevelScene())
-                void this.engine.goToScene('level/0')
+                this.engine.addScene('level', new IntroductionLevelScene())
+                void this.engine.goToScene('level')
                 break
         }
     }
