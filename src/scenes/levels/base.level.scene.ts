@@ -1,4 +1,4 @@
-import { Engine, Scene, SceneActivationContext, Vector } from 'excalibur'
+import { Engine, Scene, Vector } from 'excalibur'
 import { PlayerActor } from '../../actors/player.actor'
 import { MyApp } from '../../app'
 import { MyInputs } from '../../utils/input_handling'
@@ -18,13 +18,8 @@ export class BaseLevelScene extends Scene {
         super.onInitialize(engine)
 
         this.player = new PlayerActor()
-        this.add(this.player)
-    }
-
-    onActivate(context: SceneActivationContext<unknown>) {
-        super.onActivate(context)
-
         this.player.pos = this.configs.playerSpawnPos
+        this.add(this.player)
     }
 
     onPreUpdate(engine: Engine, delta: number) {

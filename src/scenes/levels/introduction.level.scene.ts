@@ -1,12 +1,7 @@
-import {
-    Actor,
-    Color,
-    Engine,
-    SceneActivationContext,
-    Sprite,
-    Vector,
-} from 'excalibur'
+import { Actor, Color, Engine, Sprite, Vector } from 'excalibur'
+import { DoorActor } from '../../actors/door.actor'
 import { Resources } from '../../assets/resources'
+import { EngineConfigs } from '../../configs'
 import { BaseLevelScene } from './base.level.scene'
 
 export class IntroductionLevelScene extends BaseLevelScene {
@@ -18,10 +13,6 @@ export class IntroductionLevelScene extends BaseLevelScene {
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
-    }
-
-    onActivate(context: SceneActivationContext<unknown>) {
-        super.onActivate(context)
 
         // Background
         const bg = new Actor({
@@ -31,6 +22,7 @@ export class IntroductionLevelScene extends BaseLevelScene {
             width: 160,
             height: 144,
             color: Color.Violet,
+            z: EngineConfigs.BackgroundZIndex,
         })
         bg.graphics.use(
             new Sprite({
@@ -39,10 +31,14 @@ export class IntroductionLevelScene extends BaseLevelScene {
         )
         this.add(bg)
 
+        // Add exit door
+        const door = new DoorActor(new Vector(8, 7), true)
+        this.add(door)
+
         // Animate player introduction
         this.player.actions.clearActions()
         this.player.actions.callMethod(() => {
-            this.player.animateIntroduction(() => {
+            this.player.animateIntroduction().then(() => {
                 // TODO: Dialog
             })
         })

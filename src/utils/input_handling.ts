@@ -49,6 +49,30 @@ class InputHandling {
             engine.input.keyboard.wasPressed.bind(engine.input.keyboard)
         )
     }
+
+    public IsPadUpHeld(engine: Engine): boolean {
+        return EngineConfigs.PadUp.some(
+            engine.input.keyboard.isHeld.bind(engine.input.keyboard)
+        )
+    }
+
+    public IsPadDownHeld(engine: Engine): boolean {
+        return EngineConfigs.PadDown.some(
+            engine.input.keyboard.isHeld.bind(engine.input.keyboard)
+        )
+    }
+
+    public IsPadLeftHeld(engine: Engine): boolean {
+        return EngineConfigs.PadLeft.some(
+            engine.input.keyboard.isHeld.bind(engine.input.keyboard)
+        )
+    }
+
+    public IsPadRightHeld(engine: Engine): boolean {
+        return EngineConfigs.PadRight.some(
+            engine.input.keyboard.isHeld.bind(engine.input.keyboard)
+        )
+    }
 }
 
 export const MyInputs = new InputHandling()
