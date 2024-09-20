@@ -13,10 +13,10 @@ import {
     SpriteSheet,
     Vector,
 } from 'excalibur'
-import { Observable, Subject, takeUntil } from 'rxjs'
-import { Resources } from '../assets/resources'
+import { Subject, takeUntil } from 'rxjs'
+import { Resources } from '../0_assets/resources'
+import { MyInputs } from '../1_utils/input_handling'
 import { EngineConfigs } from '../configs'
-import { MyInputs } from '../utils/input_handling'
 import { InteractionsActor } from './interactions.actor'
 
 export class DoorActor extends Actor {
@@ -29,6 +29,9 @@ export class DoorActor extends Actor {
     private openingAnim: Animation
     private closingAnim: Animation
     private interaction: InteractionsActor
+
+    public open$ = this.openSub.pipe(takeUntil(this.dieSub))
+    public close$ = this.closeSub.pipe(takeUntil(this.dieSub))
 
     constructor(tile: Vector, isClosed: boolean) {
         super({
@@ -129,14 +132,6 @@ export class DoorActor extends Actor {
                 }
             }
         }
-    }
-
-    public observeOpen(): Observable<void> {
-        return this.openSub.pipe(takeUntil(this.dieSub))
-    }
-
-    public observeClose(): Observable<void> {
-        return this.closeSub.pipe(takeUntil(this.dieSub))
     }
 
     private open() {

@@ -1,7 +1,7 @@
 import { Engine, Scene, Vector } from 'excalibur'
-import { PlayerActor } from '../../actors/player.actor'
+import { MyInputs } from '../../1_utils/input_handling'
+import { PlayerActor } from '../../3_actors/player.actor'
 import { MyApp } from '../../app'
-import { MyInputs } from '../../utils/input_handling'
 
 export interface LevelConfigs {
     playerSpawnPos: Vector

@@ -5,7 +5,7 @@ import {
     Shader,
     VertexLayout,
 } from 'excalibur'
-import { MyStorage } from '../utils/storage'
+import { MyStorage } from '../1_utils/storage'
 
 type Palette = [Color, Color, Color, Color]
 

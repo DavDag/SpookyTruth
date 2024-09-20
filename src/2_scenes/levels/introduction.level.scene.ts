@@ -1,10 +1,13 @@
 import { Actor, Color, Engine, Sprite, Vector } from 'excalibur'
-import { DoorActor } from '../../actors/door.actor'
-import { Resources } from '../../assets/resources'
+import { Resources } from '../../0_assets/resources'
+import { DialogActor } from '../../3_actors/dialog.actor'
+import { DoorActor } from '../../3_actors/door.actor'
 import { EngineConfigs } from '../../configs'
 import { BaseLevelScene } from './base.level.scene'
 
 export class IntroductionLevelScene extends BaseLevelScene {
+    private dialog: DialogActor
+
     constructor() {
         super({
             playerSpawnPos: new Vector(4, 7).scale(16),
@@ -35,12 +38,15 @@ export class IntroductionLevelScene extends BaseLevelScene {
         const door = new DoorActor(new Vector(8, 7), true)
         this.add(door)
 
-        // Animate player introduction
-        this.player.actions.clearActions()
-        this.player.actions.callMethod(() => {
-            this.player.animateIntroduction().then(() => {
-                // TODO: Dialog
-            })
+        // Add dialog
+        this.dialog = new DialogActor({
+            text: '......\n\nWhy am I here?',
         })
+        this.add(this.dialog)
+
+        // Animate player introduction
+        this.player.actions.callMethod(() =>
+            this.player.animateIntroduction().then(() => this.dialog.next())
+        )
     }
 }

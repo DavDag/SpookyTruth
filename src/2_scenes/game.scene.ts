@@ -1,7 +1,7 @@
 import { Engine, Scene, SceneActivationContext } from 'excalibur'
-import { MyStorage } from '../utils/storage'
+import { MySounds } from '../1_utils/sound_handling'
+import { MyStorage } from '../1_utils/storage'
 import { IntroductionLevelScene } from './levels/introduction.level.scene'
-import { MySounds } from '../utils/sound_handling'
 
 export class GameScene extends Scene {
     private level: number = 0

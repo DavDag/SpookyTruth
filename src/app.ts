@@ -1,12 +1,15 @@
 import { Engine, Keys, Loader } from 'excalibur'
-import { Resources } from './assets/resources'
+import { Resources } from './0_assets/resources'
+import { CreditsScene } from './2_scenes/credits.scene'
+import { GameScene } from './2_scenes/game.scene'
+import { MenuScene } from './2_scenes/menu.scene'
+import {
+    OptionsScene,
+    OptionsSceneActivationCtx,
+} from './2_scenes/options.scene'
+import { PauseScene, PauseSceneActivationCtx } from './2_scenes/pause.scene'
+import { GameBoyPostProcessor } from './9_postprocessors/gameboy_pp'
 import { EngineConfigs } from './configs'
-import { GameBoyPostProcessor } from './postprocessors/gameboy_pp'
-import { CreditsScene } from './scenes/credits.scene'
-import { GameScene } from './scenes/game.scene'
-import { MenuScene } from './scenes/menu.scene'
-import { OptionsScene, OptionsSceneActivationCtx } from './scenes/options.scene'
-import { PauseScene, PauseSceneActivationCtx } from './scenes/pause.scene'
 
 class App {
     private loader: Loader

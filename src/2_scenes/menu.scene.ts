@@ -4,71 +4,48 @@ import {
     Engine,
     Label,
     Scene,
-    SceneActivationContext,
     TextAlign,
     Vector,
 } from 'excalibur'
+import { Resources } from '../0_assets/resources'
+import { MyInputs } from '../1_utils/input_handling'
+import { MySounds } from '../1_utils/sound_handling'
 import { MyApp } from '../app'
-import { Resources } from '../assets/resources'
-import { MyInputs } from '../utils/input_handling'
-import { MySounds } from '../utils/sound_handling'
-import { MyStorage } from '../utils/storage'
 
-export interface PauseSceneActivationCtx {
-    backScene: string
-}
-
-export class PauseScene extends Scene {
-    private backScene: string
-
+export class MenuScene extends Scene {
     private selected = 0
     private selector: Actor
     private menuItems: Label[] = []
-
-    private level = 0
-    private levelName: Label
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
         // Title
         const title = new Label({
-            text: 'game paused',
-            pos: new Vector(80, 20),
+            text: 'Spooky Truth',
+            pos: new Vector(80, 30),
             font: Resources.font.main.toFont({
+                size: 24,
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
             }),
         })
         this.add(title)
 
-        // Level name
-        this.levelName = new Label({
-            // templated string
-            text: `level: ${this.level}`,
-            pos: new Vector(2, 142),
-            font: Resources.font.main.toFont({
-                size: 12,
-                textAlign: TextAlign.Left,
-                baseAlign: BaseAlign.Bottom,
-            }),
-        })
-        this.add(this.levelName)
-
         // Menu items
-        const resume = new Label({
-            text: 'resume',
-            pos: new Vector(80, 60),
+        const play = new Label({
+            text: 'play',
+            pos: new Vector(80, 80),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
             }),
         })
-        this.add(resume)
-        this.menuItems.push(resume)
+        this.add(play)
+        this.menuItems.push(play)
         const options = new Label({
             text: 'options',
-            pos: new Vector(80, 80),
+            pos: new Vector(80, 100),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -76,16 +53,16 @@ export class PauseScene extends Scene {
         })
         this.add(options)
         this.menuItems.push(options)
-        const quit = new Label({
-            text: 'quit',
-            pos: new Vector(80, 100),
+        const credits = new Label({
+            text: 'credits',
+            pos: new Vector(80, 120),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
             }),
         })
-        this.add(quit)
-        this.menuItems.push(quit)
+        this.add(credits)
+        this.menuItems.push(credits)
 
         // Selector
         this.selector = new Label({
@@ -98,27 +75,18 @@ export class PauseScene extends Scene {
             offset: new Vector(-40, 0),
         })
         this.add(this.selector)
+
+        // Update selector position
         this.selector.pos = this.menuItems[this.selected].pos.clone()
         this.menuItems[this.selected].actions.repeatForever((ctx) => {
             ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
         })
     }
 
-    onActivate(context: SceneActivationContext<PauseSceneActivationCtx>) {
-        super.onActivate(context)
-
-        // Update back scene
-        this.backScene = context.data?.backScene ?? this.backScene
-
-        // Update level
-        this.level = MyStorage.Retrieve<number>('level', 0)
-        this.levelName.text = `level: ${this.level}`
-    }
-
     onPreUpdate(engine: Engine, delta: number) {
         super.onPreUpdate(engine, delta)
 
-        // Handle input
+        // Move the selection up and down
         let newSelected = this.selected
         if (MyInputs.IsPadUpPressed(engine)) {
             newSelected =
@@ -147,9 +115,9 @@ export class PauseScene extends Scene {
         // Handle selection
         if (MyInputs.IsButtonAPressed(engine)) {
             switch (this.selected) {
-                // Resume
+                // Play
                 case 0:
-                    void engine.goToScene(this.backScene)
+                    void this.engine.goToScene('game')
                     break
 
                 // Options
@@ -157,43 +125,14 @@ export class PauseScene extends Scene {
                     MyApp.OpenOptions()
                     break
 
-                // Quit
+                // Credits
                 case 2:
-                    engine.removeScene('level')
-                    void engine.goToScene('menu').then(() => {
-                        this.resetSelector()
-                    })
-                    MySounds.StopMusicTheme()
+                    void this.engine.goToScene('credits')
                     break
             }
 
             // Play sound
             MySounds.PlayMenuInteraction()
         }
-
-        // Back to game
-        if (MyInputs.IsButtonBPressed(engine)) {
-            void engine.goToScene(this.backScene).then(() => {
-                this.resetSelector()
-            })
-
-            // Play sound
-            MySounds.PlayMenuInteraction()
-        }
-    }
-
-    private resetSelector() {
-        // Reset previous selection
-        this.menuItems[this.selected].scale.setTo(1, 1)
-        this.menuItems[this.selected].actions.clearActions()
-
-        // Update selection
-        this.selected = 0
-
-        // Update selector position
-        this.selector.pos = this.menuItems[this.selected].pos.clone()
-        this.menuItems[this.selected].actions.repeatForever((ctx) => {
-            ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
-        })
     }
 }

@@ -9,9 +9,9 @@ import {
     SpriteSheet,
     Vector,
 } from 'excalibur'
-import { Resources } from '../assets/resources'
+import { Resources } from '../0_assets/resources'
+import { MyInputs } from '../1_utils/input_handling'
 import { EngineConfigs } from '../configs'
-import { MyInputs } from '../utils/input_handling'
 
 export class PlayerActor extends Actor {
     static readonly Speed = 32

@@ -6,9 +6,9 @@ import {
     TextAlign,
     Vector,
 } from 'excalibur'
-import { Resources } from '../assets/resources'
-import { MyInputs } from '../utils/input_handling'
-import { MySounds } from '../utils/sound_handling'
+import { Resources } from '../0_assets/resources'
+import { MyInputs } from '../1_utils/input_handling'
+import { MySounds } from '../1_utils/sound_handling'
 
 export class CreditsScene extends Scene {
     private text: Label

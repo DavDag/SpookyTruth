@@ -8,7 +8,7 @@ import {
     SpriteSheet,
     Vector,
 } from 'excalibur'
-import { Resources } from '../assets/resources'
+import { Resources } from '../0_assets/resources'
 import { EngineConfigs } from '../configs'
 
 export type InteractionType = 'buttonA'

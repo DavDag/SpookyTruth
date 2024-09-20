@@ -1,4 +1,4 @@
-import { Resources } from '../assets/resources'
+import { Resources } from '../0_assets/resources'
 import { MyStorage } from './storage'
 
 class SoundHandling {
