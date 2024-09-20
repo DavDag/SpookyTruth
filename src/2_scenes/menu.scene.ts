@@ -4,12 +4,14 @@ import {
     Engine,
     Label,
     Scene,
+    SceneActivationContext,
     TextAlign,
     Vector,
 } from 'excalibur'
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
+import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { MyApp } from '../app'
 
 export class MenuScene extends Scene {
@@ -81,6 +83,11 @@ export class MenuScene extends Scene {
         this.menuItems[this.selected].actions.repeatForever((ctx) => {
             ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
         })
+    }
+
+    onActivate(context: SceneActivationContext<unknown>) {
+        super.onActivate(context)
+        MyLightPP.Disable()
     }
 
     onPreUpdate(engine: Engine, delta: number) {

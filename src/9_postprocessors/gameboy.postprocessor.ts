@@ -7,11 +7,8 @@ import {
 } from 'excalibur'
 import { MyStorage } from '../1_utils/storage'
 
-type Palette = [Color, Color, Color, Color]
-
 // https://lospec.com/palette-list
 const PALETTES = {
-    debug: [Color.Red, Color.Blue, Color.Green, Color.White],
     kirokaze: [
         Color.fromHex('#332c50'),
         Color.fromHex('#46878f'),
@@ -42,9 +39,9 @@ export type PaletteName = keyof typeof PALETTES
 
 export class GameBoyPostProcessor implements PostProcessor {
     private _shader: ScreenShader
-    private _isPaletteChangeRequired: boolean = true
+    private _isShaderDirty: boolean = true
     private _palette: PaletteName = 'kirokaze'
-    private _showDebugPalette: boolean = false
+    private _isDebugModeOn: boolean = false
 
     constructor() {
         this._palette = MyStorage.Retrieve<PaletteName>('palette', 'kirokaze')
@@ -60,10 +57,15 @@ uniform vec2 u_resolution; // screen resolution
 uniform float u_time_ms; // total playback time
 uniform float u_elapsed_ms; // elapsed time (since last frame)
 uniform vec3 u_palette[4]; // color palette
+uniform bool u_bDebugModeOn; // debug mode
 in vec2 v_texcoord; // text coords
 out vec4 fragColor; // final color
 void main() {
     vec4 tex = texture(u_image, v_texcoord);
+    if (u_bDebugModeOn) {
+        fragColor = tex;
+        return;
+    }
     float avg = 0.2126 * tex.r + 0.7152 * tex.g + 0.0722 * tex.b;
     int index = (avg < 0.25) ? 0 : (avg < 0.5) ? 1 : (avg < 0.75) ? 2 : 3;
     fragColor = vec4(u_palette[index], 1.0);
@@ -72,13 +74,19 @@ void main() {
     }
 
     onUpdate(delta: number) {
-        if (this._isPaletteChangeRequired) {
-            this._isPaletteChangeRequired = false
+        if (this._isShaderDirty) {
+            this._isShaderDirty = false
+
+            // Use the shader
+            this._shader.getShader().use()
+
+            // Update debug mode
+            this._shader
+                .getShader()
+                .setUniformBoolean('u_bDebugModeOn', this._isDebugModeOn)
 
             // Update palette
-            const p =
-                PALETTES[!this._showDebugPalette ? this._palette : 'debug']
-            this._shader.getShader().use()
+            const p = PALETTES[this._palette]
             this._shader
                 .getShader()
                 .setUniform('uniform3fv', 'u_palette', [
@@ -106,22 +114,22 @@ void main() {
         return this._shader.getShader()
     }
 
-    public getPalette() {
+    public get palette() {
         return `#${Object.keys(PALETTES).indexOf(this._palette)}`
     }
 
-    public toggleDebugPalette() {
-        this._isPaletteChangeRequired = true
-        this._showDebugPalette = !this._showDebugPalette
+    public toggleDebugMode() {
+        this._isShaderDirty = true
+        this._isDebugModeOn = !this._isDebugModeOn
     }
 
     public setPalette(palette: PaletteName) {
-        this._isPaletteChangeRequired = true
+        this._isShaderDirty = true
         this._palette = palette
     }
 
     public nextPalette() {
-        const keys = Object.keys(PALETTES).filter((k) => k !== 'debug')
+        const keys = Object.keys(PALETTES)
         const index = keys.indexOf(this._palette)
         const next = (index + 1) % keys.length
         this.setPalette(keys[next] as PaletteName)
@@ -129,10 +137,12 @@ void main() {
     }
 
     public prevPalette() {
-        const keys = Object.keys(PALETTES).filter((k) => k !== 'debug')
+        const keys = Object.keys(PALETTES)
         const index = keys.indexOf(this._palette)
         const prev = (index - 1 + keys.length) % keys.length
         this.setPalette(keys[prev] as PaletteName)
         MyStorage.Store('palette', this._palette)
     }
 }
+
+export const MyGameBoyPP = new GameBoyPostProcessor()

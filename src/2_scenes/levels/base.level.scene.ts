@@ -1,6 +1,7 @@
-import { Engine, Scene, Vector } from 'excalibur'
+import { Engine, Scene, SceneActivationContext, Vector } from 'excalibur'
 import { MyInputs } from '../../1_utils/input_handling'
 import { PlayerActor } from '../../3_actors/player.actor'
+import { MyLightPP } from '../../9_postprocessors/light.postprocessor'
 import { MyApp } from '../../app'
 
 export interface LevelConfigs {
@@ -21,6 +22,11 @@ export class BaseLevelScene extends Scene {
         this.player = new PlayerActor()
         this.player.pos = this.configs.playerSpawnPos
         this.add(this.player)
+    }
+
+    onActivate(context: SceneActivationContext<unknown>) {
+        super.onActivate(context)
+        MyLightPP.Enable()
     }
 
     onPreUpdate(engine: Engine, delta: number) {

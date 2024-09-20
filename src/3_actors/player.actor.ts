@@ -12,12 +12,15 @@ import {
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { EngineConfigs } from '../configs'
+import { LightActor } from './light.actor'
 
 export class PlayerActor extends Actor {
     static readonly Speed = 32
 
     private enabled = false
     private anims: { [key: string]: Animation } = {}
+
+    private light: LightActor
 
     constructor() {
         super({
@@ -30,11 +33,19 @@ export class PlayerActor extends Actor {
             collisionType: CollisionType.Active,
             z: EngineConfigs.PlayerZIndex,
         })
+
+        // Light
+        this.light = new LightActor(
+            this.pos.add(new Vector(12, 6)),
+            'player.candle'
+        )
+        this.addChild(this.light)
     }
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
+        // Animations
         const sprites = SpriteSheet.fromImageSource({
             image: Resources.image.player,
             grid: {

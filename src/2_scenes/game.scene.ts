@@ -1,6 +1,7 @@
 import { Engine, Scene, SceneActivationContext } from 'excalibur'
 import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
+import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { IntroductionLevelScene } from './levels/introduction.level.scene'
 
 export class GameScene extends Scene {
@@ -12,6 +13,7 @@ export class GameScene extends Scene {
 
     onActivate(context: SceneActivationContext<unknown>) {
         super.onActivate(context)
+        MyLightPP.Disable()
 
         // Load the level
         this.level = MyStorage.Retrieve<number>('level', 0)

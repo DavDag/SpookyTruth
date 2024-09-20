@@ -11,7 +11,8 @@ import {
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
-import { MyApp } from '../app'
+import { MyGameBoyPP } from '../9_postprocessors/gameboy.postprocessor'
+import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 
 export interface OptionsSceneActivationCtx {
     backScene: string
@@ -80,7 +81,7 @@ export class OptionsScene extends Scene {
         this.add(palette)
         this.menuItems.push(palette)
         const paletteV = new Label({
-            text: MyApp.Palette,
+            text: MyGameBoyPP.palette,
             pos: new Vector(140, 60),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.End,
@@ -122,6 +123,7 @@ export class OptionsScene extends Scene {
 
     onActivate(context: SceneActivationContext<OptionsSceneActivationCtx>) {
         super.onActivate(context)
+        MyLightPP.Disable()
 
         // Update back scene
         this.backScene = context.data?.backScene ?? this.backScene
@@ -184,8 +186,9 @@ export class OptionsScene extends Scene {
 
                 // Palette
                 case 2:
-                    MyApp.NextPalette()
-                    this.menuItemsValues[this.selected].text = MyApp.Palette
+                    MyGameBoyPP.nextPalette()
+                    this.menuItemsValues[this.selected].text =
+                        MyGameBoyPP.palette
                     break
 
                 // Back

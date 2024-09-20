@@ -8,13 +8,13 @@ import {
     OptionsSceneActivationCtx,
 } from './2_scenes/options.scene'
 import { PauseScene, PauseSceneActivationCtx } from './2_scenes/pause.scene'
-import { GameBoyPostProcessor } from './9_postprocessors/gameboy_pp'
+import { MyGameBoyPP } from './9_postprocessors/gameboy.postprocessor'
+import { MyLightPP } from './9_postprocessors/light.postprocessor'
 import { EngineConfigs } from './configs'
 
 class App {
     private loader: Loader
     private engine: Engine
-    private gbpp: GameBoyPostProcessor
 
     public Initialize() {
         this.AddResources()
@@ -44,18 +44,6 @@ class App {
                 backScene: this.engine.currentSceneName,
             },
         })
-    }
-
-    public get Palette() {
-        return this.gbpp.getPalette()
-    }
-
-    public NextPalette() {
-        this.gbpp.nextPalette()
-    }
-
-    public PrevPalette() {
-        this.gbpp.prevPalette()
     }
 
     private AddResources() {
@@ -107,14 +95,15 @@ class App {
             // P to toggle debug mode
             if (evt.key === Keys.P) {
                 this.engine.toggleDebug()
-                this.gbpp.toggleDebugPalette()
+                MyLightPP.ToggleDebugMode()
+                MyGameBoyPP.toggleDebugMode()
             }
         })
     }
 
     private AddPostProcessors() {
-        this.gbpp = new GameBoyPostProcessor()
-        this.engine.graphicsContext.addPostProcessor(this.gbpp)
+        this.engine.graphicsContext.addPostProcessor(MyLightPP)
+        this.engine.graphicsContext.addPostProcessor(MyGameBoyPP)
     }
 }
 

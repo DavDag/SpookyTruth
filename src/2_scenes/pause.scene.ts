@@ -12,6 +12,7 @@ import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
+import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { MyApp } from '../app'
 
 export interface PauseSceneActivationCtx {
@@ -106,6 +107,7 @@ export class PauseScene extends Scene {
 
     onActivate(context: SceneActivationContext<PauseSceneActivationCtx>) {
         super.onActivate(context)
+        MyLightPP.Disable()
 
         // Update back scene
         this.backScene = context.data?.backScene ?? this.backScene

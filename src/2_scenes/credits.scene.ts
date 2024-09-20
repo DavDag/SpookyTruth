@@ -9,6 +9,7 @@ import {
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
+import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 
 export class CreditsScene extends Scene {
     private text: Label
@@ -34,6 +35,7 @@ export class CreditsScene extends Scene {
 
     onActivate(context: SceneActivationContext<unknown>) {
         super.onActivate(context)
+        MyLightPP.Disable()
 
         this.text.actions.clearActions()
         this.text.pos = new Vector(80, 140)

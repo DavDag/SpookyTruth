@@ -12,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs'
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
+import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { EngineConfigs } from '../configs'
 import { InteractionsActor } from './interactions.actor'
 
@@ -146,6 +147,7 @@ export class DialogActor extends Actor {
         this.interaction.hide()
         this.text.graphics.visible = true
         this.graphics.visible = true
+        MyLightPP.SetShowingDialog(true)
 
         // Last line shown
         if (this.data.nextLine()) {
@@ -153,6 +155,7 @@ export class DialogActor extends Actor {
             this.text.graphics.visible = false
             this.graphics.visible = false
             this.interaction.hide()
+            MyLightPP.SetShowingDialog(false)
             return
         }
 
