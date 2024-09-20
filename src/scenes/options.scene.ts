@@ -162,7 +162,7 @@ export class OptionsScene extends Scene {
             })
 
             // Play sound
-            MySounds.PlayMenuInteraction()
+            // MySounds.PlayMenuInteraction()
         }
 
         // Handle selection

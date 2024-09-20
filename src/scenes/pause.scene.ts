@@ -12,6 +12,7 @@ import { MyApp } from '../app'
 import { Resources } from '../assets/resources'
 import { MyInputs } from '../utils/input_handling'
 import { MySounds } from '../utils/sound_handling'
+import { MyStorage } from '../utils/storage'
 
 export interface PauseSceneActivationCtx {
     backScene: string
@@ -23,6 +24,9 @@ export class PauseScene extends Scene {
     private selected = 0
     private selector: Actor
     private menuItems: Label[] = []
+
+    private level = 0
+    private levelName: Label
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
@@ -37,6 +41,19 @@ export class PauseScene extends Scene {
             }),
         })
         this.add(title)
+
+        // Level name
+        this.levelName = new Label({
+            // templated string
+            text: `level: ${this.level}`,
+            pos: new Vector(2, 142),
+            font: Resources.font.main.toFont({
+                size: 12,
+                textAlign: TextAlign.Left,
+                baseAlign: BaseAlign.Bottom,
+            }),
+        })
+        this.add(this.levelName)
 
         // Menu items
         const resume = new Label({
@@ -85,12 +102,6 @@ export class PauseScene extends Scene {
         this.menuItems[this.selected].actions.repeatForever((ctx) => {
             ctx.scaleTo(1.2, 1.2, 1, 1).scaleTo(1, 1, 1, 1)
         })
-
-        // TODO: Add level name
-        // TODO: Add last checkpoint
-        // TODO: Add buttons guide
-        // TODO: Add memory scene
-        // TODO: Add option to quit
     }
 
     onActivate(context: SceneActivationContext<PauseSceneActivationCtx>) {
@@ -98,6 +109,10 @@ export class PauseScene extends Scene {
 
         // Update back scene
         this.backScene = context.data?.backScene ?? this.backScene
+
+        // Update level
+        this.level = MyStorage.Retrieve<number>('level', 0)
+        this.levelName.text = `level: ${this.level}`
     }
 
     onPreUpdate(engine: Engine, delta: number) {
@@ -126,7 +141,7 @@ export class PauseScene extends Scene {
             })
 
             // Play sound
-            MySounds.PlayMenuInteraction()
+            // MySounds.PlayMenuInteraction()
         }
 
         // Handle selection
@@ -148,6 +163,7 @@ export class PauseScene extends Scene {
                     void engine.goToScene('menu').then(() => {
                         this.resetSelector()
                     })
+                    MySounds.StopMusicTheme()
                     break
             }
 

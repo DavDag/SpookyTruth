@@ -109,7 +109,7 @@ export class MenuScene extends Scene {
             })
 
             // Play sound
-            MySounds.PlayMenuInteraction()
+            // MySounds.PlayMenuInteraction()
         }
 
         // Handle selection

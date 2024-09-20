@@ -63,6 +63,9 @@ class App {
         Object.values(Resources.music).forEach(
             this.loader.addResource.bind(this.loader)
         )
+        Object.values(Resources.sfx).forEach(
+            this.loader.addResource.bind(this.loader)
+        )
         Object.values(Resources.font).forEach(
             this.loader.addResource.bind(this.loader)
         )

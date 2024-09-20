@@ -8,6 +8,7 @@ import {
 } from 'excalibur'
 import { Resources } from '../assets/resources'
 import { MyInputs } from '../utils/input_handling'
+import { MySounds } from '../utils/sound_handling'
 
 export class CreditsScene extends Scene {
     private text: Label
@@ -44,6 +45,9 @@ export class CreditsScene extends Scene {
 
         if (MyInputs.IsButtonBPressed(engine)) {
             void this.engine.goToScene('menu')
+
+            // Play sound
+            MySounds.PlayMenuInteraction()
         }
     }
 }

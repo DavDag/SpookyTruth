@@ -17,6 +17,7 @@ export class BaseLevelScene extends Scene {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
+        // Create the player at the spawn position
         this.player = new PlayerActor()
         this.player.pos = this.configs.playerSpawnPos
         this.add(this.player)
@@ -25,6 +26,7 @@ export class BaseLevelScene extends Scene {
     onPreUpdate(engine: Engine, delta: number) {
         super.onPreUpdate(engine, delta)
 
+        // Open the pause menu
         if (MyInputs.IsButtonStartPressed(engine)) {
             MyApp.OpenPause()
         }
