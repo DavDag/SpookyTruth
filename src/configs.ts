@@ -10,7 +10,8 @@ export class EngineConfigs {
     static BackgroundZIndex: number = 0
     static DoorZIndex: number = 1
     static PlayerZIndex: number = 2
-    static InteractionsZIndex: number = 3
+    static DialogZIndex: number = 3
+    static InteractionsZIndex: number = 4
 
     static ButtonA: Keys[] = [Keys.J, Keys.Z]
     static ButtonB: Keys[] = [Keys.X, Keys.K]

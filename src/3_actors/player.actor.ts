@@ -94,13 +94,19 @@ export class PlayerActor extends Actor {
         }
     }
 
-    public animateIntroduction(): Promise<void> {
+    public enable() {
+        this.enabled = true
+    }
+
+    public disable() {
         this.enabled = false
+    }
+
+    public animateIntroduction(): Promise<void> {
         this.graphics.use('introduction')
         this.anims['introduction'].events.clear()
         return new Promise<void>((res, rej) => {
             this.anims['introduction'].events.on('end', () => {
-                this.enabled = true
                 res()
             })
         })

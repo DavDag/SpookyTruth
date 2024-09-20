@@ -1,6 +1,6 @@
 import { Actor, Color, Engine, Sprite, Vector } from 'excalibur'
 import { Resources } from '../../0_assets/resources'
-import { DialogActor } from '../../3_actors/dialog.actor'
+import { DialogActor, DialogData } from '../../3_actors/dialog.actor'
 import { DoorActor } from '../../3_actors/door.actor'
 import { EngineConfigs } from '../../configs'
 import { BaseLevelScene } from './base.level.scene'
@@ -39,14 +39,23 @@ export class IntroductionLevelScene extends BaseLevelScene {
         this.add(door)
 
         // Add dialog
-        this.dialog = new DialogActor({
-            text: '......\n\nWhy am I here?',
-        })
+        this.dialog = new DialogActor(
+            new DialogData({
+                text: '...\n...\n...\nWhy am I here?\n...\n...\nI need to find a way out!',
+            })
+        )
+        this.dialog.completion$.subscribe(() => this.player.enable())
         this.add(this.dialog)
 
         // Animate player introduction
-        this.player.actions.callMethod(() =>
-            this.player.animateIntroduction().then(() => this.dialog.next())
-        )
+        this.player.disable()
+        this.player.actions
+            .callMethod(async () => {
+                await this.player.animateIntroduction()
+            })
+            .delay(2000)
+            .callMethod(() => {
+                this.dialog.next()
+            })
     }
 }
