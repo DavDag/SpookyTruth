@@ -11,6 +11,14 @@
             "scaleInDock": 1,
             "scaleInEditor": 8
         },
+        "ending.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 152.72727272727275,
+                "y": 88.09090909090908
+            }
+        },
         "introduction.tmx": {
             "expandedObjectLayers": [
                 7
@@ -27,10 +35,10 @@
                 5
             ],
             "scale": 5.5,
-            "selectedLayer": 3,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 296,
-                "y": 135.90909090909088
+                "x": 161.27272727272728,
+                "y": 105.1818181818182
             }
         }
     },
@@ -46,6 +54,7 @@
     "project": "levels.tiled-project",
     "property.type": "int",
     "recentFiles": [
+        "ending.tmx",
         "dungeon.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

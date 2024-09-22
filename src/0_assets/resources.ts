@@ -13,6 +13,7 @@ import GhostImage from './image/ghost.png' // @ts-ignore
 import InteractionsImage from './image/interactions.png' // @ts-ignore
 import IntroductionRoomImage from './image/introduction_room.png' // @ts-ignore
 import DungeonTsx from './levels/dungeon.tsx' // @ts-ignore
+import EndingTmx from './levels/ending.tmx' // @ts-ignore
 import IntroductionTmx from './levels/introduction.tmx' // @ts-ignore
 import Level1Tmx from './levels/level1.tmx' // @ts-ignore
 import MusicTheme1Sound from './music/music_theme1.mp3' // @ts-ignore
@@ -76,6 +77,10 @@ export const Resources = {
         level1: new TiledResource(
             Level1Tmx,
             TiledArgs('level1.tmx', Level1Tmx)
+        ),
+        ending: new TiledResource(
+            EndingTmx,
+            TiledArgs('ending.tmx', EndingTmx)
         ),
     },
 }

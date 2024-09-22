@@ -2,6 +2,7 @@ import { Engine, Scene, SceneActivationContext } from 'excalibur'
 import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
 import { MyLightPP } from '../9_postprocessors/light.postprocessor'
+import { EndingLevelScene } from './levels/ending.level.scene'
 import { IntroductionLevelScene } from './levels/introduction.level.scene'
 import { Level1LevelScene } from './levels/level1.level.scene'
 
@@ -40,6 +41,9 @@ export class GameScene extends Scene {
                 break
             case 'level1':
                 this.engine.addScene('level', new Level1LevelScene())
+                break
+            case 'ending':
+                this.engine.addScene('level', new EndingLevelScene())
                 break
             default:
                 console.warn('Unknown level:', this.level)

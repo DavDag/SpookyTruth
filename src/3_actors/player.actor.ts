@@ -208,6 +208,10 @@ export class PlayerActor extends Actor {
         MyStorage.Store('deathCount', MyStorage.Retrieve('deathCount', 0) + 1)
     }
 
+    public candleOff() {
+        this.light.kill()
+    }
+
     private animateEnterDoor() {
         this.enabled = false
         this.actions

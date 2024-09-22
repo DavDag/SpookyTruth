@@ -14,6 +14,19 @@ import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
 import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 
+export function UnlockMemoryPiece(
+    engine: Engine,
+    currentScene: string,
+    level: number
+) {
+    return engine.goToScene('memory', {
+        sceneActivationData: {
+            backScene: currentScene,
+            unlockPiece: level,
+        },
+    })
+}
+
 export interface MemorySceneActivationCtx {
     backScene: string
     unlockPiece?: number
