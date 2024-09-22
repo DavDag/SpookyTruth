@@ -120,7 +120,12 @@ void main() {
     }
 
     public get palette() {
-        return `#${Object.keys(PALETTES).indexOf(this._palette)}`
+        return Object.keys(PALETTES).indexOf(this._palette).toString()
+    }
+
+    public set palette(palette: string) {
+        this._isShaderDirty = true
+        this._palette = Object.keys(PALETTES)[parseInt(palette)] as PaletteName
     }
 
     public toggleDebugMode() {

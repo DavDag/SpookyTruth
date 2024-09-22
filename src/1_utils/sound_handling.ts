@@ -22,8 +22,18 @@ class SoundHandling {
         return this.sfxVolume
     }
 
+    public set SfxVolume(value: number) {
+        this.sfxVolume = value
+        this.setVolumes()
+    }
+
     public get MusicVolume() {
         return this.musicVolume
+    }
+
+    public set MusicVolume(value: number) {
+        this.musicVolume = value
+        this.setVolumes()
     }
 
     public PlayMusicTheme() {

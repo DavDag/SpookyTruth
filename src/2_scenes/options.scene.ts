@@ -81,7 +81,7 @@ export class OptionsScene extends Scene {
         this.add(palette)
         this.menuItems.push(palette)
         const paletteV = new Label({
-            text: MyGameBoyPP.palette,
+            text: '#' + MyGameBoyPP.palette,
             pos: new Vector(140, 60),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.End,
@@ -188,7 +188,7 @@ export class OptionsScene extends Scene {
                 case 2:
                     MyGameBoyPP.nextPalette()
                     this.menuItemsValues[this.selected].text =
-                        MyGameBoyPP.palette
+                        '#' + MyGameBoyPP.palette
                     break
 
                 // Back

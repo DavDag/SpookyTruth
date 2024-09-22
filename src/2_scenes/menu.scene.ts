@@ -12,6 +12,7 @@ import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
+import { MyGameBoyPP } from '../9_postprocessors/gameboy.postprocessor'
 import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { MyApp } from '../app'
 
@@ -150,7 +151,13 @@ export class MenuScene extends Scene {
 
                 // Reset
                 case 3:
+                    const sfx = MySounds.SfxVolume
+                    const music = MySounds.MusicVolume
+                    const palette = MyGameBoyPP.palette
                     MyStorage.Reset()
+                    MySounds.SfxVolume = sfx
+                    MySounds.MusicVolume = music
+                    MyGameBoyPP.palette = palette
                     window.location.reload()
                     break
             }
