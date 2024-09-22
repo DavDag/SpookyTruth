@@ -6,6 +6,7 @@
    <property name="solid" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="14" type="mirror"/>
  <tile id="17">
   <properties>
    <property name="light" value="castle.lantern"/>

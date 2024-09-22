@@ -19,9 +19,9 @@ export class CreditsScene extends Scene {
 
         this.text = new Label({
             text:
-                'Programming by\n\nDavide Risaliti\n\n\n' +
-                'Art by\n\nDavide Risaliti\nIrene Costagli\n\n\n' +
+                'Art by\n\nChiara Costagli\nDavide Risaliti\nIrene Costagli\n\n\n' +
                 'Music by\n\nIrene Costagli\n\n\n' +
+                'Programming by\n\nDavide Risaliti\n\n\n' +
                 '\n' +
                 'Thanks for\nplaying!',
             pos: Vector.Zero,
@@ -39,7 +39,7 @@ export class CreditsScene extends Scene {
 
         this.text.actions.clearActions()
         this.text.pos = new Vector(80, 140)
-        this.text.actions.moveBy(0, -480, 25)
+        this.text.actions.moveBy(0, -500, 25)
 
         // Play theme
         MySounds.PlayCreditsTheme()

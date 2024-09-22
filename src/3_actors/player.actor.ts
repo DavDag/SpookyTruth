@@ -18,11 +18,13 @@ import {
 import { Subject, take, takeUntil } from 'rxjs'
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
+import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
 import { EngineConfigs } from '../configs'
 import { DoorActor } from './door.actor'
 import { GhostActor } from './ghost.actor'
 import { LightActor } from './light.actor'
+import { MirrorActor } from './mirror.actor'
 
 export class PlayerActor extends Actor {
     static readonly Speed = 64
@@ -37,12 +39,15 @@ export class PlayerActor extends Actor {
     public onDieEnd$ = this.onDieEndSub.pipe(takeUntil(this.dieSub))
     private onDoorEnterSub = new Subject<DoorActor>()
     public onDoorEnter$ = this.onDoorEnterSub.pipe(takeUntil(this.dieSub))
+    private onMirrorEnterSub = new Subject<MirrorActor>()
+    public onMirrorEnter$ = this.onMirrorEnterSub.pipe(takeUntil(this.dieSub))
 
     private enabled = true
     private anims: { [key: string]: Animation } = {}
     private light: LightActor
     private direction: string = 'right'
     private nearDoor: DoorActor | null = null
+    private nearMirror: MirrorActor | null = null
     private onGround = true
 
     constructor() {
@@ -145,6 +150,8 @@ export class PlayerActor extends Actor {
             // Open door
             if (this.nearDoor && this.nearDoor.canOpen()) {
                 this.animateEnterDoor()
+            } else if (this.nearMirror) {
+                this.animateEnterMirror()
             } else {
                 // Jump
                 if (this.onGround) {
@@ -167,6 +174,11 @@ export class PlayerActor extends Actor {
         // Check for door collision
         if (other.owner instanceof DoorActor) {
             this.nearDoor = other.owner
+        }
+
+        // Check for mirror collision
+        if (other.owner instanceof MirrorActor) {
+            this.nearMirror = other.owner
         }
 
         // Check for ghost collision
@@ -236,5 +248,20 @@ export class PlayerActor extends Actor {
                     }),
                 ])
             )
+    }
+
+    private animateEnterMirror() {
+        this.enabled = false
+        this.vel = Vector.Zero
+        this.acc = Vector.Zero
+        this.graphics.use('idle.right')
+        this.actions.clearActions()
+        this.actions
+            .callMethod(() => MySounds.StopMusicTheme())
+            .moveTo(this.nearMirror.pos, PlayerActor.Speed / 2)
+            .delay(1000)
+            .callMethod(() => {
+                this.onMirrorEnterSub.next(this.nearMirror)
+            })
     }
 }

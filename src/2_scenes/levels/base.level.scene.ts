@@ -7,6 +7,7 @@ import { DialogActor, DialogData } from '../../3_actors/dialog.actor'
 import { DoorActor } from '../../3_actors/door.actor'
 import { GhostActor } from '../../3_actors/ghost.actor'
 import { LightActor, LightType } from '../../3_actors/light.actor'
+import { MirrorActor } from '../../3_actors/mirror.actor'
 import { PlayerActor } from '../../3_actors/player.actor'
 import { MyLightPP } from '../../9_postprocessors/light.postprocessor'
 import { MyApp } from '../../app'
@@ -31,6 +32,12 @@ export class BaseLevelScene extends Scene {
         this.configs.tiledRes.getObjectsByClassName('door').forEach((obj) => {
             const d = new DoorActor(new Vector(obj.x, obj.y - 16), obj.name)
             this.add(d)
+        })
+
+        // Create mirrors from the Tiled map
+        this.configs.tiledRes.getTilesByClassName('mirror').forEach((tile) => {
+            const m = new MirrorActor(tile.exTile.pos)
+            this.add(m)
         })
 
         // Create ghosts from the Tiled map

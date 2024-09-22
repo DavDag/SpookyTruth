@@ -1,5 +1,7 @@
-import { Engine } from 'excalibur'
+import { Engine, SceneActivationContext } from 'excalibur'
 import { Resources } from '../../0_assets/resources'
+import { MySounds } from '../../1_utils/sound_handling'
+import { MyStorage } from '../../1_utils/storage'
 import { DialogActor, DialogData } from '../../3_actors/dialog.actor'
 import { PlayerActor } from '../../3_actors/player.actor'
 import { UnlockMemoryPiece } from '../memory.scene'
@@ -9,6 +11,8 @@ export class EndingLevelScene extends BaseLevelScene {
     private enterRoomDialog: DialogActor
     private candleOffDialog: DialogActor
     private mirrorClickDialog: DialogActor
+    private lastMemoryPieceDialog: DialogActor
+    private fromMemory = false
 
     constructor() {
         super({
@@ -54,14 +58,41 @@ export class EndingLevelScene extends BaseLevelScene {
             })
         )
         this.mirrorClickDialog.completion$.subscribe(() => {
-            void UnlockMemoryPiece(engine, 'ending', 9)
+            this.fromMemory = true
+            void UnlockMemoryPiece(engine, 'level', 8)
         })
         this.add(this.mirrorClickDialog)
+        this.player.onMirrorEnter$.subscribe(() =>
+            // TODO: Show mirror image
+            this.mirrorClickDialog.next()
+        )
+
+        // Add dialog (last memory piece)
+        this.lastMemoryPieceDialog = new DialogActor(
+            new DialogData({
+                text: 'Now I do remember...\nI am...\na ghost...\n...\nMaybe even the other ghosts are just memories...',
+            })
+        )
+        this.add(this.lastMemoryPieceDialog)
+        this.lastMemoryPieceDialog.completion$.subscribe(() => {
+            MySounds.StopMusicTheme()
+            MyStorage.Store('lastLevelName', '')
+            this.engine
+                .goToScene('credits')
+                .then(() => this.engine.removeScene('level'))
+        })
 
         // Start dialog
         this.player.disable()
         this.enterRoomDialog.actions.callMethod(() =>
             this.enterRoomDialog.next()
         )
+    }
+
+    onActivate(context: SceneActivationContext<unknown>) {
+        super.onActivate(context)
+        if (this.fromMemory) {
+            this.lastMemoryPieceDialog.next()
+        }
     }
 }
