@@ -44,11 +44,26 @@ export class MemoryScene extends Scene {
         super.onInitialize(engine)
 
         // Texts
-        const text1 = new MyLabel({ pos: new Vector(40, 36) }, '1.A')
-        const text2 = new MyLabel({ pos: new Vector(120, 36) }, '1.B')
-        const text3 = new MyLabel({ pos: new Vector(40, 108) }, '1.C')
-        const text4 = new MyLabel({ pos: new Vector(120, 108) }, '1.D')
-        this.texts = [text1, text2, text3, text4]
+        const text1 = new MyLabel({ pos: new Vector(30, 24) }, 'A')
+        const text2 = new MyLabel({ pos: new Vector(85, 24) }, 'B')
+        const text3 = new MyLabel({ pos: new Vector(135, 24) }, 'C')
+        const text4 = new MyLabel({ pos: new Vector(30, 72) }, 'D')
+        const text5 = new MyLabel({ pos: new Vector(85, 72) }, 'E')
+        const text6 = new MyLabel({ pos: new Vector(135, 72) }, 'F')
+        const text7 = new MyLabel({ pos: new Vector(30, 120) }, 'G')
+        const text8 = new MyLabel({ pos: new Vector(85, 120) }, 'H')
+        const text9 = new MyLabel({ pos: new Vector(135, 120) }, 'I')
+        this.texts = [
+            text1,
+            text2,
+            text3,
+            text4,
+            text5,
+            text6,
+            text7,
+            text8,
+            text9,
+        ]
         this.texts.forEach(this.add.bind(this))
 
         // Pieces
@@ -226,8 +241,11 @@ export class MemoryScene extends Scene {
     onPreUpdate(engine: Engine, delta: number) {
         super.onPreUpdate(engine, delta)
 
-        // Handle button B
-        if (MyInputs.IsButtonBPressed(engine)) {
+        // Handle button A/B
+        if (
+            MyInputs.IsButtonBPressed(engine) ||
+            MyInputs.IsButtonAPressed(engine)
+        ) {
             if (this.isAnimating) {
                 // Complete animation early
                 this.exitAnimationEarly()
@@ -237,17 +255,6 @@ export class MemoryScene extends Scene {
             } else {
                 // Go back to the previous scene
                 void engine.goToScene(this.backScene)
-
-                // Play sound
-                MySounds.PlayMenuInteraction()
-            }
-        }
-
-        // Handle button A
-        if (MyInputs.IsButtonAPressed(engine)) {
-            if (this.isAnimating) {
-                // Complete animation early
-                this.exitAnimationEarly()
 
                 // Play sound
                 MySounds.PlayMenuInteraction()

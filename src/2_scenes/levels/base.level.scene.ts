@@ -100,10 +100,9 @@ export class BaseLevelScene extends Scene {
         this.player.onDoorEnter$.subscribe((door) => this.onDoorEnter(door))
 
         // Listen to the player opening a post-it
-        this.player.onPostItEnter$.subscribe((postit) => {
-            postit.kill()
-            void UnlockMemoryPiece(this.engine, 'level', postit.piece)
-        })
+        this.player.onPostItEnter$.subscribe((postit) =>
+            this.onPostItEnter(postit)
+        )
 
         // Death dialog
         if (
@@ -144,9 +143,14 @@ export class BaseLevelScene extends Scene {
         }
     }
 
-    private onDoorEnter(door: DoorActor) {
+    protected onDoorEnter(door: DoorActor) {
         // console.log(`Player entered door towards: ${door.dest}`)
         this.goToLevel(door.dest)
+    }
+
+    protected onPostItEnter(postit: PostItActor) {
+        postit.kill()
+        void UnlockMemoryPiece(this.engine, 'level', postit.piece)
     }
 
     public goToLevel(level: string) {
