@@ -60,6 +60,9 @@ class App {
         Object.values(Resources.font).forEach(
             this.loader.addResource.bind(this.loader)
         )
+        Object.values(Resources.levels).forEach(
+            this.loader.addResource.bind(this.loader)
+        )
     }
 
     private CreateEngine() {

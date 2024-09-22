@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset version="1.10" tiledversion="1.11.0" name="dungeon" tilewidth="16" tileheight="16" tilecount="100" columns="10">
+ <image source="../image/castle.png" width="160" height="160"/>
+ <tile id="1">
+  <properties>
+   <property name="solid" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="17">
+  <properties>
+   <property name="light" value="castle.candle"/>
+  </properties>
+ </tile>
+</tileset>

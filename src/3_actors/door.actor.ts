@@ -53,7 +53,7 @@ export class DoorActor extends Actor {
 
         // Animations
         const sheet = SpriteSheet.fromImageSource({
-            image: Resources.image.door,
+            image: Resources.image.tileset,
             grid: {
                 rows: 4,
                 columns: 4,

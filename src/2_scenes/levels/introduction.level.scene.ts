@@ -1,9 +1,8 @@
-import { Actor, Color, Engine, Sprite, Vector } from 'excalibur'
+import { Engine, Vector } from 'excalibur'
 import { take } from 'rxjs'
 import { Resources } from '../../0_assets/resources'
+import { MySounds } from '../../1_utils/sound_handling'
 import { DialogActor, DialogData } from '../../3_actors/dialog.actor'
-import { DoorActor } from '../../3_actors/door.actor'
-import { EngineConfigs } from '../../configs'
 import { BaseLevelScene } from './base.level.scene'
 
 export class IntroductionLevelScene extends BaseLevelScene {
@@ -11,33 +10,31 @@ export class IntroductionLevelScene extends BaseLevelScene {
 
     constructor() {
         super({
-            playerSpawnPos: new Vector(4, 7).scale(16),
+            playerSpawnTile: new Vector(4, 7),
+            tiledRes: Resources.levels.introduction,
         })
     }
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
+        MySounds.PauseMusicTheme()
 
-        // Background
-        const bg = new Actor({
-            name: 'Background',
-            pos: Vector.Zero,
-            anchor: Vector.Zero,
-            width: 160,
-            height: 144,
-            color: Color.Violet,
-            z: EngineConfigs.BackgroundZIndex,
-        })
-        bg.graphics.use(
-            new Sprite({
-                image: Resources.image.introductionRoom,
-            })
-        )
-        this.add(bg)
-
-        // Add exit door
-        const door = new DoorActor(new Vector(8, 7), true)
-        this.add(door)
+        // // Background
+        // const bg = new Actor({
+        //     name: 'Background',
+        //     pos: Vector.Zero,
+        //     anchor: Vector.Zero,
+        //     width: 160,
+        //     height: 144,
+        //     color: Color.Violet,
+        //     z: EngineConfigs.BackgroundZIndex,
+        // })
+        // bg.graphics.use(
+        //     new Sprite({
+        //         image: Resources.image.introductionRoom,
+        //     })
+        // )
+        // this.add(bg)
 
         // Add dialog
         this.dialog = new DialogActor(
@@ -45,7 +42,10 @@ export class IntroductionLevelScene extends BaseLevelScene {
                 text: '...\nWhy am I here?\n...\nI need to find a way out!',
             })
         )
-        this.dialog.completion$.subscribe(() => this.player.enable())
+        this.dialog.completion$.subscribe(() => {
+            this.player.enable()
+            MySounds.ResumeMusicTheme()
+        })
         this.add(this.dialog)
 
         // Animate player introduction

@@ -15,6 +15,7 @@ export class GameScene extends Scene {
         super.onActivate(context)
         MyLightPP.ClearLightPoints()
         MyLightPP.Disable()
+        MyLightPP.SetShowingDialog(false)
 
         // Load the level
         this.level = MyStorage.Retrieve<number>('level', 0)

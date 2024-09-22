@@ -4,8 +4,8 @@ import {
     Color,
     Engine,
     Label,
-    Rectangle,
     Scene,
+    Sprite,
     TextAlign,
     Vector,
 } from 'excalibur'
@@ -115,19 +115,14 @@ export class DialogActor extends Actor {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        // TODO: Add dialog sprite
-        this.graphics.use(
-            new Rectangle({
-                color: Color.Black,
-                width: this.width,
-                height: this.height,
-            })
-        )
+        // Add dialog background
+        const sprite = new Sprite({ image: Resources.image.dialog })
+        this.graphics.use(sprite)
 
         // Add dialog text
         this.text = new Label({
             text: '',
-            pos: new Vector(4, 4),
+            pos: new Vector(4, 6),
             anchor: Vector.Zero,
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Start,

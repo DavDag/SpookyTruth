@@ -1,11 +1,14 @@
+import { TiledResource } from '@excaliburjs/plugin-tiled'
 import { Engine, Scene, SceneActivationContext, Vector } from 'excalibur'
 import { MyInputs } from '../../1_utils/input_handling'
+import { LightActor, LightType } from '../../3_actors/light.actor'
 import { PlayerActor } from '../../3_actors/player.actor'
 import { MyLightPP } from '../../9_postprocessors/light.postprocessor'
 import { MyApp } from '../../app'
 
 export interface LevelConfigs {
-    playerSpawnPos: Vector
+    playerSpawnTile: Vector
+    tiledRes: TiledResource
 }
 
 export class BaseLevelScene extends Scene {
@@ -18,9 +21,25 @@ export class BaseLevelScene extends Scene {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
+        // Load the Tiled map
+        this.configs.tiledRes.addToScene(this)
+
+        // Create doors from the Tiled map
+        // TODO
+
+        // Create lights from the Tiled map
+        this.configs.tiledRes.getTilesByProperty('light').forEach((tile) => {
+            const l = new LightActor(
+                tile.exTile.pos.add(new Vector(0.5, 0.5).scale(16)),
+                (tile.tiledTile.properties.get('light') ??
+                    'castle.candle') as LightType
+            )
+            this.add(l)
+        })
+
         // Create the player at the spawn position
         this.player = new PlayerActor()
-        this.player.pos = this.configs.playerSpawnPos
+        this.player.pos = this.configs.playerSpawnTile.scale(16)
         this.add(this.player)
     }
 

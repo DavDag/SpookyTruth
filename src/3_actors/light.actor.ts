@@ -1,7 +1,7 @@
 import { Actor, Engine, Scene, Vector } from 'excalibur'
 import { LightPoint, MyLightPP } from '../9_postprocessors/light.postprocessor'
 
-type LightType = 'player.candle'
+export type LightType = 'player.candle' | 'castle.candle'
 
 export class LightActor extends Actor {
     private type: LightType
@@ -11,6 +11,8 @@ export class LightActor extends Actor {
         super({
             name: 'light',
             pos: pos,
+            width: 4,
+            height: 4,
         })
 
         this.type = type

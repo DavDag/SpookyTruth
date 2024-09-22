@@ -29,12 +29,16 @@ class SoundHandling {
         void Resources.music.musicTheme1.play()
     }
 
-    public PauseMusicTheme() {
-        void Resources.music.musicTheme1.pause()
-    }
-
     public StopMusicTheme() {
         void Resources.music.musicTheme1.stop()
+    }
+
+    public ResumeMusicTheme() {
+        void Resources.music.musicTheme1.play()
+    }
+
+    public PauseMusicTheme() {
+        void Resources.music.musicTheme1.pause()
     }
 
     public PlayMenuInteraction() {
