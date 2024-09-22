@@ -52,7 +52,7 @@ class FontHandling {
                     grid: {
                         rows: 3,
                         columns: 16,
-                        spriteWidth: 11,
+                        spriteWidth: 9,
                         spriteHeight: 13,
                     },
                     spacing: {
@@ -61,7 +61,7 @@ class FontHandling {
                             y: 3,
                         },
                         margin: {
-                            x: 5,
+                            x: 7,
                             y: 3,
                         },
                     },

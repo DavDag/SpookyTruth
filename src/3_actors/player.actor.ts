@@ -25,7 +25,8 @@ import { GhostActor } from './ghost.actor'
 import { LightActor } from './light.actor'
 
 export class PlayerActor extends Actor {
-    static readonly Speed = 32
+    static readonly Speed = 64
+    static readonly JumpSpeed = 200
 
     private dieSub = new Subject<void>()
     private onIntroductionEndSub = new Subject<void>()
@@ -42,6 +43,7 @@ export class PlayerActor extends Actor {
     private light: LightActor
     private direction: string = 'right'
     private nearDoor: DoorActor | null = null
+    private onGround = true
 
     constructor() {
         super({
@@ -118,6 +120,9 @@ export class PlayerActor extends Actor {
         super.onPreUpdate(engine, delta)
         if (!this.enabled) return
 
+        // Gravity
+        this.vel.y += 400 * (delta / 1000)
+
         // Movement
         const dir = Vector.Zero
         if (MyInputs.IsPadLeftHeld(engine)) {
@@ -137,8 +142,15 @@ export class PlayerActor extends Actor {
 
         // Handle button A
         if (MyInputs.IsButtonAPressed(engine)) {
+            // Open door
             if (this.nearDoor && this.nearDoor.canOpen()) {
                 this.animateEnterDoor()
+            } else {
+                // Jump
+                if (this.onGround) {
+                    this.vel.y = -PlayerActor.JumpSpeed
+                    this.onGround = false
+                }
             }
         }
     }
@@ -160,6 +172,11 @@ export class PlayerActor extends Actor {
         // Check for ghost collision
         if (other.owner instanceof GhostActor) {
             this.animateDie()
+        }
+
+        // Check for ground collision
+        if (other.owner.name === 'Walls' && side === Side.Bottom) {
+            this.onGround = true
         }
     }
 

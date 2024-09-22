@@ -82,7 +82,7 @@ export class GhostActor extends Actor {
         this.graphics.use(`idle.right`)
 
         // Collision
-        this.collider.useCircleCollider(20, new Vector(8, 8))
+        this.collider.useCircleCollider(24, new Vector(8, 8))
 
         // Movement
         this.actions.repeatForever((ctx) => {
