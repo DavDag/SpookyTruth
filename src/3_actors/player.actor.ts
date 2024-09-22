@@ -25,6 +25,7 @@ import { DoorActor } from './door.actor'
 import { GhostActor } from './ghost.actor'
 import { LightActor } from './light.actor'
 import { MirrorActor } from './mirror.actor'
+import { PostItActor } from './postit.actor'
 
 export class PlayerActor extends Actor {
     static readonly Speed = 64
@@ -41,6 +42,8 @@ export class PlayerActor extends Actor {
     public onDoorEnter$ = this.onDoorEnterSub.pipe(takeUntil(this.dieSub))
     private onMirrorEnterSub = new Subject<MirrorActor>()
     public onMirrorEnter$ = this.onMirrorEnterSub.pipe(takeUntil(this.dieSub))
+    private onPostItEnterSub = new Subject<PostItActor>()
+    public onPostItEnter$ = this.onPostItEnterSub.pipe(takeUntil(this.dieSub))
 
     private enabled = true
     private anims: { [key: string]: Animation } = {}
@@ -48,6 +51,7 @@ export class PlayerActor extends Actor {
     private direction: string = 'right'
     private nearDoor: DoorActor | null = null
     private nearMirror: MirrorActor | null = null
+    private nearPostIt: PostItActor | null = null
     private onGround = true
 
     constructor() {
@@ -152,6 +156,8 @@ export class PlayerActor extends Actor {
                 this.animateEnterDoor()
             } else if (this.nearMirror) {
                 this.animateEnterMirror()
+            } else if (this.nearPostIt) {
+                this.animateOpenPostIt()
             } else {
                 // Jump
                 if (this.onGround) {
@@ -179,6 +185,11 @@ export class PlayerActor extends Actor {
         // Check for mirror collision
         if (other.owner instanceof MirrorActor) {
             this.nearMirror = other.owner
+        }
+
+        // Check for post-it collision
+        if (other.owner instanceof PostItActor) {
+            this.nearPostIt = other.owner
         }
 
         // Check for ghost collision
@@ -260,8 +271,18 @@ export class PlayerActor extends Actor {
             .callMethod(() => MySounds.StopMusicTheme())
             .moveTo(this.nearMirror.pos, PlayerActor.Speed / 2)
             .delay(1000)
-            .callMethod(() => {
-                this.onMirrorEnterSub.next(this.nearMirror)
-            })
+            .callMethod(() => this.onMirrorEnterSub.next(this.nearMirror))
+    }
+
+    private animateOpenPostIt() {
+        this.enabled = false
+        this.vel = Vector.Zero
+        this.acc = Vector.Zero
+        this.graphics.use('idle.right')
+        this.actions.clearActions()
+        this.actions.delay(1000).callMethod(() => {
+            this.enabled = true
+            this.onPostItEnterSub.next(this.nearPostIt)
+        })
     }
 }

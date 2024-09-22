@@ -33,4 +33,5 @@
  </tile>
  <tile id="90" probability="20"/>
  <tile id="91" probability="2"/>
+ <tile id="96" type="postit"/>
 </tileset>

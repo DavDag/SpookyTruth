@@ -9,8 +9,10 @@ import { GhostActor } from '../../3_actors/ghost.actor'
 import { LightActor, LightType } from '../../3_actors/light.actor'
 import { MirrorActor } from '../../3_actors/mirror.actor'
 import { PlayerActor } from '../../3_actors/player.actor'
+import { PostItActor } from '../../3_actors/postit.actor'
 import { MyLightPP } from '../../9_postprocessors/light.postprocessor'
 import { MyApp } from '../../app'
+import { UnlockMemoryPiece } from '../memory.scene'
 
 export interface LevelConfigs {
     name: string
@@ -38,6 +40,15 @@ export class BaseLevelScene extends Scene {
         this.configs.tiledRes.getTilesByClassName('mirror').forEach((tile) => {
             const m = new MirrorActor(tile.exTile.pos)
             this.add(m)
+        })
+
+        // Create post-its from the Tiled map
+        this.configs.tiledRes.getObjectsByClassName('postit').forEach((obj) => {
+            const p = new PostItActor(
+                new Vector(obj.x, obj.y - 16),
+                parseInt(obj.name)
+            )
+            this.add(p)
         })
 
         // Create ghosts from the Tiled map
@@ -87,6 +98,12 @@ export class BaseLevelScene extends Scene {
 
         // Listen to the player entering a door
         this.player.onDoorEnter$.subscribe((door) => this.onDoorEnter(door))
+
+        // Listen to the player opening a post-it
+        this.player.onPostItEnter$.subscribe((postit) => {
+            postit.kill()
+            void UnlockMemoryPiece(this.engine, 'level', postit.piece)
+        })
 
         // Death dialog
         if (

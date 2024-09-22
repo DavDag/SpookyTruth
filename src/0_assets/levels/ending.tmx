@@ -27,6 +27,9 @@
   </data>
  </layer>
  <objectgroup id="5" name="Decorations">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
   <object id="9" name="spawn" gid="67" x="32" y="128" width="16" height="16"/>
   <object id="7" name="level9" gid="87" x="16" y="128" width="16" height="16"/>
  </objectgroup>
