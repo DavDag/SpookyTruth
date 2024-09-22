@@ -49,7 +49,7 @@ export class GameBoyPostProcessor implements PostProcessor {
     private _isDebugModeOn: boolean = false
 
     constructor() {
-        this._palette = MyStorage.Retrieve<PaletteName>('palette', 'A')
+        this._palette = MyStorage.Retrieve<PaletteName>('palette', 'C')
     }
 
     initialize(gl: WebGL2RenderingContext) {

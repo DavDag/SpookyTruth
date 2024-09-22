@@ -1,8 +1,11 @@
 import { TiledResource } from '@excaliburjs/plugin-tiled'
 import { Engine, Scene, SceneActivationContext, Vector } from 'excalibur'
 import { MyInputs } from '../../1_utils/input_handling'
+import { MySounds } from '../../1_utils/sound_handling'
 import { MyStorage } from '../../1_utils/storage'
+import { DialogActor, DialogData } from '../../3_actors/dialog.actor'
 import { DoorActor } from '../../3_actors/door.actor'
+import { GhostActor } from '../../3_actors/ghost.actor'
 import { LightActor, LightType } from '../../3_actors/light.actor'
 import { PlayerActor } from '../../3_actors/player.actor'
 import { MyLightPP } from '../../9_postprocessors/light.postprocessor'
@@ -14,6 +17,7 @@ export interface LevelConfigs {
 }
 
 export class BaseLevelScene extends Scene {
+    private deathDialog: DialogActor
     protected player: PlayerActor
 
     constructor(private configs: LevelConfigs) {
@@ -27,6 +31,15 @@ export class BaseLevelScene extends Scene {
         this.configs.tiledRes.getObjectsByClassName('door').forEach((obj) => {
             const d = new DoorActor(new Vector(obj.x, obj.y - 16), obj.name)
             this.add(d)
+        })
+
+        // Create ghosts from the Tiled map
+        this.configs.tiledRes.getObjectsByClassName('ghost').forEach((obj) => {
+            const g = new GhostActor(obj.name, new Vector(obj.x, obj.y - 16), {
+                wanderingDistance:
+                    (obj.properties.get('wandering_dist') as number) ?? 0,
+            })
+            this.add(g)
         })
 
         // Create lights from the Tiled map
@@ -60,13 +73,37 @@ export class BaseLevelScene extends Scene {
         })
 
         // Camera strategy
-        this.camera.strategy.elasticToActor(this.player, 0.1, 0.1)
+        this.camera.strategy.lockToActor(this.player)
 
         // Load the Tiled map (& camera strategy using plugin)
         this.configs.tiledRes.addToScene(this)
 
         // Listen to the player entering a door
         this.player.onDoorEnter$.subscribe((door) => this.onDoorEnter(door))
+
+        // Death dialog
+        if (
+            MyStorage.Retrieve('deathCount', 0) > 0 &&
+            MyStorage.Retrieve('deathDialog', 0) === 0
+        ) {
+            // First death
+            this.deathDialog = new DialogActor(
+                new DialogData({
+                    text: "I'm so scared by those ghosts...\nI should be more careful.",
+                })
+            )
+            this.deathDialog.completion$.subscribe(() => {
+                this.player.enable()
+                MySounds.ResumeMusicTheme()
+                MyStorage.Store('deathDialog', 1)
+            })
+            this.add(this.deathDialog)
+
+            // Start the dialog
+            MySounds.PauseMusicTheme()
+            this.player.disable()
+            this.deathDialog.actions.callMethod(() => this.deathDialog.next())
+        }
     }
 
     onActivate(context: SceneActivationContext<unknown>) {
@@ -84,7 +121,7 @@ export class BaseLevelScene extends Scene {
     }
 
     private onDoorEnter(door: DoorActor) {
-        console.log(`Player entered door towards: ${door.dest}`)
+        // console.log(`Player entered door towards: ${door.dest}`)
         this.goToLevel(door.dest)
     }
 

@@ -40,6 +40,9 @@ export class CreditsScene extends Scene {
         this.text.actions.clearActions()
         this.text.pos = new Vector(80, 140)
         this.text.actions.moveBy(0, -480, 25)
+
+        // Play theme
+        MySounds.PlayCreditsTheme()
     }
 
     onPreUpdate(engine: Engine, delta: number) {
@@ -50,6 +53,9 @@ export class CreditsScene extends Scene {
 
             // Play sound
             MySounds.PlayMenuInteraction()
+
+            // Stop theme
+            MySounds.StopCreditsTheme()
         }
     }
 }

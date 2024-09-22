@@ -44,7 +44,7 @@
     "openFiles": [
     ],
     "project": "levels.tiled-project",
-    "property.type": "bool",
+    "property.type": "int",
     "recentFiles": [
         "dungeon.tsx"
     ],

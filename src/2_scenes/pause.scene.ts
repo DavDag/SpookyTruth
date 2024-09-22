@@ -169,7 +169,6 @@ export class PauseScene extends Scene {
                     void engine.goToScene('memory', {
                         sceneActivationData: {
                             backScene: 'pause',
-                            memory: 'accident',
                         },
                     })
                     break

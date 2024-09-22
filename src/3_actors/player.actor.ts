@@ -18,8 +18,10 @@ import {
 import { Subject, take, takeUntil } from 'rxjs'
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
+import { MyStorage } from '../1_utils/storage'
 import { EngineConfigs } from '../configs'
 import { DoorActor } from './door.actor'
+import { GhostActor } from './ghost.actor'
 import { LightActor } from './light.actor'
 
 export class PlayerActor extends Actor {
@@ -139,10 +141,6 @@ export class PlayerActor extends Actor {
                 this.animateEnterDoor()
             }
         }
-
-        if (MyInputs.IsButtonSelectPressed(engine)) {
-            this.animateDie()
-        }
     }
 
     onCollisionStart(
@@ -152,10 +150,16 @@ export class PlayerActor extends Actor {
         contact: CollisionContact
     ) {
         super.onCollisionStart(self, other, side, contact)
+        // console.log('PlayerActor.onCollisionStart', other.owner.name)
 
         // Check for door collision
         if (other.owner instanceof DoorActor) {
             this.nearDoor = other.owner
+        }
+
+        // Check for ghost collision
+        if (other.owner instanceof GhostActor) {
+            this.animateDie()
         }
     }
 
@@ -178,7 +182,13 @@ export class PlayerActor extends Actor {
 
     public animateDie() {
         this.enabled = false
+        this.vel = Vector.Zero
+        this.acc = Vector.Zero
         this.graphics.use('die')
+        this.actions.delay(2000).callMethod(() => {
+            void this.scene.engine.goToScene('game')
+        })
+        MyStorage.Store('deathCount', MyStorage.Retrieve('deathCount', 0) + 1)
     }
 
     private animateEnterDoor() {

@@ -52,16 +52,16 @@ class FontHandling {
                     grid: {
                         rows: 3,
                         columns: 16,
-                        spriteWidth: 9,
+                        spriteWidth: 11,
                         spriteHeight: 13,
                     },
                     spacing: {
                         originOffset: {
-                            x: 4,
-                            y: 4,
+                            x: 3,
+                            y: 3,
                         },
                         margin: {
-                            x: 7,
+                            x: 5,
                             y: 3,
                         },
                     },

@@ -26,8 +26,5 @@ export class Level1LevelScene extends BaseLevelScene {
             this.player.enable()
         })
         this.add(this.dialog)
-
-        // Enable player
-        this.player.enable()
     }
 }

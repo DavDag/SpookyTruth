@@ -16,6 +16,7 @@ import DungeonTsx from './levels/dungeon.tsx' // @ts-ignore
 import IntroductionTmx from './levels/introduction.tmx' // @ts-ignore
 import Level1Tmx from './levels/level1.tmx' // @ts-ignore
 import MusicTheme1Sound from './music/music_theme1.mp3' // @ts-ignore
+import MusicTheme3Sound from './music/music_theme3.mp3' // @ts-ignore
 import MenuInteractionSound from './sfx/menu_interaction.wav'
 
 const TiledArgs: (name: string, path: string) => TiledResourceOptions = (
@@ -56,6 +57,7 @@ export const Resources = {
     },
     music: {
         musicTheme1: new Sound(MusicTheme1Sound),
+        musicTheme3: new Sound(MusicTheme3Sound),
     },
     sfx: {
         menuInteraction: new Sound(MenuInteractionSound),

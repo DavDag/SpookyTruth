@@ -13,8 +13,8 @@ export class EngineConfigs {
     static TiledDecorations2LayerZIndex: number = 30
 
     static DoorZIndex: number = 21
-    static PlayerZIndex: number = 22
-
+    static GhostZIndex: number = 22
+    static PlayerZIndex: number = 23
     static DialogZIndex: number = 31
     static InteractionsZIndex: number = 32
 

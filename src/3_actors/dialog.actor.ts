@@ -87,7 +87,6 @@ export class DialogData {
 export class DialogActor extends Actor {
     private dieSub = new Subject<void>()
     private completionSub = new Subject<void>()
-
     public completion$ = this.completionSub.pipe(takeUntil(this.dieSub))
 
     private data: DialogData
@@ -134,6 +133,31 @@ export class DialogActor extends Actor {
         this.interaction.hide()
     }
 
+    onPreUpdate(engine: Engine, delta: number) {
+        super.onPreUpdate(engine, delta)
+        if (!this.graphics.visible) return
+
+        // Update pos to follow camera
+        this.pos.x = engine.currentScene.camera.pos.x - 80
+
+        // Check for player input
+        if (MyInputs.IsButtonAPressed(engine)) {
+            this.text.actions.clearActions()
+            if (this.data.isComplete()) {
+                this.next()
+            } else {
+                this.data.complete()
+                this.text.text = this.data.text
+                this.text.actions
+                    .delay(500)
+                    .callMethod(() => this.interaction.show())
+            }
+
+            // Play sound
+            MySounds.PlayMenuInteraction()
+        }
+    }
+
     onPreKill(scene: Scene) {
         super.onPreKill(scene)
         this.dieSub.next()
@@ -168,27 +192,5 @@ export class DialogActor extends Actor {
             }, l)
             .delay(500)
             .callMethod(() => this.interaction.show())
-    }
-
-    onPreUpdate(engine: Engine, delta: number) {
-        super.onPreUpdate(engine, delta)
-        if (!this.graphics.visible) return
-
-        // Check for player input
-        if (MyInputs.IsButtonAPressed(engine)) {
-            this.text.actions.clearActions()
-            if (this.data.isComplete()) {
-                this.next()
-            } else {
-                this.data.complete()
-                this.text.text = this.data.text
-                this.text.actions
-                    .delay(500)
-                    .callMethod(() => this.interaction.show())
-            }
-
-            // Play sound
-            MySounds.PlayMenuInteraction()
-        }
     }
 }
