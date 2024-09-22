@@ -1,6 +1,7 @@
 import { TiledResource } from '@excaliburjs/plugin-tiled'
 import { Engine, Scene, SceneActivationContext, Vector } from 'excalibur'
 import { MyInputs } from '../../1_utils/input_handling'
+import { MyStorage } from '../../1_utils/storage'
 import { DoorActor } from '../../3_actors/door.actor'
 import { LightActor, LightType } from '../../3_actors/light.actor'
 import { PlayerActor } from '../../3_actors/player.actor'
@@ -8,7 +9,7 @@ import { MyLightPP } from '../../9_postprocessors/light.postprocessor'
 import { MyApp } from '../../app'
 
 export interface LevelConfigs {
-    playerSpawnTile: Vector
+    name: string
     tiledRes: TiledResource
 }
 
@@ -22,12 +23,9 @@ export class BaseLevelScene extends Scene {
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
 
-        // Load the Tiled map
-        this.configs.tiledRes.addToScene(this)
-
         // Create doors from the Tiled map
-        this.configs.tiledRes.getTilesByProperty('door').forEach((tile) => {
-            const d = new DoorActor(tile.exTile.pos)
+        this.configs.tiledRes.getObjectsByClassName('door').forEach((obj) => {
+            const d = new DoorActor(new Vector(obj.x, obj.y - 16), obj.name)
             this.add(d)
         })
 
@@ -43,14 +41,32 @@ export class BaseLevelScene extends Scene {
 
         // Create the player at the spawn position
         this.player = new PlayerActor()
-        this.player.pos = this.configs.playerSpawnTile.scale(16)
+        this.player.pos.add(new Vector(0.5, 0.5).scale(16))
         this.add(this.player)
 
-        // Listen to the player entering a door
-        this.player.onDoorEnter$.subscribe((door) => {
-            console.log('Player entered door', door)
-            // TODO: Change level
+        // Spawn on the spawn point
+        const obj = this.configs.tiledRes.getObjectsByName('spawn')?.[0]
+        this.player.pos.x = obj?.x ?? 0
+        this.player.pos.y = (obj?.y ?? 16) - 16
+
+        // Spawn on the last door used
+        const lastLevelName: string = MyStorage.Retrieve(
+            'lastLevelName',
+            'spawn'
+        )
+        this.configs.tiledRes.getObjectsByName(lastLevelName).forEach((obj) => {
+            this.player.pos.x = obj.x
+            this.player.pos.y = obj.y - 16
         })
+
+        // Camera strategy
+        this.camera.strategy.elasticToActor(this.player, 0.1, 0.1)
+
+        // Load the Tiled map (& camera strategy using plugin)
+        this.configs.tiledRes.addToScene(this)
+
+        // Listen to the player entering a door
+        this.player.onDoorEnter$.subscribe((door) => this.onDoorEnter(door))
     }
 
     onActivate(context: SceneActivationContext<unknown>) {
@@ -65,5 +81,19 @@ export class BaseLevelScene extends Scene {
         if (MyInputs.IsButtonStartPressed(engine)) {
             MyApp.OpenPause()
         }
+    }
+
+    private onDoorEnter(door: DoorActor) {
+        console.log(`Player entered door towards: ${door.dest}`)
+        this.goToLevel(door.dest)
+    }
+
+    public goToLevel(level: string) {
+        MyStorage.Store('lastLevelName', this.configs.name)
+        void this.engine.goToScene('game', {
+            sceneActivationData: {
+                level,
+            },
+        })
     }
 }

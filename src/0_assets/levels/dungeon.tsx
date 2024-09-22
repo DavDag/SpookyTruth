@@ -18,7 +18,7 @@
  </tile>
  <tile id="70" probability="2"/>
  <tile id="81" probability="2"/>
- <tile id="86">
+ <tile id="86" type="door">
   <properties>
    <property name="door" value="y"/>
    <property name="door.closed" type="bool" value="true"/>
@@ -30,6 +30,6 @@
    <property name="door.closed" type="bool" value="false"/>
   </properties>
  </tile>
- <tile id="90" probability="10"/>
+ <tile id="90" probability="20"/>
  <tile id="91" probability="2"/>
 </tileset>

@@ -182,6 +182,7 @@ export class PauseScene extends Scene {
                 // Quit
                 case 3:
                     engine.removeScene('level')
+                    MyStorage.Store('lastLevelName', '')
                     void engine.goToScene('menu').then(() => {
                         this.resetSelector()
                     })

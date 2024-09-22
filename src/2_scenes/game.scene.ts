@@ -1,24 +1,31 @@
 import { Engine, Scene, SceneActivationContext } from 'excalibur'
+import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
 import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { IntroductionLevelScene } from './levels/introduction.level.scene'
-import { MySounds } from '../1_utils/sound_handling'
+import { Level1LevelScene } from './levels/level1.level.scene'
+
+export interface GameSceneActivationCtx {
+    level?: string
+}
 
 export class GameScene extends Scene {
-    private level: number = 0
+    private level: string = 'introduction'
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
     }
 
-    onActivate(context: SceneActivationContext<unknown>) {
+    onActivate(context: SceneActivationContext<GameSceneActivationCtx>) {
         super.onActivate(context)
         MyLightPP.ClearLightPoints()
         MyLightPP.Disable()
         MyLightPP.SetShowingDialog(false)
 
         // Load the level
-        this.level = MyStorage.Retrieve<number>('level', 0)
+        this.level =
+            context?.data?.level ?? MyStorage.Retrieve('level', 'introduction')
+        MyStorage.Store('level', this.level)
         this.openLevel()
 
         // Start the music
@@ -26,11 +33,19 @@ export class GameScene extends Scene {
     }
 
     private openLevel() {
+        this.engine.removeScene('level')
         switch (this.level) {
-            case 0:
+            case 'introduction':
                 this.engine.addScene('level', new IntroductionLevelScene())
-                void this.engine.goToScene('level')
                 break
+            case 'level1':
+                this.engine.addScene('level', new Level1LevelScene())
+                break
+            default:
+                console.warn('Unknown level:', this.level)
+                void this.engine.goToScene('menu')
+                return
         }
+        void this.engine.goToScene('level')
     }
 }

@@ -2,6 +2,7 @@ import { Actor, Color, Engine, Sprite, Vector } from 'excalibur'
 import { take } from 'rxjs'
 import { Resources } from '../../0_assets/resources'
 import { MySounds } from '../../1_utils/sound_handling'
+import { MyStorage } from '../../1_utils/storage'
 import { DialogActor, DialogData } from '../../3_actors/dialog.actor'
 import { BaseLevelScene } from './base.level.scene'
 
@@ -10,14 +11,13 @@ export class IntroductionLevelScene extends BaseLevelScene {
 
     constructor() {
         super({
-            playerSpawnTile: new Vector(4, 7),
+            name: 'introduction',
             tiledRes: Resources.levels.introduction,
         })
     }
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine)
-        MySounds.PauseMusicTheme()
 
         // // Background
         const bg = new Actor({
@@ -45,14 +45,20 @@ export class IntroductionLevelScene extends BaseLevelScene {
         this.dialog.completion$.subscribe(() => {
             this.player.enable()
             MySounds.ResumeMusicTheme()
+            MyStorage.Store('introduction', 1)
         })
         this.add(this.dialog)
 
         // Animate player introduction
-        this.player.disable()
-        this.player.actions.callMethod(() => this.player.animateIntroduction())
-        this.player.onIntroductionEnd$
-            .pipe(take(1))
-            .subscribe(() => this.dialog.next())
+        if (!MyStorage.Retrieve('introduction', 0)) {
+            MySounds.PauseMusicTheme()
+            this.player.disable()
+            this.player.actions.callMethod(() =>
+                this.player.animateIntroduction()
+            )
+            this.player.onIntroductionEnd$
+                .pipe(take(1))
+                .subscribe(() => this.dialog.next())
+        }
     }
 }

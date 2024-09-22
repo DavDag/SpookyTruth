@@ -12,19 +12,25 @@
             "scaleInEditor": 8
         },
         "introduction.tmx": {
+            "expandedObjectLayers": [
+                7
+            ],
             "scale": 8,
-            "selectedLayer": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 92.375,
-                "y": 73.9375
+                "x": 120,
+                "y": 136.0625
             }
         },
         "level1.tmx": {
-            "scale": 5.59609375,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 5.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 176.73042021499376,
-                "y": 79.43040625436271
+                "x": 296,
+                "y": 135.90909090909088
             }
         }
     },
@@ -38,7 +44,7 @@
     "openFiles": [
     ],
     "project": "levels.tiled-project",
-    "property.type": "float",
+    "property.type": "bool",
     "recentFiles": [
         "dungeon.tsx"
     ],

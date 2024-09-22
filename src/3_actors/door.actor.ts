@@ -27,7 +27,10 @@ export class DoorActor extends Actor {
 
     public open$ = this.openSub.pipe(takeUntil(this.dieSub))
 
-    constructor(pos: Vector) {
+    constructor(
+        pos: Vector,
+        public readonly dest: string
+    ) {
         super({
             name: 'door',
             pos: pos,

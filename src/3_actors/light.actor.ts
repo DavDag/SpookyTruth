@@ -26,7 +26,9 @@ export class LightActor extends Actor {
         super.onPreUpdate(engine, delta)
 
         // Update light position
-        this.lightPoint.pos = this.getGlobalPos()
+        this.lightPoint.pos = engine.worldToScreenCoordinates(
+            this.getGlobalPos()
+        )
     }
 
     onPreKill(scene: Scene) {

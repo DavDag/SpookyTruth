@@ -35,7 +35,7 @@ export class PlayerActor extends Actor {
     private onDoorEnterSub = new Subject<DoorActor>()
     public onDoorEnter$ = this.onDoorEnterSub.pipe(takeUntil(this.dieSub))
 
-    private enabled = false
+    private enabled = true
     private anims: { [key: string]: Animation } = {}
     private light: LightActor
     private direction: string = 'right'

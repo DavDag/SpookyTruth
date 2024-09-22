@@ -26,7 +26,9 @@ class SoundHandling {
     }
 
     public PlayMusicTheme() {
-        void Resources.music.musicTheme1.play()
+        if (!Resources.music.musicTheme1.isPlaying()) {
+            void Resources.music.musicTheme1.play()
+        }
     }
 
     public StopMusicTheme() {
