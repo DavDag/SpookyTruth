@@ -7,33 +7,32 @@ import {
 } from 'excalibur'
 import { MyStorage } from '../1_utils/storage'
 
-// https://lospec.com/palette-list
 const PALETTES = {
-    kirokaze: [
+    A: [
         Color.fromHex('#332c50'),
         Color.fromHex('#46878f'),
         Color.fromHex('#94e344'),
         Color.fromHex('#e2f3e4'),
     ],
-    icecream: [
+    B: [
         Color.fromHex('#7c3f58'),
         Color.fromHex('#eb6b6f'),
         Color.fromHex('#f9a875'),
         Color.fromHex('#fff6d3'),
     ],
-    '2bit_demichrome': [
+    C: [
         Color.fromHex('#211e20'),
         Color.fromHex('#555568'),
         Color.fromHex('#a0a08b'),
         Color.fromHex('#e9efec'),
     ],
-    lava: [
+    D: [
         Color.fromHex('#051f39'),
         Color.fromHex('#4a2480'),
         Color.fromHex('#c53a9d'),
         Color.fromHex('#ffb6de'),
     ],
-    asdasd: [
+    E: [
         Color.fromHex('#2a1c3c'),
         Color.fromHex('#7550e8'),
         Color.fromHex('#608fcf'),
@@ -46,11 +45,11 @@ export type PaletteName = keyof typeof PALETTES
 export class GameBoyPostProcessor implements PostProcessor {
     private _shader: ScreenShader
     private _isShaderDirty: boolean = true
-    private _palette: PaletteName = 'kirokaze'
+    private _palette: PaletteName = 'A'
     private _isDebugModeOn: boolean = false
 
     constructor() {
-        this._palette = MyStorage.Retrieve<PaletteName>('palette', 'kirokaze')
+        this._palette = MyStorage.Retrieve<PaletteName>('palette', 'A')
     }
 
     initialize(gl: WebGL2RenderingContext) {
