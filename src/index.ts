@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
 const obs = new MutationObserver(() => {
     const btn = document.getElementById('excalibur-play')
     document.getElementById('custom-start-overlay-play-btn').style.display =
-        !!btn ? 'grid' : 'none'
+        !!btn ? 'block' : 'none'
 })
 
 obs.observe(document.body, { childList: true })

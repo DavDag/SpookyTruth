@@ -13,6 +13,7 @@ export class GameScene extends Scene {
 
     onActivate(context: SceneActivationContext<unknown>) {
         super.onActivate(context)
+        MyLightPP.ClearLightPoints()
         MyLightPP.Disable()
 
         // Load the level

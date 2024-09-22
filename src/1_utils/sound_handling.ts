@@ -79,10 +79,12 @@ class SoundHandling {
         MyStorage.Store('musicVolume', this.musicVolume)
 
         // SFX
-        Resources.sfx.menuInteraction.volume = this.sfxVolume
+        Resources.sfx.menuInteraction.volume =
+            this.sfxVolume * this.sfxVolume * this.sfxVolume
 
         // Music
-        Resources.music.musicTheme1.volume = this.musicVolume
+        Resources.music.musicTheme1.volume =
+            this.musicVolume * this.musicVolume * this.musicVolume
     }
 }
 

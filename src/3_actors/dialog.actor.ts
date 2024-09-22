@@ -4,6 +4,7 @@ import {
     Color,
     Engine,
     Label,
+    Rectangle,
     Scene,
     TextAlign,
     Vector,
@@ -105,6 +106,7 @@ export class DialogActor extends Actor {
             width: 160,
             height: 48,
             color: Color.Violet,
+            z: EngineConfigs.DialogZIndex,
         })
 
         this.data = data
@@ -114,6 +116,13 @@ export class DialogActor extends Actor {
         super.onInitialize(engine)
 
         // TODO: Add dialog sprite
+        this.graphics.use(
+            new Rectangle({
+                color: Color.Black,
+                width: this.width,
+                height: this.height,
+            })
+        )
 
         // Add dialog text
         this.text = new Label({

@@ -7,14 +7,25 @@ import {
 } from 'excalibur'
 
 export class LightPoint {
+    private _isInvalid: boolean
     private _isDirty: boolean
     private _pos: Vector
     private _intensity: number // pixel distance
 
     constructor(pos: Vector, intensity: number) {
+        this._isInvalid = false
         this._isDirty = true
         this._pos = pos
         this._intensity = intensity
+    }
+
+    public get isInvalid() {
+        return this._isInvalid
+    }
+
+    public invalidate() {
+        console.warn('LightPoint invalidated')
+        this._isInvalid = true
     }
 
     public get pos() {
@@ -41,6 +52,7 @@ export class LightPoint {
 }
 
 // TODO: Think about adding lightning
+// TODO: remove lights when exiting the scene..
 
 export class LightPostProcessor implements PostProcessor {
     private _shader: ScreenShader
@@ -163,6 +175,12 @@ void main() {
         } else {
             console.warn('LightPoint not found')
         }
+    }
+
+    public ClearLightPoints() {
+        this._lights.forEach((lp) => lp.invalidate())
+        this._lights = []
+        this._isShaderDirty = true
     }
 
     public SetShowingDialog(showing: boolean) {

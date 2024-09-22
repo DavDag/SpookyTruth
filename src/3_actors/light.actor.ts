@@ -26,6 +26,7 @@ export class LightActor extends Actor {
 
     onPreKill(scene: Scene) {
         super.onPreKill(scene)
+        console.log('LightActor.onPreKill', this.type)
         MyLightPP.RemoveLightPoint(this.lightPoint)
     }
 }

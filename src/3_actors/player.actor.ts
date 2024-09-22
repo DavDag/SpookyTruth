@@ -6,9 +6,11 @@ import {
     Color,
     Engine,
     range,
+    Scene,
     SpriteSheet,
     Vector,
 } from 'excalibur'
+import { Subject, takeUntil } from 'rxjs'
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { EngineConfigs } from '../configs'
@@ -17,10 +19,16 @@ import { LightActor } from './light.actor'
 export class PlayerActor extends Actor {
     static readonly Speed = 32
 
+    private dieSub = new Subject<void>()
+    private onIntroductionEndSub = new Subject<void>()
+    public onIntroductionEnd$ = this.onIntroductionEndSub.pipe(
+        takeUntil(this.dieSub)
+    )
+
     private enabled = false
     private anims: { [key: string]: Animation } = {}
-
     private light: LightActor
+    private direction: string = 'right'
 
     constructor() {
         super({
@@ -50,27 +58,36 @@ export class PlayerActor extends Actor {
             image: Resources.image.player,
             grid: {
                 rows: 4,
-                columns: 4,
-                spriteWidth: 16,
-                spriteHeight: 16,
+                columns: 7,
+                spriteWidth: 48,
+                spriteHeight: 32,
             },
         })
-        this.anims['introduction'] = Animation.fromSpriteSheet(
+        this.graphics.offset = new Vector(-16, -16)
+        this.anims['die'] = Animation.fromSpriteSheet(
             sprites,
-            range(0, 3),
-            500,
+            range(21, 27),
+            200,
             AnimationStrategy.Freeze
         )
-        this.anims['idle'] = Animation.fromSpriteSheet(
+        this.anims['introduction'] = this.anims['die'].clone()
+        this.anims['introduction'].reverse()
+        this.anims['introduction'].events.on('end', () => {
+            this.graphics.use(`idle.${this.direction}`)
+            this.onIntroductionEndSub.next()
+        })
+        this.anims['idle.right'] = Animation.fromSpriteSheet(
             sprites,
-            range(4, 7),
-            150,
-            AnimationStrategy.PingPong
+            range(0, 6),
+            100,
+            AnimationStrategy.Loop
         )
+        this.anims['idle.left'] = this.anims['idle.right'].clone()
+        this.anims['idle.left'].flipHorizontal = true
         this.anims['walk.right'] = Animation.fromSpriteSheet(
             sprites,
-            range(8, 11),
-            150,
+            range(7, 13),
+            100,
             AnimationStrategy.Loop
         )
         this.anims['walk.left'] = this.anims['walk.right'].clone()
@@ -80,7 +97,7 @@ export class PlayerActor extends Actor {
         )
 
         // Start with the idle animation
-        this.graphics.use('idle')
+        this.graphics.use(`idle.${this.direction}`)
     }
 
     onPreUpdate(engine: Engine, delta: number) {
@@ -95,14 +112,19 @@ export class PlayerActor extends Actor {
         if (MyInputs.IsPadRightHeld(engine)) {
             dir.x += 1
         }
-
         if (dir.x !== 0) {
             this.vel.x = dir.x * PlayerActor.Speed
-            this.graphics.use('walk.' + (dir.x > 0 ? 'right' : 'left'))
+            this.direction = dir.x > 0 ? 'right' : 'left'
+            this.graphics.use(`walk.${this.direction}`)
         } else {
             this.vel.x = 0
-            this.graphics.use('idle')
+            this.graphics.use(`idle.${this.direction}`)
         }
+    }
+
+    onPreKill(scene: Scene) {
+        super.onPreKill(scene)
+        this.dieSub.next()
     }
 
     public enable() {
@@ -113,13 +135,7 @@ export class PlayerActor extends Actor {
         this.enabled = false
     }
 
-    public animateIntroduction(): Promise<void> {
+    public animateIntroduction() {
         this.graphics.use('introduction')
-        this.anims['introduction'].events.clear()
-        return new Promise<void>((res, rej) => {
-            this.anims['introduction'].events.on('end', () => {
-                res()
-            })
-        })
     }
 }

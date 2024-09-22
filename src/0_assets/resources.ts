@@ -7,7 +7,8 @@ import DoorImage from './image/door.png' // @ts-ignore
 import GameBoyImage from './image/gameboy.png' // @ts-ignore
 import InteractionsImage from './image/interactions.png' // @ts-ignore
 import IntroductionRoomImage from './image/introduction_room.png' // @ts-ignore
-import PlayerImage from './image/player.png' // @ts-ignore
+// import PlayerImage from './image/player.png' // @ts-ignore
+import CharacterImage from './image/character.png' // @ts-ignore
 import MusicTheme1Sound from './music/music_theme1.mp3' // @ts-ignore
 import MenuInteractionSound from './sfx/menu_interaction.wav' // @ts-ignore
 
@@ -15,7 +16,7 @@ export const Resources = {
     image: {
         gameboy: new ImageSource(GameBoyImage),
         checkboard: new ImageSource(CheckboardImage),
-        player: new ImageSource(PlayerImage),
+        player: new ImageSource(CharacterImage),
         door: new ImageSource(DoorImage),
         interactions: new ImageSource(InteractionsImage),
         introductionRoom: new ImageSource(IntroductionRoomImage),
