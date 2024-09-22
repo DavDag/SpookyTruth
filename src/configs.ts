@@ -10,11 +10,13 @@ export class EngineConfigs {
     static TiledBackgroundLayerZIndex: number = 0
     static TiledWallLayerZIndex: number = 10
     static TiledDecorationsLayerZIndex: number = 20
+    static TiledDecorations2LayerZIndex: number = 30
 
     static DoorZIndex: number = 21
     static PlayerZIndex: number = 22
-    static DialogZIndex: number = 23
-    static InteractionsZIndex: number = 24
+
+    static DialogZIndex: number = 31
+    static InteractionsZIndex: number = 32
 
     static ButtonA: Keys[] = [Keys.J, Keys.Z]
     static ButtonB: Keys[] = [Keys.X, Keys.K]

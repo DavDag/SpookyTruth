@@ -31,7 +31,13 @@ const PALETTES = {
         Color.fromHex('#051f39'),
         Color.fromHex('#4a2480'),
         Color.fromHex('#c53a9d'),
-        Color.fromHex('#ff8e80'),
+        Color.fromHex('#ffb6de'),
+    ],
+    asdasd: [
+        Color.fromHex('#2a1c3c'),
+        Color.fromHex('#7550e8'),
+        Color.fromHex('#608fcf'),
+        Color.fromHex('#8be5ff'),
     ],
 }
 

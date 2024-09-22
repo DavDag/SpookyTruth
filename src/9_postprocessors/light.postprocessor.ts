@@ -99,7 +99,7 @@ void main() {
         if (dist < lightIntensity) {
             float dOverI = (dist / lightIntensity);
             float intensity = (dOverI > 0.8) ? 0.5 : 1.0;
-            fragColor.rgb += tex.rgb * intensity;
+            fragColor.rgb = max(fragColor.rgb, tex.rgb * intensity);
         }
     }
 }`

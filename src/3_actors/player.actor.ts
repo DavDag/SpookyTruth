@@ -90,17 +90,17 @@ export class PlayerActor extends Actor {
         })
         this.anims['idle.right'] = Animation.fromSpriteSheet(
             sprites,
-            range(0, 6),
-            100,
-            AnimationStrategy.Loop
+            range(0, 2),
+            200,
+            AnimationStrategy.PingPong
         )
         this.anims['idle.left'] = this.anims['idle.right'].clone()
         this.anims['idle.left'].flipHorizontal = true
         this.anims['walk.right'] = Animation.fromSpriteSheet(
             sprites,
-            range(7, 13),
+            range(7, 11),
             100,
-            AnimationStrategy.Loop
+            AnimationStrategy.PingPong
         )
         this.anims['walk.left'] = this.anims['walk.right'].clone()
         this.anims['walk.left'].flipHorizontal = true
@@ -138,6 +138,10 @@ export class PlayerActor extends Actor {
             if (this.nearDoor && this.nearDoor.canOpen()) {
                 this.animateEnterDoor()
             }
+        }
+
+        if (MyInputs.IsButtonSelectPressed(engine)) {
+            this.animateDie()
         }
     }
 

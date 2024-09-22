@@ -1,7 +1,7 @@
 import { Actor, Engine, Scene, Vector } from 'excalibur'
 import { LightPoint, MyLightPP } from '../9_postprocessors/light.postprocessor'
 
-export type LightType = 'player.candle' | 'castle.candle'
+export type LightType = 'player.candle' | 'castle.candle' | 'castle.lantern'
 
 export class LightActor extends Actor {
     private type: LightType
@@ -16,7 +16,10 @@ export class LightActor extends Actor {
         })
 
         this.type = type
-        this.lightPoint = MyLightPP.NewLightPoint(this.pos, 40)
+        this.lightPoint = MyLightPP.NewLightPoint(
+            this.pos,
+            type === 'castle.candle' ? 20 : 40
+        )
     }
 
     onPreUpdate(engine: Engine, delta: number) {

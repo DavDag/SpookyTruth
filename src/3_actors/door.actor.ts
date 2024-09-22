@@ -44,18 +44,18 @@ export class DoorActor extends Actor {
 
         // Animations
         const sheet = SpriteSheet.fromImageSource({
-            image: Resources.image.door,
+            image: Resources.image.tileset,
             grid: {
-                rows: 4,
-                columns: 4,
+                rows: 10,
+                columns: 10,
                 spriteWidth: 16,
                 spriteHeight: 16,
             },
         })
-        const idle = sheet.getSprite(0, 0)
+        const idle = sheet.getSprite(6, 8)
         this.openingAnim = Animation.fromSpriteSheet(
             sheet,
-            range(0, 3),
+            range(86, 89),
             250,
             AnimationStrategy.Freeze
         )

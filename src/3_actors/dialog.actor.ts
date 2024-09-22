@@ -1,16 +1,7 @@
-import {
-    Actor,
-    BaseAlign,
-    Color,
-    Engine,
-    Label,
-    Scene,
-    Sprite,
-    TextAlign,
-    Vector,
-} from 'excalibur'
+import { Actor, Color, Engine, Scene, Sprite, Vector } from 'excalibur'
 import { Subject, takeUntil } from 'rxjs'
 import { Resources } from '../0_assets/resources'
+import { MyLabel } from '../1_utils/font_handling'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
 import { MyLightPP } from '../9_postprocessors/light.postprocessor'
@@ -35,25 +26,30 @@ export class DialogData {
 
         // Add manual line break every 16 characters
         this._lines = this._lines.map((line) => {
-            if (line.length <= 20) return line
+            if (line.length <= 17) return line
             return line
                 .split(' ')
                 .reduce(
                     (acc, word) => {
                         if (
-                            acc[1].length == 0 &&
-                            acc[0].length + word.length < 20
+                            acc[0].length + word.length < 17 &&
+                            acc[1].length == 0
                         ) {
                             acc[0] += word + ' '
-                        } else {
+                        } else if (
+                            acc[1].length + word.length < 17 &&
+                            acc[2].length == 0
+                        ) {
                             acc[1] += word + ' '
+                        } else {
+                            acc[2] += word + ' '
                         }
                         return acc
                     },
-                    ['', '']
+                    ['', '', '']
                 )
                 .map((l) => {
-                    if (l.length > 20) throw new Error('Line too long: ' + l)
+                    if (l.length > 17) throw new Error('Line too long: ' + l)
                     return l
                 })
                 .join('\n')
@@ -95,7 +91,7 @@ export class DialogActor extends Actor {
     public completion$ = this.completionSub.pipe(takeUntil(this.dieSub))
 
     private data: DialogData
-    private text: Label
+    private text: MyLabel
     private interaction: InteractionsActor
 
     constructor(data: DialogData) {
@@ -120,14 +116,10 @@ export class DialogActor extends Actor {
         this.graphics.use(sprite)
 
         // Add dialog text
-        this.text = new Label({
-            text: '',
-            pos: new Vector(4, 6),
+        this.text = new MyLabel({
+            name: 'dialog.text',
+            pos: new Vector(4, 4),
             anchor: Vector.Zero,
-            font: Resources.font.main.toFont({
-                textAlign: TextAlign.Start,
-                baseAlign: BaseAlign.Top,
-            }),
             z: EngineConfigs.DialogZIndex,
         })
         this.addChild(this.text)

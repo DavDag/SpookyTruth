@@ -1,4 +1,4 @@
-import { Engine, Vector } from 'excalibur'
+import { Actor, Color, Engine, Sprite, Vector } from 'excalibur'
 import { take } from 'rxjs'
 import { Resources } from '../../0_assets/resources'
 import { MySounds } from '../../1_utils/sound_handling'
@@ -20,26 +20,26 @@ export class IntroductionLevelScene extends BaseLevelScene {
         MySounds.PauseMusicTheme()
 
         // // Background
-        // const bg = new Actor({
-        //     name: 'Background',
-        //     pos: Vector.Zero,
-        //     anchor: Vector.Zero,
-        //     width: 160,
-        //     height: 144,
-        //     color: Color.Violet,
-        //     z: EngineConfigs.BackgroundZIndex,
-        // })
-        // bg.graphics.use(
-        //     new Sprite({
-        //         image: Resources.image.introductionRoom,
-        //     })
-        // )
-        // this.add(bg)
+        const bg = new Actor({
+            name: 'Background',
+            pos: Vector.Zero,
+            anchor: Vector.Zero,
+            width: 160,
+            height: 144,
+            color: Color.Violet,
+            z: 0,
+        })
+        bg.graphics.use(
+            new Sprite({
+                image: Resources.image.introductionRoom,
+            })
+        )
+        this.add(bg)
 
         // Add dialog
         this.dialog = new DialogActor(
             new DialogData({
-                text: '...\nWhy am I here?\n...\nI need to find a way out!',
+                text: '...\nWhy am I here? I do not remember anything...\nI need to find a way out!',
             })
         )
         this.dialog.completion$.subscribe(() => {

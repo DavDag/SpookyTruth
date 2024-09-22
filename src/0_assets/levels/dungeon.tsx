@@ -8,19 +8,28 @@
  </tile>
  <tile id="17">
   <properties>
+   <property name="light" value="castle.lantern"/>
+  </properties>
+ </tile>
+ <tile id="29">
+  <properties>
    <property name="light" value="castle.candle"/>
   </properties>
  </tile>
- <tile id="98">
-  <properties>
-   <property name="door" value="y"/>
-   <property name="door.closed" type="bool" value="false"/>
-  </properties>
- </tile>
- <tile id="99">
+ <tile id="70" probability="2"/>
+ <tile id="81" probability="2"/>
+ <tile id="86">
   <properties>
    <property name="door" value="y"/>
    <property name="door.closed" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="89">
+  <properties>
+   <property name="door" value="y"/>
+   <property name="door.closed" type="bool" value="false"/>
+  </properties>
+ </tile>
+ <tile id="90" probability="10"/>
+ <tile id="91" probability="2"/>
 </tileset>
