@@ -1,19 +1,25 @@
 import {
+    ActionSequence,
     Actor,
     Animation,
     AnimationStrategy,
+    Collider,
+    CollisionContact,
     CollisionType,
     Color,
     Engine,
+    ParallelActions,
     range,
     Scene,
+    Side,
     SpriteSheet,
     Vector,
 } from 'excalibur'
-import { Subject, takeUntil } from 'rxjs'
+import { Subject, take, takeUntil } from 'rxjs'
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { EngineConfigs } from '../configs'
+import { DoorActor } from './door.actor'
 import { LightActor } from './light.actor'
 
 export class PlayerActor extends Actor {
@@ -24,11 +30,16 @@ export class PlayerActor extends Actor {
     public onIntroductionEnd$ = this.onIntroductionEndSub.pipe(
         takeUntil(this.dieSub)
     )
+    private onDieEndSub = new Subject<void>()
+    public onDieEnd$ = this.onDieEndSub.pipe(takeUntil(this.dieSub))
+    private onDoorEnterSub = new Subject<DoorActor>()
+    public onDoorEnter$ = this.onDoorEnterSub.pipe(takeUntil(this.dieSub))
 
     private enabled = false
     private anims: { [key: string]: Animation } = {}
     private light: LightActor
     private direction: string = 'right'
+    private nearDoor: DoorActor | null = null
 
     constructor() {
         super({
@@ -70,6 +81,7 @@ export class PlayerActor extends Actor {
             200,
             AnimationStrategy.Freeze
         )
+        this.anims['die'].events.on('end', () => this.onDieEndSub.next())
         this.anims['introduction'] = this.anims['die'].clone()
         this.anims['introduction'].reverse()
         this.anims['introduction'].events.on('end', () => {
@@ -120,6 +132,27 @@ export class PlayerActor extends Actor {
             this.vel.x = 0
             this.graphics.use(`idle.${this.direction}`)
         }
+
+        // Handle button A
+        if (MyInputs.IsButtonAPressed(engine)) {
+            if (this.nearDoor && this.nearDoor.canOpen()) {
+                this.animateEnterDoor()
+            }
+        }
+    }
+
+    onCollisionStart(
+        self: Collider,
+        other: Collider,
+        side: Side,
+        contact: CollisionContact
+    ) {
+        super.onCollisionStart(self, other, side, contact)
+
+        // Check for door collision
+        if (other.owner instanceof DoorActor) {
+            this.nearDoor = other.owner
+        }
     }
 
     onPreKill(scene: Scene) {
@@ -137,5 +170,36 @@ export class PlayerActor extends Actor {
 
     public animateIntroduction() {
         this.graphics.use('introduction')
+    }
+
+    public animateDie() {
+        this.enabled = false
+        this.graphics.use('die')
+    }
+
+    private animateEnterDoor() {
+        this.enabled = false
+        this.actions
+            .callMethod(() => {
+                this.nearDoor.open()
+                this.nearDoor.open$
+                    .pipe(take(1))
+                    .subscribe(() => this.onDoorEnterSub.next(this.nearDoor))
+            })
+            .callMethod(() => {
+                this.direction =
+                    this.pos.x > this.nearDoor.pos.x ? 'left' : 'right'
+                this.graphics.use(`walk.${this.direction}`)
+            })
+            .runAction(
+                new ParallelActions([
+                    new ActionSequence(this, (ctx) => {
+                        ctx.moveTo(this.nearDoor.pos, PlayerActor.Speed / 2)
+                    }),
+                    new ActionSequence(this, (ctx) => {
+                        ctx.fade(0, 500)
+                    }),
+                ])
+            )
     }
 }

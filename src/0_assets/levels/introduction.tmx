@@ -2,6 +2,9 @@
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="9" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
  <tileset firstgid="1" source="dungeon.tsx"/>
  <layer id="1" name="Background" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="0"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJyFj0kKADAIA/1ivDb/f0cvCoNUehjELVFHhAsVWRzQ/c5VtYPYexo7U7cx6hp+WnTonY/ZRM67vHjyh+0ug/xoskftC5WfHmE=
   </data>
@@ -9,14 +12,18 @@
  <layer id="2" name="Walls" width="10" height="9">
   <properties>
    <property name="solid" type="bool" value="true"/>
+   <property name="zindex" type="float" value="10"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJwTY2BgECMC8zIQBtwjUB0TkRgAoYMBmQ==
   </data>
  </layer>
  <layer id="3" name="Decorations" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYCAeGAKxERALIYmB2PpAbIAk5gXE3gTYIBACxKEE2CAQB8TxBNjUAkKElYBBOInmAgA77gdB
+   eJxjYCAeGAKxERALIYmB2PpAbIAk5gXE3gTYIBACxKEE2CAQB8TxBNi0AMJALIJDLoVEswBDcgdj
   </data>
  </layer>
 </map>

@@ -22,7 +22,7 @@
     "openFiles": [
     ],
     "project": "levels.tiled-project",
-    "property.type": "int",
+    "property.type": "float",
     "recentFiles": [
         "dungeon.tsx"
     ],

@@ -7,11 +7,14 @@ export class EngineConfigs {
     static BackgroundColor: Color = Color.Black
     static FixedUpdateFps: number = 60
 
-    static BackgroundZIndex: number = 0
-    static DoorZIndex: number = 1
-    static PlayerZIndex: number = 2
-    static DialogZIndex: number = 3
-    static InteractionsZIndex: number = 4
+    static TiledBackgroundLayerZIndex: number = 0
+    static TiledWallLayerZIndex: number = 10
+    static TiledDecorationsLayerZIndex: number = 20
+
+    static DoorZIndex: number = 21
+    static PlayerZIndex: number = 22
+    static DialogZIndex: number = 23
+    static InteractionsZIndex: number = 24
 
     static ButtonA: Keys[] = [Keys.J, Keys.Z]
     static ButtonB: Keys[] = [Keys.X, Keys.K]

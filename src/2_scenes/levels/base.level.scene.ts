@@ -1,6 +1,7 @@
 import { TiledResource } from '@excaliburjs/plugin-tiled'
 import { Engine, Scene, SceneActivationContext, Vector } from 'excalibur'
 import { MyInputs } from '../../1_utils/input_handling'
+import { DoorActor } from '../../3_actors/door.actor'
 import { LightActor, LightType } from '../../3_actors/light.actor'
 import { PlayerActor } from '../../3_actors/player.actor'
 import { MyLightPP } from '../../9_postprocessors/light.postprocessor'
@@ -25,7 +26,10 @@ export class BaseLevelScene extends Scene {
         this.configs.tiledRes.addToScene(this)
 
         // Create doors from the Tiled map
-        // TODO
+        this.configs.tiledRes.getTilesByProperty('door').forEach((tile) => {
+            const d = new DoorActor(tile.exTile.pos)
+            this.add(d)
+        })
 
         // Create lights from the Tiled map
         this.configs.tiledRes.getTilesByProperty('light').forEach((tile) => {
@@ -41,6 +45,12 @@ export class BaseLevelScene extends Scene {
         this.player = new PlayerActor()
         this.player.pos = this.configs.playerSpawnTile.scale(16)
         this.add(this.player)
+
+        // Listen to the player entering a door
+        this.player.onDoorEnter$.subscribe((door) => {
+            console.log('Player entered door', door)
+            // TODO: Change level
+        })
     }
 
     onActivate(context: SceneActivationContext<unknown>) {

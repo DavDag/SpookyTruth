@@ -5,7 +5,6 @@ import {
     Collider,
     CollisionContact,
     CollisionType,
-    Color,
     Engine,
     range,
     Scene,
@@ -15,37 +14,29 @@ import {
 } from 'excalibur'
 import { Subject, takeUntil } from 'rxjs'
 import { Resources } from '../0_assets/resources'
-import { MyInputs } from '../1_utils/input_handling'
 import { EngineConfigs } from '../configs'
 import { InteractionsActor } from './interactions.actor'
 
 export class DoorActor extends Actor {
     private dieSub = new Subject<void>()
     private openSub = new Subject<void>()
-    private closeSub = new Subject<void>()
-    private isClosed = true
-    private isAnimating = false
-    private canInteract = false
     private openingAnim: Animation
-    private closingAnim: Animation
     private interaction: InteractionsActor
+    private isClosed = true
+    private canInteract = false
 
     public open$ = this.openSub.pipe(takeUntil(this.dieSub))
-    public close$ = this.closeSub.pipe(takeUntil(this.dieSub))
 
-    constructor(tile: Vector, isClosed: boolean) {
+    constructor(pos: Vector) {
         super({
             name: 'door',
-            pos: tile.scale(16),
+            pos: pos,
             anchor: Vector.Zero,
             width: 16,
             height: 16,
-            color: Color.Violet,
             collisionType: CollisionType.Passive,
             z: EngineConfigs.DoorZIndex,
         })
-
-        this.isClosed = isClosed
     }
 
     onInitialize(engine: Engine) {
@@ -53,7 +44,7 @@ export class DoorActor extends Actor {
 
         // Animations
         const sheet = SpriteSheet.fromImageSource({
-            image: Resources.image.tileset,
+            image: Resources.image.door,
             grid: {
                 rows: 4,
                 columns: 4,
@@ -69,12 +60,8 @@ export class DoorActor extends Actor {
             AnimationStrategy.Freeze
         )
         this.openingAnim.events.on('end', this.onOpenAnimationEnd.bind(this))
-        this.closingAnim = this.openingAnim.clone()
-        this.closingAnim.reverse()
-        this.closingAnim.events.on('end', this.onCloseAnimationEnd.bind(this))
         this.graphics.add('idle', idle)
         this.graphics.add('opening', this.openingAnim)
-        this.graphics.add('closing', this.closingAnim)
         this.graphics.use('idle')
 
         // Interaction
@@ -97,7 +84,7 @@ export class DoorActor extends Actor {
         super.onCollisionStart(self, other, side, contact)
 
         // Check for player collision
-        if (other.owner.name === 'player') {
+        if (other.owner.name === 'player' && this.isClosed) {
             this.canInteract = true
             this.interaction.show()
         }
@@ -118,51 +105,17 @@ export class DoorActor extends Actor {
         }
     }
 
-    onPreUpdate(engine: Engine, delta: number) {
-        super.onPreUpdate(engine, delta)
-
-        // Handle interaction
-        if (this.canInteract && !this.isAnimating) {
-            // Open / Close door
-            if (MyInputs.IsButtonAPressed(engine)) {
-                if (this.isClosed) {
-                    this.open()
-                } else {
-                    this.close()
-                }
-            }
-        }
+    public canOpen() {
+        return this.canInteract && this.isClosed
     }
 
-    private open() {
-        this.isAnimating = true
-        this.openingAnim.reset()
+    public open() {
+        this.isClosed = false
         this.interaction.hide()
         this.graphics.use('opening')
     }
 
-    private close() {
-        this.isAnimating = true
-        this.closingAnim.reset()
-        this.interaction.hide()
-        this.graphics.use('closing')
-    }
-
     private onOpenAnimationEnd() {
-        this.isClosed = false
-        this.isAnimating = false
-        if (this.canInteract) {
-            this.interaction.show()
-        }
         this.openSub.next()
-    }
-
-    private onCloseAnimationEnd() {
-        this.isClosed = true
-        this.isAnimating = false
-        if (this.canInteract) {
-            this.interaction.show()
-        }
-        this.closeSub.next()
     }
 }

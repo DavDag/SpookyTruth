@@ -11,4 +11,16 @@
    <property name="light" value="castle.candle"/>
   </properties>
  </tile>
+ <tile id="98">
+  <properties>
+   <property name="door" value="y"/>
+   <property name="door.closed" type="bool" value="false"/>
+  </properties>
+ </tile>
+ <tile id="99">
+  <properties>
+   <property name="door" value="y"/>
+   <property name="door.closed" type="bool" value="true"/>
+  </properties>
+ </tile>
 </tileset>
