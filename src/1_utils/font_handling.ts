@@ -30,6 +30,14 @@ export class MyLabel extends Actor {
     public get text() {
         return this._text
     }
+
+    public show() {
+        this.graphics.visible = true
+    }
+
+    public hide() {
+        this.graphics.visible = false
+    }
 }
 
 class FontHandling {

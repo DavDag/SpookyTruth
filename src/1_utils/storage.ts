@@ -10,6 +10,10 @@ class Storage {
         }
         return def
     }
+
+    public Reset() {
+        localStorage.clear()
+    }
 }
 
 export const MyStorage = new Storage()

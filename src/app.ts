@@ -2,6 +2,7 @@ import { Engine, Keys, Loader } from 'excalibur'
 import { Resources } from './0_assets/resources'
 import { CreditsScene } from './2_scenes/credits.scene'
 import { GameScene } from './2_scenes/game.scene'
+import { MemoryScene } from './2_scenes/memory.scene'
 import { MenuScene } from './2_scenes/menu.scene'
 import {
     OptionsScene,
@@ -27,7 +28,7 @@ class App {
     public Start() {
         void this.engine
             .start(this.loader)
-            .then(() => this.engine.goToScene('game'))
+            .then(() => this.engine.goToScene('menu'))
     }
 
     public OpenPause() {
@@ -90,6 +91,7 @@ class App {
         this.engine.add('credits', new CreditsScene())
         this.engine.add('options', new OptionsScene())
         this.engine.add('pause', new PauseScene())
+        this.engine.add('memory', new MemoryScene())
     }
 
     private AddListeners() {

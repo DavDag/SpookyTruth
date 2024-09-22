@@ -2,6 +2,8 @@ import { TiledResource } from '@excaliburjs/plugin-tiled' // @ts-ignore
 import { Color, FontSource, ImageSource, Sound } from 'excalibur' // @ts-ignore
 import YataghanFont from './font/Yataghan-qZ5d.ttf' // @ts-ignore
 import AlphabetImage from './image/alphabet.png' // @ts-ignore
+import AccidentImage from './image/accident.png' // @ts-ignore
+import FinaleImage from './image/finale.png' // @ts-ignore
 import CastleTilesetImage from './image/castle.png' // @ts-ignore
 import CharacterImage from './image/character.png' // @ts-ignore
 import DialogImage from './image/dialog.png' // @ts-ignore
@@ -25,6 +27,8 @@ export const Resources = {
         dialog: new ImageSource(DialogImage),
         interactions: new ImageSource(InteractionsImage),
         tileset: new ImageSource(CastleTilesetImage),
+        accident: new ImageSource(AccidentImage),
+        finale: new ImageSource(FinaleImage),
     },
     music: {
         musicTheme1: new Sound(MusicTheme1Sound),

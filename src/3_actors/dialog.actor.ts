@@ -129,7 +129,7 @@ export class DialogActor extends Actor {
         this.addChild(this.interaction)
 
         // Start as invisible
-        this.text.graphics.visible = false
+        this.text.hide()
         this.graphics.visible = false
         this.interaction.hide()
     }
@@ -141,14 +141,14 @@ export class DialogActor extends Actor {
 
     public next() {
         this.interaction.hide()
-        this.text.graphics.visible = true
+        this.text.show()
         this.graphics.visible = true
         MyLightPP.SetShowingDialog(true)
 
         // Last line shown
         if (this.data.nextLine()) {
             this.completionSub.next()
-            this.text.graphics.visible = false
+            this.text.hide()
             this.graphics.visible = false
             this.interaction.hide()
             MyLightPP.SetShowingDialog(false)

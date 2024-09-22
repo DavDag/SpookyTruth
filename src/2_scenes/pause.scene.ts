@@ -67,9 +67,19 @@ export class PauseScene extends Scene {
         })
         this.add(resume)
         this.menuItems.push(resume)
+        const memory = new Label({
+            text: 'memory',
+            pos: new Vector(80, 80),
+            font: Resources.font.main.toFont({
+                textAlign: TextAlign.Center,
+                baseAlign: BaseAlign.Middle,
+            }),
+        })
+        this.add(memory)
+        this.menuItems.push(memory)
         const options = new Label({
             text: 'options',
-            pos: new Vector(80, 80),
+            pos: new Vector(80, 100),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -79,7 +89,7 @@ export class PauseScene extends Scene {
         this.menuItems.push(options)
         const quit = new Label({
             text: 'quit',
-            pos: new Vector(80, 100),
+            pos: new Vector(80, 120),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -154,13 +164,23 @@ export class PauseScene extends Scene {
                     void engine.goToScene(this.backScene)
                     break
 
-                // Options
+                // Memory
                 case 1:
+                    void engine.goToScene('memory', {
+                        sceneActivationData: {
+                            backScene: 'pause',
+                            memory: 'accident',
+                        },
+                    })
+                    break
+
+                // Options
+                case 2:
                     MyApp.OpenOptions()
                     break
 
                 // Quit
-                case 2:
+                case 3:
                     engine.removeScene('level')
                     void engine.goToScene('menu').then(() => {
                         this.resetSelector()

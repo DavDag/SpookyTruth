@@ -11,6 +11,7 @@ import {
 import { Resources } from '../0_assets/resources'
 import { MyInputs } from '../1_utils/input_handling'
 import { MySounds } from '../1_utils/sound_handling'
+import { MyStorage } from '../1_utils/storage'
 import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { MyApp } from '../app'
 
@@ -37,7 +38,7 @@ export class MenuScene extends Scene {
         // Menu items
         const play = new Label({
             text: 'play',
-            pos: new Vector(80, 80),
+            pos: new Vector(80, 70),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -47,7 +48,7 @@ export class MenuScene extends Scene {
         this.menuItems.push(play)
         const options = new Label({
             text: 'options',
-            pos: new Vector(80, 100),
+            pos: new Vector(80, 90),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -57,7 +58,7 @@ export class MenuScene extends Scene {
         this.menuItems.push(options)
         const credits = new Label({
             text: 'credits',
-            pos: new Vector(80, 120),
+            pos: new Vector(80, 110),
             font: Resources.font.main.toFont({
                 textAlign: TextAlign.Center,
                 baseAlign: BaseAlign.Middle,
@@ -65,6 +66,16 @@ export class MenuScene extends Scene {
         })
         this.add(credits)
         this.menuItems.push(credits)
+        const reset = new Label({
+            text: 'reset',
+            pos: new Vector(80, 130),
+            font: Resources.font.main.toFont({
+                textAlign: TextAlign.Center,
+                baseAlign: BaseAlign.Middle,
+            }),
+        })
+        this.add(reset)
+        this.menuItems.push(reset)
 
         // Selector
         this.selector = new Label({
@@ -135,6 +146,12 @@ export class MenuScene extends Scene {
                 // Credits
                 case 2:
                     void this.engine.goToScene('credits')
+                    break
+
+                // Reset
+                case 3:
+                    MyStorage.Reset()
+                    window.location.reload()
                     break
             }
 

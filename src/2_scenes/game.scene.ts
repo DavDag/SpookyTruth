@@ -1,8 +1,8 @@
 import { Engine, Scene, SceneActivationContext } from 'excalibur'
-import { MySounds } from '../1_utils/sound_handling'
 import { MyStorage } from '../1_utils/storage'
 import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { IntroductionLevelScene } from './levels/introduction.level.scene'
+import { MySounds } from '../1_utils/sound_handling'
 
 export class GameScene extends Scene {
     private level: number = 0
