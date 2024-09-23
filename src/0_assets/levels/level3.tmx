@@ -15,7 +15,7 @@
    <property name="zindex" type="float" value="10"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwTZWBgEKMSFgdiXgbqAe5BaJ4dieZpArE2EOsQYfZg9C8M2FHZPAaoeYxAzEQiZsZjHjkA5CctBsx4ApknykBePsDlvpEWv0PJPFBexZVPscmhiw0F/5KT3/DlQwBqCQeB
+   eJwTZWBgEKMSFgdiXgbqAe5BaJ4dieZpArE2EOsQYfZg9C8M2FHZPAaoeYxAzEQiZsZjHjkA5CctBsx4ApknykBePsDlvpEQv7A8Mpj9i808UF7FlU+xyaGLDQX/kpPf8OVDAOExB78=
   </data>
  </layer>
  <layer id="3" name="Decorations" width="20" height="20">
@@ -56,7 +56,7 @@
    <property name="zindex" type="float" value="30"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKA+MARiIwr06wOxAZXcQk/gONAOGAWDBuDLA5TkjaEC9AfaAcMQiACxMA45Yag8ITFqAwDnsQI9
+   eJxjYKA+MARiIwr06wOxAZXcQk/gONAOGAWDBuDLA5TkjaEChmL+HexABIiFccgJQ+UJiVEbAADpmQI+
   </data>
  </layer>
 </map>

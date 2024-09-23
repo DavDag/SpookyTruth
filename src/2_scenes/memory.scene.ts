@@ -242,7 +242,10 @@ export class MemoryScene extends Scene {
         super.onPreUpdate(engine, delta)
 
         // Handle button A/B
-        if (MyInputs.IsButtonBPressed(engine)) {
+        if (
+            MyInputs.IsButtonAPressed(engine) ||
+            MyInputs.IsButtonBPressed(engine)
+        ) {
             if (!this.isAnimating) {
                 // Go back to the previous scene
                 void engine.goToScene(this.backScene)

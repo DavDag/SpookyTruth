@@ -74,8 +74,8 @@
             "scale": 4,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 88,
-                "y": 103.875
+                "x": 127.25,
+                "y": 256.625
             }
         },
         "level5.tmx": {
@@ -105,10 +105,10 @@
                 7
             ],
             "scale": 8,
-            "selectedLayer": 4,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 91,
-                "y": 80.5625
+                "x": 90.875,
+                "y": 101.3125
             }
         }
     },
