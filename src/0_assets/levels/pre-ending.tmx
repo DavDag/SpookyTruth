@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="9" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="16">
+ <tileset firstgid="1" source="dungeon.tsx"/>
+ <layer id="1" name="Background" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwLYmBgiIbiGCAOQuJHo8mBaHckNjI/CMpGVx8NlQPxPbCY60Gk/cj2BaKZjSyHS18MVN4diY3LLYFo7sLmbnx2YfMDAM/3HqI=
+  </data>
+ </layer>
+ <layer id="2" name="Walls" width="10" height="9">
+  <properties>
+   <property name="solid" type="bool" value="true"/>
+   <property name="zindex" type="float" value="10"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwTY2BgECMC8zIQBtwjUB0TkRgAoYMBmQ==
+  </data>
+ </layer>
+ <layer id="3" name="Decorations" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBhYIESkmCORYoMVAAB9DACn
+  </data>
+ </layer>
+ <objectgroup id="7" name="Decorations">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
+  <object id="3" name="spawn" gid="35" x="32" y="128" width="16" height="16"/>
+  <object id="14" name="ending" gid="87" x="128" y="128" width="16" height="16"/>
+  <object id="15" name="level8" gid="87" x="16" y="128" width="16" height="16"/>
+ </objectgroup>
+ <layer id="5" name="Decorations II" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="30"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBhegAuHuAyR+vWp5RA0AAAlgABW
+  </data>
+ </layer>
+</map>

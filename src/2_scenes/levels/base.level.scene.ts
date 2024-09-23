@@ -23,6 +23,8 @@ export class BaseLevelScene extends Scene {
     private deathDialog: DialogActor
     protected player: PlayerActor
 
+    protected doors: DoorActor[] = []
+
     constructor(private configs: LevelConfigs) {
         super()
     }
@@ -34,6 +36,7 @@ export class BaseLevelScene extends Scene {
         this.configs.tiledRes.getObjectsByClassName('door').forEach((obj) => {
             const d = new DoorActor(new Vector(obj.x, obj.y - 16), obj.name)
             this.add(d)
+            this.doors.push(d)
         })
 
         // Create mirrors from the Tiled map

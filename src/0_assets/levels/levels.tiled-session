@@ -16,10 +16,10 @@
                 5
             ],
             "scale": 5.5,
-            "selectedLayer": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 170.72727272727275,
-                "y": 94.09090909090908
+                "x": 159.63636363636365,
+                "y": 120.27272727272725
             }
         },
         "introduction.tmx": {
@@ -42,6 +42,14 @@
             "viewCenter": {
                 "x": 231,
                 "y": 120.6875
+            }
+        },
+        "pre-ending.tmx": {
+            "scale": 8,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 91,
+                "y": 80.5625
             }
         }
     },

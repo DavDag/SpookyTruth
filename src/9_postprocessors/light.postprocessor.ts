@@ -51,7 +51,6 @@ export class LightPoint {
 }
 
 // TODO: Think about adding lightning
-// TODO: remove lights when exiting the scene..
 
 export class LightPostProcessor implements PostProcessor {
     private _shader: ScreenShader
@@ -90,7 +89,7 @@ void main() {
         fragColor = tex;
         return;
     }
-    fragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    float maxIntensity = 0.0;
     for (int i = 0; i < u_lightCount; i++) {
         vec2 lightPos = u_lightPos[i];
         float lightIntensity = u_lightIntensity[i];
@@ -98,10 +97,12 @@ void main() {
         float dist = length(diff);
         if (dist < lightIntensity) {
             float dOverI = (dist / lightIntensity);
-            float intensity = (dOverI > 0.8) ? 0.5 : 1.0;
-            fragColor.rgb = max(fragColor.rgb, tex.rgb * intensity);
+            float intensity = (dOverI > 0.75) ? 0.5 : 1.0;
+            maxIntensity = max(maxIntensity, intensity);
         }
     }
+    fragColor.rgb = tex.rgb * maxIntensity;
+    fragColor.a = tex.a;
 }`
         )
     }

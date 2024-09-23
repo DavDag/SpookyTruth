@@ -16,6 +16,7 @@ import DungeonTsx from './levels/dungeon.tsx' // @ts-ignore
 import EndingTmx from './levels/ending.tmx' // @ts-ignore
 import IntroductionTmx from './levels/introduction.tmx' // @ts-ignore
 import Level1Tmx from './levels/level1.tmx' // @ts-ignore
+import PreEndingTmx from './levels/pre-ending.tmx' // @ts-ignore
 import MusicTheme1Sound from './music/music_theme1.mp3' // @ts-ignore
 import MusicTheme3Sound from './music/music_theme3.mp3' // @ts-ignore
 import MenuInteractionSound from './sfx/menu_interaction.wav'
@@ -77,6 +78,10 @@ export const Resources = {
         level1: new TiledResource(
             Level1Tmx,
             TiledArgs('level1.tmx', Level1Tmx)
+        ),
+        pre_ending: new TiledResource(
+            PreEndingTmx,
+            TiledArgs('pre-ending.tmx', PreEndingTmx)
         ),
         ending: new TiledResource(
             EndingTmx,
