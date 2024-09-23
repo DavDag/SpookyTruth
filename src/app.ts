@@ -28,7 +28,7 @@ class App {
     public Start() {
         void this.engine
             .start(this.loader)
-            .then(() => this.engine.goToScene('game'))
+            .then(() => this.engine.goToScene('menu'))
     }
 
     public OpenPause() {

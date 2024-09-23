@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="9" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="5">
+ <properties>
+  <property name="zindex" type="float" value="0"/>
+ </properties>
+ <tileset firstgid="1" source="dungeon.tsx"/>
+ <layer id="1" name="Background" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJx9jjEKADAIA/M7u+qq/39HO1iQkHY4FD0lCaAOdkgiujr17N35/FHCscdceQmdqcgL4Tj+WevR8030Ppr1+aVyTDb21x8B
+  </data>
+ </layer>
+ <layer id="2" name="Walls" width="10" height="9">
+  <properties>
+   <property name="solid" type="bool" value="true"/>
+   <property name="zindex" type="float" value="10"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwTZWBgECOAxYGYl4Ew4B5k6uzoYC8jEDMRwMxADADDIwHX
+  </data>
+ </layer>
+ <layer id="3" name="Decorations" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBgawJFIMWIBFxBz4qBpAQB4AADG
+  </data>
+ </layer>
+ <objectgroup id="5" name="Decorations">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
+  <object id="1" name="level4" type="door" gid="87" x="16" y="128" width="16" height="16"/>
+  <object id="2" name="a" type="ghost" gid="67" x="80" y="128" width="16" height="16">
+   <properties>
+    <property name="wandering_dist" type="float" value="1"/>
+   </properties>
+  </object>
+  <object id="4" name="spawn" gid="67" x="32" y="128" width="16" height="16"/>
+  <object id="3" name="6" type="postit" gid="67" x="128" y="128" width="16" height="16"/>
+ </objectgroup>
+ <layer id="4" name="Decorations II" width="10" height="9">
+  <properties>
+   <property name="zindex" type="float" value="30"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeGOEQ1wdiAxLMIRUIkSlHDSAMxCJINDKbFAAA5GgBPw==
+  </data>
+ </layer>
+</map>

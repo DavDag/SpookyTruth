@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="8">
+ <tileset firstgid="1" source="dungeon.tsx"/>
+ <layer id="1" name="Background" width="10" height="40">
+  <properties>
+   <property name="zindex" type="float" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJyllEEOwCAIBP2dXOWq/39HeyHZbBaw6YGkKrAIU/cYYzc2X3P43rA+5Lto7RBzazPRujWnXEb5Mj/lE2Yf9Ls4A22+W3fX6pxnkfVV+ZnIr7SO6FGli/dfRR8jx4S4bBaqrtu9zJjbqOlALiffW66R44yzat2xx/0/Yj/jUM2u6mXHBzPS9Sj0sRZVk2L3z7uAM12FbsaI+g941l/rU7NnDcVpxxIzofjF911pcP8i9gEMSYmO
+  </data>
+ </layer>
+ <layer id="2" name="Walls" width="10" height="40">
+  <properties>
+   <property name="solid" type="bool" value="true"/>
+   <property name="zindex" type="float" value="10"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwTZWBgECOAxYGYl4Ew4B6C6jSBWAuItYFYh8b22lFoHsitOmS6D5/dtA5nXHbTI36x2U2v9IduNz3TvR2R6qhtL7LdtLIXlg/QASX5g1x1yG6hpb24/EwrexmBmIkAZgZiAMCwCIY=
+  </data>
+ </layer>
+ <layer id="3" name="Decorations" width="10" height="40">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeCJEh5wnEXkSYHQzEIUSoiwXiOCLUkQtkaWg2NiCHRQxbWMpQyT5vIPYhQl0oEIcRoS4eiBPwyMPcTe9wJRXgS9vkAGLji5bxQUyYU+JvYvVyIbFp5V9q5Q9yAaGwpiSckf2Gbg+6vylNx9jKI3wAAFhrCgg=
+  </data>
+ </layer>
+ <objectgroup id="5" name="Decorations">
+  <properties>
+   <property name="zindex" type="float" value="20"/>
+  </properties>
+  <object id="1" name="level3" gid="87" x="32" y="624" width="16" height="16"/>
+  <object id="2" name="level5" gid="87" x="128" y="480" width="16" height="16"/>
+  <object id="3" name="level6" gid="87" x="128" y="160" width="16" height="16"/>
+  <object id="4" name="pre-ending" gid="87" x="80" y="96" width="16" height="16"/>
+  <object id="5" name="spawn" gid="67" x="48" y="624" width="16" height="16"/>
+  <object id="6" name="4" type="postit" gid="67" x="16" y="480" width="16" height="16"/>
+  <object id="7" name="5" type="postit" gid="67" x="16" y="144" width="16" height="16"/>
+ </objectgroup>
+ <layer id="4" name="Decorations II" width="10" height="40">
+  <properties>
+   <property name="zindex" type="float" value="30"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeGOEQ1wdiAxLMoRcQBmKRgXYEkQDZnbjCmVgwWONjFIwCfABfXiUnHw+18oqWQJ9IdaSGMwBBcAJa
+  </data>
+ </layer>
+</map>

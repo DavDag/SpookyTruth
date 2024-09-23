@@ -71,8 +71,8 @@ uniform vec2 u_resolution; // screen resolution
 uniform float u_time_ms; // total playback time
 uniform float u_elapsed_ms; // elapsed time (since last frame)
 uniform int u_lightCount; // light count
-uniform vec2 u_lightPos[8]; // light position
-uniform float u_lightIntensity[8]; // light intensity
+uniform vec2 u_lightPos[16]; // light position
+uniform float u_lightIntensity[16]; // light intensity
 uniform bool u_bDialogModeOn; // dialog mode
 uniform bool u_bDisabledModeOn; // disabled mode
 uniform bool u_bDebugModeOn; // debug mode
@@ -164,7 +164,7 @@ void main() {
         const lp = new LightPoint(pos, intensity)
         this._lights.push(lp)
         this._isShaderDirty = true
-        if (this._lights.length > 8) console.warn('Too many lights')
+        if (this._lights.length > 15) console.warn('Too many lights')
         return lp
     }
 

@@ -18,7 +18,7 @@ export interface GhostBehaviourProps {
 }
 
 export class GhostActor extends Actor {
-    static readonly Speed = 32
+    static readonly Speed = 8
 
     private dieSub = new Subject<void>()
     private anims: { [key: string]: Animation } = {}
@@ -82,7 +82,7 @@ export class GhostActor extends Actor {
         this.graphics.use(`idle.right`)
 
         // Collision
-        this.collider.useCircleCollider(24, new Vector(8, 8))
+        this.collider.useCircleCollider(20, new Vector(8, 8))
 
         // Movement
         this.actions.repeatForever((ctx) => {
@@ -90,6 +90,9 @@ export class GhostActor extends Actor {
             ctx.moveBy(this.props.wanderingDistance * 16, 0, GhostActor.Speed)
             ctx.callMethod(() => this.graphics.use('walk.left'))
             ctx.moveBy(-this.props.wanderingDistance * 16, 0, GhostActor.Speed)
+            ctx.moveBy(-this.props.wanderingDistance * 16, 0, GhostActor.Speed)
+            ctx.callMethod(() => this.graphics.use('walk.right'))
+            ctx.moveBy(this.props.wanderingDistance * 16, 0, GhostActor.Speed)
         })
     }
 

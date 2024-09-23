@@ -17,6 +17,10 @@ import EndingTmx from './levels/ending.tmx' // @ts-ignore
 import IntroductionTmx from './levels/introduction.tmx' // @ts-ignore
 import Level1Tmx from './levels/level1.tmx' // @ts-ignore
 import Level2Tmx from './levels/level2.tmx' // @ts-ignore
+import Level3Tmx from './levels/level3.tmx' // @ts-ignore
+import Level4Tmx from './levels/level4.tmx' // @ts-ignore
+import Level5Tmx from './levels/level5.tmx' // @ts-ignore
+import Level6Tmx from './levels/level6.tmx' // @ts-ignore
 import PreEndingTmx from './levels/pre-ending.tmx' // @ts-ignore
 import MusicTheme1Sound from './music/music_theme1.mp3' // @ts-ignore
 import MusicTheme3Sound from './music/music_theme3.mp3' // @ts-ignore
@@ -84,6 +88,22 @@ export const Resources = {
         level2: new TiledResource(
             Level2Tmx,
             TiledArgs('level2.tmx', Level2Tmx)
+        ),
+        level3: new TiledResource(
+            Level3Tmx,
+            TiledArgs('level3.tmx', Level3Tmx)
+        ),
+        level4: new TiledResource(
+            Level4Tmx,
+            TiledArgs('level4.tmx', Level4Tmx)
+        ),
+        level5: new TiledResource(
+            Level5Tmx,
+            TiledArgs('level5.tmx', Level5Tmx)
+        ),
+        level6: new TiledResource(
+            Level6Tmx,
+            TiledArgs('level6.tmx', Level6Tmx)
         ),
         pre_ending: new TiledResource(
             PreEndingTmx,

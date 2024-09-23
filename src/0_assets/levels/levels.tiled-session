@@ -30,8 +30,8 @@
             "scale": 8,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 72,
-                "y": 136.0625
+                "x": 99.25,
+                "y": 81.4375
             }
         },
         "level1.tmx": {
@@ -50,10 +50,54 @@
                 5
             ],
             "scale": 5.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 100.18181818181816,
+                "y": 151.72727272727275
+            }
+        },
+        "level3.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 5.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 156.72727272727275,
+                "y": 201.1818181818182
+            }
+        },
+        "level4.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 4,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 107.99999999999997,
-                "y": 100.63636363636365
+                "x": 88,
+                "y": 103.875
+            }
+        },
+        "level5.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 8,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 89.5,
+                "y": 107.9375
+            }
+        },
+        "level6.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 4,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 106.75,
+                "y": 180.625
             }
         },
         "pre-ending.tmx": {
@@ -70,7 +114,7 @@
     },
     "last.imagePath": "E:/Extra/SpookyTruth/src/0_assets/image",
     "last.objectTemplatePath": "E:/Extra/SpookyTruth/src/0_assets/levels",
-    "map.height": 15,
+    "map.height": 20,
     "map.lastUsedFormat": "tmx",
     "map.layerDataFormat": "3",
     "map.tileHeight": 16,

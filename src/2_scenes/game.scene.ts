@@ -6,6 +6,10 @@ import { EndingLevelScene } from './levels/ending.level.scene'
 import { IntroductionLevelScene } from './levels/introduction.level.scene'
 import { Level1LevelScene } from './levels/level1.level.scene'
 import { Level2LevelScene } from './levels/level2.level.scene'
+import { Level3LevelScene } from './levels/level3.level.scene'
+import { Level4LevelScene } from './levels/level4.level.scene'
+import { Level5LevelScene } from './levels/level5.level.scene'
+import { Level6LevelScene } from './levels/level6.level.scene'
 import { PreEndingLevelScene } from './levels/preending.level.scene'
 
 export interface GameSceneActivationCtx {
@@ -46,6 +50,18 @@ export class GameScene extends Scene {
                 break
             case 'level2':
                 this.engine.addScene('level', new Level2LevelScene())
+                break
+            case 'level3':
+                this.engine.addScene('level', new Level3LevelScene())
+                break
+            case 'level4':
+                this.engine.addScene('level', new Level4LevelScene())
+                break
+            case 'level5':
+                this.engine.addScene('level', new Level5LevelScene())
+                break
+            case 'level6':
+                this.engine.addScene('level', new Level6LevelScene())
                 break
             case 'pre-ending':
                 this.engine.addScene('level', new PreEndingLevelScene())
