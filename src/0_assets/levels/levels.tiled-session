@@ -5,10 +5,11 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         "dungeon.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 4,
             "scaleInEditor": 8
         },
         "ending.tmx": {
@@ -16,10 +17,10 @@
                 5
             ],
             "scale": 5.5,
-            "selectedLayer": 3,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 159.63636363636365,
-                "y": 120.27272727272725
+                "x": 159.45454545454547,
+                "y": 111.36363636363637
             }
         },
         "introduction.tmx": {
@@ -37,14 +38,28 @@
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 8,
+            "scale": 5.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 231,
-                "y": 120.6875
+                "x": 192.36363636363637,
+                "y": 118.27272727272725
+            }
+        },
+        "level2.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 5.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 107.99999999999997,
+                "y": 100.63636363636365
             }
         },
         "pre-ending.tmx": {
+            "expandedObjectLayers": [
+                7
+            ],
             "scale": 8,
             "selectedLayer": 4,
             "viewCenter": {
@@ -54,19 +69,24 @@
         }
     },
     "last.imagePath": "E:/Extra/SpookyTruth/src/0_assets/image",
-    "map.height": 9,
+    "last.objectTemplatePath": "E:/Extra/SpookyTruth/src/0_assets/levels",
+    "map.height": 15,
     "map.lastUsedFormat": "tmx",
     "map.layerDataFormat": "3",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 20,
+    "map.width": 10,
     "openFiles": [
     ],
     "project": "levels.tiled-project",
     "property.type": "float",
     "recentFiles": [
+        "dungeon.tsx",
+        "introduction.tmx",
+        "level1.tmx",
         "ending.tmx",
-        "dungeon.tsx"
+        "pre-ending.tmx",
+        "level2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

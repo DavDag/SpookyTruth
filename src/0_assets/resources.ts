@@ -16,6 +16,7 @@ import DungeonTsx from './levels/dungeon.tsx' // @ts-ignore
 import EndingTmx from './levels/ending.tmx' // @ts-ignore
 import IntroductionTmx from './levels/introduction.tmx' // @ts-ignore
 import Level1Tmx from './levels/level1.tmx' // @ts-ignore
+import Level2Tmx from './levels/level2.tmx' // @ts-ignore
 import PreEndingTmx from './levels/pre-ending.tmx' // @ts-ignore
 import MusicTheme1Sound from './music/music_theme1.mp3' // @ts-ignore
 import MusicTheme3Sound from './music/music_theme3.mp3' // @ts-ignore
@@ -26,6 +27,7 @@ const TiledArgs: (name: string, path: string) => TiledResourceOptions = (
     path: string
 ) => {
     return {
+        strict: false,
         useTilemapCameraStrategy: true,
         pathMap: [
             {
@@ -78,6 +80,10 @@ export const Resources = {
         level1: new TiledResource(
             Level1Tmx,
             TiledArgs('level1.tmx', Level1Tmx)
+        ),
+        level2: new TiledResource(
+            Level2Tmx,
+            TiledArgs('level2.tmx', Level2Tmx)
         ),
         pre_ending: new TiledResource(
             PreEndingTmx,

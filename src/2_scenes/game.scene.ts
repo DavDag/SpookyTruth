@@ -5,6 +5,7 @@ import { MyLightPP } from '../9_postprocessors/light.postprocessor'
 import { EndingLevelScene } from './levels/ending.level.scene'
 import { IntroductionLevelScene } from './levels/introduction.level.scene'
 import { Level1LevelScene } from './levels/level1.level.scene'
+import { Level2LevelScene } from './levels/level2.level.scene'
 import { PreEndingLevelScene } from './levels/preending.level.scene'
 
 export interface GameSceneActivationCtx {
@@ -42,6 +43,9 @@ export class GameScene extends Scene {
                 break
             case 'level1':
                 this.engine.addScene('level', new Level1LevelScene())
+                break
+            case 'level2':
+                this.engine.addScene('level', new Level2LevelScene())
                 break
             case 'pre-ending':
                 this.engine.addScene('level', new PreEndingLevelScene())

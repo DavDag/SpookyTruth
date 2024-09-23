@@ -240,9 +240,10 @@ export class PlayerActor extends Actor {
         this.actions
             .callMethod(() => {
                 this.nearDoor.open()
-                this.nearDoor.open$
-                    .pipe(take(1))
-                    .subscribe(() => this.onDoorEnterSub.next(this.nearDoor))
+                this.nearDoor.open$.pipe(take(1)).subscribe(() => {
+                    this.onDoorEnterSub.next(this.nearDoor)
+                    this.nearDoor = null
+                })
             })
             .callMethod(() => {
                 this.direction =
@@ -271,7 +272,10 @@ export class PlayerActor extends Actor {
             .callMethod(() => MySounds.StopMusicTheme())
             .moveTo(this.nearMirror.pos, PlayerActor.Speed / 2)
             .delay(1000)
-            .callMethod(() => this.onMirrorEnterSub.next(this.nearMirror))
+            .callMethod(() => {
+                this.onMirrorEnterSub.next(this.nearMirror)
+                this.nearMirror = null
+            })
     }
 
     private animateOpenPostIt() {
@@ -283,6 +287,7 @@ export class PlayerActor extends Actor {
         this.actions.delay(1000).callMethod(() => {
             this.enabled = true
             this.onPostItEnterSub.next(this.nearPostIt)
+            this.nearPostIt = null
         })
     }
 }

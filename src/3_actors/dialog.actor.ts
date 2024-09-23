@@ -139,6 +139,7 @@ export class DialogActor extends Actor {
 
         // Update pos to follow camera
         this.pos.x = engine.currentScene.camera.pos.x - 80
+        this.pos.y = engine.currentScene.camera.pos.y - 72
 
         // Check for player input
         if (MyInputs.IsButtonAPressed(engine)) {
