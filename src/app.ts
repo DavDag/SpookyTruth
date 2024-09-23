@@ -1,4 +1,4 @@
-import { Engine, Keys, Loader } from 'excalibur'
+import { Engine, Keys, Loader, PointerScope } from 'excalibur'
 import { Resources } from './0_assets/resources'
 import { CreditsScene } from './2_scenes/credits.scene'
 import { GameScene } from './2_scenes/game.scene'
@@ -75,6 +75,8 @@ class App {
             backgroundColor: EngineConfigs.BackgroundColor,
             fixedUpdateFps: EngineConfigs.FixedUpdateFps,
             antialiasing: false,
+            grabWindowFocus: true,
+            pointerScope: PointerScope.Document,
             pixelRatio: 1,
             suppressHiDPIScaling: true,
         })

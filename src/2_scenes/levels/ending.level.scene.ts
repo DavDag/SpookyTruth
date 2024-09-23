@@ -104,7 +104,7 @@ export class EndingLevelScene extends BaseLevelScene {
         )
         this.add(this.lastMemoryPieceDialog)
         this.lastMemoryPieceDialog.completion$.subscribe(() => {
-            MySounds.StopMusicTheme()
+            MySounds.StopMusicTheme2()
             MyStorage.Store('lastLevelName', '')
             this.engine
                 .goToScene('credits')
@@ -116,6 +116,10 @@ export class EndingLevelScene extends BaseLevelScene {
         this.enterRoomDialog.actions.callMethod(() =>
             this.enterRoomDialog.next()
         )
+
+        // Play music
+        MySounds.PauseMusicTheme()
+        MySounds.PlayMusicTheme2()
     }
 
     onActivate(context: SceneActivationContext<unknown>) {

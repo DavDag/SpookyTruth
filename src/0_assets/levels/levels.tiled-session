@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level3.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -60,11 +60,11 @@
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 5.5,
-            "selectedLayer": 2,
+            "scale": 4,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 156.72727272727275,
-                "y": 201.1818181818182
+                "x": 170,
+                "y": 197.125
             }
         },
         "level4.tmx": {
@@ -121,16 +121,29 @@
     "map.tileWidth": 16,
     "map.width": 10,
     "openFiles": [
+        "introduction.tmx",
+        "level1.tmx",
+        "level2.tmx",
+        "level3.tmx",
+        "level4.tmx",
+        "level5.tmx",
+        "level6.tmx",
+        "pre-ending.tmx",
+        "ending.tmx"
     ],
     "project": "levels.tiled-project",
     "property.type": "float",
     "recentFiles": [
-        "dungeon.tsx",
         "introduction.tmx",
         "level1.tmx",
+        "level2.tmx",
         "ending.tmx",
         "pre-ending.tmx",
-        "level2.tmx"
+        "level6.tmx",
+        "level5.tmx",
+        "level4.tmx",
+        "level3.tmx",
+        "dungeon.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

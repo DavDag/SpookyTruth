@@ -12,6 +12,7 @@ class SoundHandling {
 
         // Settings for sounds
         Resources.music.musicTheme1.loop = true
+        Resources.music.musicTheme2.loop = true
         Resources.music.musicTheme3.loop = true
 
         // Update the volumes
@@ -52,6 +53,16 @@ class SoundHandling {
 
     public PauseMusicTheme() {
         void Resources.music.musicTheme1.pause()
+    }
+
+    public PlayMusicTheme2() {
+        if (!Resources.music.musicTheme2.isPlaying()) {
+            void Resources.music.musicTheme2.play()
+        }
+    }
+
+    public StopMusicTheme2() {
+        void Resources.music.musicTheme2.stop()
     }
 
     public PlayCreditsTheme() {
@@ -111,6 +122,8 @@ class SoundHandling {
 
         // Music
         Resources.music.musicTheme1.volume =
+            this.musicVolume * this.musicVolume * this.musicVolume
+        Resources.music.musicTheme2.volume =
             this.musicVolume * this.musicVolume * this.musicVolume
         Resources.music.musicTheme3.volume =
             this.musicVolume * this.musicVolume * this.musicVolume

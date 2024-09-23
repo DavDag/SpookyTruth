@@ -23,6 +23,7 @@ import Level5Tmx from './levels/level5.tmx' // @ts-ignore
 import Level6Tmx from './levels/level6.tmx' // @ts-ignore
 import PreEndingTmx from './levels/pre-ending.tmx' // @ts-ignore
 import MusicTheme1Sound from './music/music_theme1.mp3' // @ts-ignore
+import MusicTheme2Sound from './music/music_theme2.mp3' // @ts-ignore
 import MusicTheme3Sound from './music/music_theme3.mp3' // @ts-ignore
 import MenuInteractionSound from './sfx/menu_interaction.wav'
 
@@ -65,6 +66,7 @@ export const Resources = {
     },
     music: {
         musicTheme1: new Sound(MusicTheme1Sound),
+        musicTheme2: new Sound(MusicTheme2Sound),
         musicTheme3: new Sound(MusicTheme3Sound),
     },
     sfx: {
