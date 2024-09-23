@@ -23,39 +23,10 @@
             background-color: black;
             font-family: monospace;
         }
-
-        #custom-start-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #efeeee;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            user-select: none;
-        }
-
-        #custom-start-overlay-play-btn {
-            display: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-        }
-
-        #custom-start-overlay-play-btn:hover {
-            padding: 16px 26px;
-        }
     </style>
     <script src="index.ts" type="module"></script>
 </head>
 <body>
 <canvas id="game"></canvas>
-<div id="custom-start-overlay">
-    <button id="custom-start-overlay-play-btn">
-        Play
-    </button>
-</div>
 </body>
 </html>
