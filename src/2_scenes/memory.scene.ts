@@ -242,17 +242,8 @@ export class MemoryScene extends Scene {
         super.onPreUpdate(engine, delta)
 
         // Handle button A/B
-        if (
-            MyInputs.IsButtonBPressed(engine) ||
-            MyInputs.IsButtonAPressed(engine)
-        ) {
-            if (this.isAnimating) {
-                // Complete animation early
-                this.exitAnimationEarly()
-
-                // Play sound
-                MySounds.PlayMenuInteraction()
-            } else {
+        if (MyInputs.IsButtonBPressed(engine)) {
+            if (!this.isAnimating) {
                 // Go back to the previous scene
                 void engine.goToScene(this.backScene)
 
@@ -282,15 +273,6 @@ export class MemoryScene extends Scene {
                 this.isAnimating = false
                 this.animatingPiece = undefined
             })
-        }
-    }
-
-    private exitAnimationEarly() {
-        if (this.animatingPiece) {
-            this.animatingPiece.actions.clearActions()
-            this.animatingPiece.graphics.opacity = 1
-            this.isAnimating = false
-            this.animatingPiece = undefined
         }
     }
 }
